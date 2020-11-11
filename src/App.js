@@ -110,7 +110,7 @@ function QueryBar(props) {
     );
 }
 
-function Glossary() {
+function Glossary(props) {
     return (
         <div id="Glossary">
             <h2>Hyperglossolalary</h2>
@@ -140,7 +140,7 @@ function App() {
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
             <QueryBar setReductions={setReductions} />
             <DigitalReductionBars reductions={reductions} />
-            <Glossary />
+            <Glossary reduction={reductions} />
         </div>
     );
 }

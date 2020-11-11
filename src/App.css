@@ -17,13 +17,22 @@ body {
 }
 
 #QueryBar {
-    display: flex;
+    /* display: flex; */
     margin: auto;
     justify-content: center;
 }
 
 #QueryBar input {
     font-size: 22px;
+}
+
+#DigitalReductionBars {
+    margin: auto;
+    width: 40%;
+}
+
+.DigitalReductionBar {
+    justify-content: center;
 }
 
 /* color: #8A8A8A; */
