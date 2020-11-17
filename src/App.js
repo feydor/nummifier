@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //import logo from "./logo.svg";
 import "./App.css";
 
@@ -31,7 +31,7 @@ let AQ = [
     ["Z", 35],
 ];
 
-let currentGematria = "AQ"; // TODO: Refactor into react state variable (to switch between gematria)
+// let currentGematria = "AQ"; // TODO: Refactor into react state variable (to switch between gematria)
 
 // neoroman nummification
 // AQ, GoN, EQ...
@@ -42,6 +42,7 @@ function gematria(str) {
     let strArr = [...str];
     let finalReduction = strArr.reduce((acc, curr) => {
         let currReduction = AQ.find(
+            // TODO: dynamic gematria selection
             (gematria) => gematria[0].toLowerCase() === curr.toLowerCase()
         );
         iterations.push(acc + currReduction[1]);
@@ -79,68 +80,122 @@ function toAQ(query) {
         reduction = reduce(reduction);
         reductionHistory.push(reduction);
     }
-    console.log(reductionHistory);
+    // console.log(reductionHistory);
     return reductionHistory;
 }
 
+// sets the query state variable onChange,
+// fetches a POST request on button press
 function QueryBar(props) {
+    const API_URL = "http://localhost:51230/gematria/";
+
     // handler function for QueryBar
     // extracts input from onChange event, strips it of invalid characters,
-    // and calls the appropriate gematric method
+    // and sets the Query state variable
     function handleQuery(e) {
         let query = e.target.value;
-        query = query.match(/[A-Z]/gi);
-        // console.log(query);
-        let reductions = [];
-        if (query !== null && currentGematria === "AQ")
-            reductions = toAQ(query);
-
-        if (reductions.length !== 0) {
-            props.setReductions(reductions);
-        } else {
-            console.log("Gematric encoding failed!");
-        }
+        props.setQuery(query.match(/[A-Z]/gi));
     }
+
+    useEffect(() => {
+        fetch(API_URL, {
+            method: "POST",
+            header: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ word: props.query, reductions: toAQ(props.query) }),
+        }).then((data) => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        });
+    });
 
     return (
         <div id="QueryBar">
             <h2>Query:</h2>
-            <input type="text" id="query" name="query" onChange={handleQuery} />
+            <form>
+                <input
+                    type="text"
+                    id="query"
+                    name="query"
+                    onChange={handleQuery}
+                />
+                <button type="submit">Save</button>
+            </form>
         </div>
     );
 }
 
+// fetches a GET request on query state variable change
 function Glossary(props) {
+    // const [isLoading, setIsLoading] = useState(false);
+    const API_URL = "http://localhost:51230/gematria/";
+    const DEFAULT_QUERY = 140;
+
+    useEffect(
+        (props) => {
+            fetch(API_URL + DEFAULT_QUERY, {
+                method: "GET",
+                header: new Headers({
+                    Acccept: "application/gematria",
+                }),
+            })
+                .then((res) => res.json())
+                .then((response) => {
+                    // do stuff with response.items
+                    props.setGlossaryWords(response.items);
+                })
+                .catch((error) => console.log(error));
+        },
+        [props.query]
+    );
+
     return (
         <div id="Glossary">
             <h2>Hyperglossolalary</h2>
+            {props.glossaryWords === null ? (
+                <div>Pending response...</div>
+            ) : (
+                props.glossaryWords.map((elem) => {
+                    return <div>{elem}</div>;
+                })
+            )}
         </div>
     );
 }
 
+// re-renders on Query state change
+// assumes QueryBar us handling input stripping
 function DigitalReductionBars(props) {
-    const reductions = props.reductions;
     return (
         <div id="DigitalReductionBars">
             <h2>Digital Reduction:</h2>
-            {reductions.map((curr, idx) => (
-                <div key={idx} class="DigitalReductionBar">
-                    {curr}
-                </div>
-            ))}
+            {props.query === null ? (
+                <div>Pending input...</div>
+            ) : (
+                toAQ(props.query).map((curr, idx) => (
+                    <div key={idx} className="DigitalReductionBar">
+                        {curr}
+                    </div>
+                ))
+            )}
         </div>
     );
 }
 
 function App() {
-    const [reductions, setReductions] = useState([]);
+    const [glossaryWords, setGlossaryWords] = useState(null);
+    const [query, setQuery] = useState(null);
 
     return (
         <div className="App">
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
-            <QueryBar setReductions={setReductions} />
-            <DigitalReductionBars reductions={reductions} />
-            <Glossary reduction={reductions} />
+            <QueryBar setQuery={setQuery} query={query} />
+            <DigitalReductionBars query={query} />
+            <Glossary
+                query={query}
+                glossaryWords={glossaryWords}
+                setGlossaryWords={setGlossaryWords}
+            />
         </div>
     );
 }
