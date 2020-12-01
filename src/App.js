@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 //import logo from "./logo.svg";
 import "./App.css";
 
+const API_URL = "http://localhost:37115/gematria/";
+
 let AQ = [
     ["A", 10],
     ["B", 11],
@@ -36,8 +38,27 @@ let AQ = [
 // neoroman nummification
 // AQ, GoN, EQ...
 // input: neoroman encoded string
-// output: number
+// output: number, or 0 if error
 function gematria(str) {
+	// test for invalid input
+	// empty string, whitespace, number, array, object (in that order)
+	if (str.length === 0 || str === null) {
+		//~ console.error("ERROR: \'" + str + "\'" + "is empty or null.");
+		return 0;
+	} else if (/\s/.test(str)) {
+		//~ console.error("ERROR: \'" + str + "\'" + "contains whitespace.");
+		return 0;
+	} else if (/\d/.test(str)) {
+		//~ console.error("ERROR: \'" + str + "\'" + "contains a number.");
+		return 0;
+	} else if (Array.isArray(str)) {
+		//~ console.error("ERROR: \'" + str + "\'" + "is an array.");
+		return 0;
+	} else if (typeof str === 'object' && str !== null) {
+		//~ console.error("ERROR: \'" + str + "\'" + "is an object.");
+		return 0;
+	} 
+	
     let iterations = [];
     let strArr = [...str];
     let finalReduction = strArr.reduce((acc, curr) => {
@@ -55,16 +76,49 @@ function gematria(str) {
 // reduces an n digit number by summation
 // ex: 78 => 15
 // ex: 9999 => 36
+// input: positive n digit number
+// output: positive n-1 digit number
+//~ function reduceNonNegative(num) {
+    //~ let arr = [];
+    //~ // add each seperate digit into arr
+    //~ // ex: 999 => [9, 9, 9]
+    //~ while (num !== 0) {
+        //~ let currDigit = num % 10; 
+        //~ arr.push(currDigit);
+        //~ num = Math.trunc(num / 10);
+    //~ }
+    //~ // sum up the digits in arr
+    //~ return arr.reduce((acc, curr) => {
+        //~ return acc + curr;
+    //~ });
+//~ }
+
+// reduces an n digit number by summation
+// ex: 78 => 15
+// ex: 9999 => 36
 // input: n digit number
 // output: n-1 digit number
 function reduce(num) {
-    let arr = [];
-    while (num !== 0) {
-        let currDigit = num % 10;
-        arr.push(currDigit);
-        num = Math.trunc(num / 10);
-    }
-    return arr.reduce((acc, curr) => {
+	let arr = [];
+	// stringify num and spread into an array,
+	// split each char into a separate nested array,
+	// parse ints and push into arr
+	let parsedArr = [...num.toString()];
+	let nestedparsedArr = parsedArr.map((elem) => {
+		return [elem];
+	});
+	// takes the first two elements (the leading digit and the number's sign)
+	// and concatenates them at the front of the array
+	if (num < 0) {
+		let flippedSignNum = nestedparsedArr[0].concat(nestedparsedArr[1]).join("");
+		nestedparsedArr = nestedparsedArr.slice(2);
+		nestedparsedArr = [flippedSignNum, ...nestedparsedArr].flat();
+	}
+	nestedparsedArr.forEach((char) => {
+		arr.push(parseInt(char));
+	});
+	// sum up the digits in arr
+	return arr.reduce((acc, curr) => {
         return acc + curr;
     });
 }
@@ -75,39 +129,50 @@ function toAQ(query) {
     let initialNummificated = gematria(query);
     // reduce until single digit, keep track of reductions
     let reduction = initialNummificated; // initial value
-    let reductionHistory = [initialNummificated];
-    while (reduction >= 10) {
+    let reductionHistory = [initialNummificated]; // add initial value to history array
+    while (reduction >= 10) { // keep reducing until we reach a single digit
         reduction = reduce(reduction);
         reductionHistory.push(reduction);
     }
-    // console.log(reductionHistory);
+    //~ console.log('toAQ (a complete digital reduction): '); 
+    //~ console.log(reductionHistory);
     return reductionHistory;
 }
 
 // sets the query state variable onChange,
 // fetches a POST request on button press
 function QueryBar(props) {
-    const API_URL = "http://localhost:51230/gematria/";
 
     // handler function for QueryBar
     // extracts input from onChange event, strips it of invalid characters,
     // and sets the Query state variable
     function handleQuery(e) {
-        let query = e.target.value;
-        props.setQuery(query.match(/[A-Z]/gi));
+        let query = e.target.value.match(/[A-Z]/gi).join(''); // removes spaces, invalid characters, etc
+        if (query === null) query = ''; // query must never be null
+        props.setQuery(query);
     }
 
-    useEffect(() => {
+    function handleSubmit() {
+		console.log("handleSubmit (before join):");
+        console.log(props.query);
+        let query = props.query.join('');
+        console.log("handleSubmit (after join):");
+        console.log(query);
         fetch(API_URL, {
             method: "POST",
             header: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ word: props.query, reductions: toAQ(props.query) }),
-        }).then((data) => {
-            console.log(data); // JSON data parsed by `data.json()` call
+            body: JSON.stringify({ "word": "" + query + "", "reductions": toAQ(query).toString }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
         });
-    });
+    }
 
     return (
         <div id="QueryBar">
@@ -119,7 +184,7 @@ function QueryBar(props) {
                     name="query"
                     onChange={handleQuery}
                 />
-                <button type="submit">Save</button>
+                <input type="button" value='Save' onClick={handleSubmit} />
             </form>
         </div>
     );
@@ -128,12 +193,16 @@ function QueryBar(props) {
 // fetches a GET request on query state variable change
 function Glossary(props) {
     // const [isLoading, setIsLoading] = useState(false);
-    const API_URL = "http://localhost:51230/gematria/";
-    const DEFAULT_QUERY = 140;
-
+    const { setGlossaryWords, glossaryWords, query } = props;
+    // the first reduction from the array returned by toAQ
+    const QUERY = (query.length === 0) ? '' : toAQ(query)[0]; 
+    
     useEffect(
-        (props) => {
-            fetch(API_URL + DEFAULT_QUERY, {
+        () => {
+			console.log("GET request:");
+			console.log(query);
+			console.log(API_URL + QUERY);
+            fetch(API_URL + QUERY, {
                 method: "GET",
                 header: new Headers({
                     Acccept: "application/gematria",
@@ -141,22 +210,29 @@ function Glossary(props) {
             })
                 .then((res) => res.json())
                 .then((response) => {
-                    // do stuff with response.items
-                    props.setGlossaryWords(response.items);
+                    // do stuff with response.matches
+                    console.log("Response (from GET):")
+                    console.log(response);
+                    let matchesArr = [];
+                    response.matches.forEach(res => {
+                        matchesArr.push(res.word);
+                    });
+                    console.log(matchesArr);
+                    setGlossaryWords(matchesArr);
                 })
                 .catch((error) => console.log(error));
         },
-        [props.query]
+        [query]
     );
 
     return (
         <div id="Glossary">
             <h2>Hyperglossolalary</h2>
-            {props.glossaryWords === null ? (
+            {glossaryWords.length === 0 ? (
                 <div>Pending response...</div>
             ) : (
-                props.glossaryWords.map((elem) => {
-                    return <div>{elem}</div>;
+                glossaryWords.map((word) => {
+                    return <div key={word.toString()} className="GlossaryBar">{QUERY + '=' + word.toUpperCase()}</div>;
                 })
             )}
         </div>
@@ -166,13 +242,14 @@ function Glossary(props) {
 // re-renders on Query state change
 // assumes QueryBar us handling input stripping
 function DigitalReductionBars(props) {
+    const { query } = props;
     return (
         <div id="DigitalReductionBars">
             <h2>Digital Reduction:</h2>
-            {props.query === null ? (
+            {query.length === 0 ? (
                 <div>Pending input...</div>
             ) : (
-                toAQ(props.query).map((curr, idx) => (
+                toAQ(query).map((curr, idx) => (
                     <div key={idx} className="DigitalReductionBar">
                         {curr}
                     </div>
@@ -182,10 +259,19 @@ function DigitalReductionBars(props) {
     );
 }
 
-function App() {
-    const [glossaryWords, setGlossaryWords] = useState(null);
-    const [query, setQuery] = useState(null);
+function Credits() {
+    return (
+        <footer id="Credits">
+            <p>© 202X rosazhou</p>
+        </footer>
+    );
+}
 
+// holds the calculator itself
+function AbysmalNummificationOfTheSignifier(props) {
+    const [glossaryWords, setGlossaryWords] = useState([]);
+    const [query, setQuery] = useState('');
+    
     return (
         <div className="App">
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
@@ -200,4 +286,22 @@ function App() {
     );
 }
 
+// the webpage itself
+function App() {
+	
+    
+    return (
+        <div className="baselevel">
+            <AbysmalNummificationOfTheSignifier />
+            <Credits />
+        </div>
+    );
+}
+
 export default App;
+//~ exports.App = App;
+//~ exports.gematria = gematria;
+//~ exports.reduce = reduce;
+//~ exports.toAQ = toAQ;
+//~ exports.QueryBar = QueryBar;
+//~ exports.API_URL = API_URL;
