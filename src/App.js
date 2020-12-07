@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 //import logo from "./logo.svg";
 import "./App.css";
 
-const API_URL = "http://localhost:37115/gematria/";
+const API_URL = "http://localhost:42469/gematria/";
 
 let AQ = [
     ["A", 10],
@@ -146,24 +146,26 @@ function QueryBar(props) {
     // handler function for QueryBar
     // extracts input from onChange event, strips it of invalid characters,
     // and sets the Query state variable
+    // output: sets query state to a string
     function handleQuery(e) {
-        let query = e.target.value.match(/[A-Z]/gi).join(''); // removes spaces, invalid characters, etc
+        let query = e.target.value.match(/[A-Z]/gi); // returns an array if query is not empty, else null
+        query = query === null ? '' : query.join(''); // removes spaces, invalid characters, etc
         if (query === null) query = ''; // query must never be null
         props.setQuery(query);
     }
 
     function handleSubmit() {
-		console.log("handleSubmit (before join):");
+		console.log("handleSubmit (props.query):");
         console.log(props.query);
-        let query = props.query.join('');
-        console.log("handleSubmit (after join):");
-        console.log(query);
+        console.log("toAQ(props.query):");
+        console.log(toAQ(props.query).toString());
+   
         fetch(API_URL, {
             method: "POST",
-            header: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ "word": "" + query + "", "reductions": toAQ(query).toString }),
+            headers: {
+				'Content-Type': 'application/json'
+			},
+            body: JSON.stringify({ "word": "" + props.query + "", "reductions": toAQ(props.query).toString() })
         })
         .then(response => response.json())
         .then(data => {
@@ -204,8 +206,8 @@ function Glossary(props) {
 			console.log(API_URL + QUERY);
             fetch(API_URL + QUERY, {
                 method: "GET",
-                header: new Headers({
-                    Acccept: "application/gematria",
+                headers: new Headers({
+                    Acccept: "application/json",
                 }),
             })
                 .then((res) => res.json())
