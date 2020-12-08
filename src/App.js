@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import numogram from './numogram.png'
 import "./App.css";
 
-const API_URL = "http://localhost:42469/gematria/";
+const API_URL = "http://localhost:44243/gematria/";
 
 let AQ = [
     ["A", 10],
@@ -41,8 +41,8 @@ let AQ = [
 // output: number, or 0 if error
 function gematria(str) {
     // test for invalid input
-    // empty string, whitespace, number, array, object (in that order)
-    if (str.length === 0 || str === null) {
+    // empty string (null or undefined), whitespace, number, array, object (in that order)
+    if (str === undefined || str === null || str.length === 0) {
         //~ console.error("ERROR: \'" + str + "\'" + "is empty or null.");
         return 0;
     } else if (/\s/.test(str)) {
@@ -54,7 +54,7 @@ function gematria(str) {
     } else if (Array.isArray(str)) {
         //~ console.error("ERROR: \'" + str + "\'" + "is an array.");
         return 0;
-    } else if (typeof str === 'object' && str !== null) {
+    } else if (typeof str === 'object') {
         //~ console.error("ERROR: \'" + str + "\'" + "is an object.");
         return 0;
     }
@@ -140,16 +140,34 @@ function toAQ(query) {
 // sets the query state variable onChange,
 // fetches a POST request on button press
 function QueryBar(props) {
+    const inputMaxLength = 30;
+    let timeout = undefined;
 
     // handler function for QueryBar
-    // extracts input from onChange event, strips it of invalid characters,
+    // extracts input from onKeyUp event, strips it of invalid characters,
     // and sets the Query state variable
     // output: sets query state to a string
-    function handleQuery(e) {
-        let query = e.target.value.match(/[A-Z]/gi); // returns an array if query is not empty, else null
-        query = query === null ? '' : query.join(''); // removes spaces, invalid characters, etc
-        if (query === null) query = ''; // query must never be null
-        props.setQuery(query);
+    function handleQuery(event) {
+        clearTimeout(timeout);
+
+        // wait 1 second after the last keyUp event
+        timeout = setTimeout(function () {
+            let query = event.target.value.match(/[A-Z]/gi); // returns an array if query is not empty, else null
+            query = query === null ? '' : query.join(''); // removes spaces, invalid characters, etc
+            if (query === null) query = ''; // query must never be null
+            props.setQuery(query);
+            toggleIsTyping();
+        }, 1000);
+
+    }
+
+    // to be called by setTimeout(() => toggleIsTyping(), 100)
+    function toggleIsTyping() {
+        if (props.setIsTyping === false) {
+            props.setIsTyping(true);
+        } else {
+            props.setIsTyping(false);
+        }
     }
 
     function handleSubmit() {
@@ -182,7 +200,9 @@ function QueryBar(props) {
                     type="text"
                     id="query-input"
                     name="query"
-                    onChange={handleQuery}
+                    size={inputMaxLength / 2}
+                    maxLength={inputMaxLength}
+                    onKeyUp={handleQuery}
                 />
                 <br />
                 <input type="button" value='Save' id="query-save-button" onClick={handleSubmit}/>
@@ -194,36 +214,38 @@ function QueryBar(props) {
 // fetches a GET request on query state variable change
 function Glossary(props) {
     // const [isLoading, setIsLoading] = useState(false);
-    const {setGlossaryWords, glossaryWords, query} = props;
+    const {setGlossaryWords, glossaryWords, query, isTyping} = props;
     // the first reduction from the array returned by toAQ
     const QUERY = (query.length === 0) ? '' : toAQ(query)[0];
 
     useEffect(
         () => {
-            console.log("GET request:");
-            console.log(query);
-            console.log(API_URL + QUERY);
-            fetch(API_URL + QUERY, {
-                method: "GET",
-                headers: new Headers({
-                    Accept: "application/json",
-                }),
-            })
-                .then((res) => res.json())
-                .then((response) => {
-                    // do stuff with response.matches
-                    console.log("Response (from GET):")
-                    console.log(response);
-                    let matchesArr = [];
-                    response.matches.forEach(res => {
-                        matchesArr.push(res.word);
-                    });
-                    console.log(matchesArr);
-                    setGlossaryWords(matchesArr);
+            if (!isTyping) {
+                console.log("GET request:");
+                console.log(query);
+                console.log(API_URL + QUERY);
+                fetch(API_URL + QUERY, {
+                    method: "GET",
+                    headers: new Headers({
+                        Accept: "application/json",
+                    }),
                 })
-                .catch((error) => console.log(error));
+                    .then((res) => res.json())
+                    .then((response) => {
+                        // do stuff with response.matches
+                        console.log("Response (from GET):")
+                        console.log(response);
+                        let matchesArr = [];
+                        response.matches.forEach(res => {
+                            matchesArr.push(res.word);
+                        });
+                        console.log(matchesArr);
+                        setGlossaryWords(matchesArr);
+                    })
+                    .catch((error) => console.log(error));
+            }
         },
-        [query]
+        [QUERY, isTyping, query, setGlossaryWords]
     );
 
     return (
@@ -244,24 +266,28 @@ function Glossary(props) {
 // assumes QueryBar us handling input stripping
 function DigitalReductionBars(props) {
     const {query} = props;
+    const pendingInput = <div>Pending input...</div>;
+
+    // digitalReductions should contain a string of the following format:
+    // QUERY = AQ-99 = AQ-18 = AQ-9
+    let digitalReductionsAQ = query.toUpperCase() + " = ";
+    toAQ(query).forEach((curr) => {
+        digitalReductionsAQ += "AQ-" + curr + " = ";
+    });
+    // remove the last two characters (the last space and equal sign)
+    digitalReductionsAQ = digitalReductionsAQ.slice(0, digitalReductionsAQ.length - 2);
+
     return (
         <div id="DigitalReductionBars">
             <h2>Digital Reduction</h2>
-            {query.length === 0 ? (
-                <div>Pending input...</div>
-            ) : (
-                toAQ(query).map((curr, idx) => (
-                    <div key={idx} className="DigitalReductionBar">
-                        {curr}
-                    </div>
-                ))
-            )}
+            {query.length === 0 ? pendingInput : <div id="digitalReductionsAQ">{digitalReductionsAQ}</div> }
         </div>
     );
 }
 
 function MainGraphic() {
     return (
+        // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img src={numogram} alt="a picture of the numogram" />
     );
 }
@@ -278,26 +304,30 @@ function Credits() {
 function AbysmalNummificationOfTheSignifier() {
     const [glossaryWords, setGlossaryWords] = useState([]);
     const [query, setQuery] = useState('');
+    const [isTyping, setIsTyping] = useState(false);
+    const showMainGraphic = query.length === 0 ? <MainGraphic className="fadeOut" />
+                            : <div>
+                                    <DigitalReductionBars query={query} />
+                                    <Glossary
+                                        query={query}
+                                        glossaryWords={glossaryWords}
+                                        setGlossaryWords={setGlossaryWords}
+                                        isTyping={isTyping}
+                                    />
+                                </div>;
 
     return (
         <div className="App">
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
-            <MainGraphic />
-            <QueryBar setQuery={setQuery} query={query}/>
-            <DigitalReductionBars query={query}/>
-            <Glossary
-                query={query}
-                glossaryWords={glossaryWords}
-                setGlossaryWords={setGlossaryWords}
-            />
+            {isTyping === true ? '' : showMainGraphic}
+            <QueryBar setQuery={setQuery} query={query} setIsTyping={setIsTyping} isTyping={isTyping}/>
+
         </div>
     );
 }
 
 // the webpage itself
 function App() {
-
-
     return (
         <div className="baselevel">
             <AbysmalNummificationOfTheSignifier/>

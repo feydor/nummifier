@@ -32,6 +32,8 @@ test('gematria', () => {
 	expect(gematria([1, 2, 3])).toEqual(0);
 	expect(gematria(['one', 'two', 'three'])).toEqual(0);
 	expect(gematria({ category1: 'variable1', category2: 666 })).toEqual(0);
+	expect(gematria(undefined)).toEqual(0);
+	expect(gematria(null)).toEqual(0);
 
 });
 
