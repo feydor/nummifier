@@ -1,47 +1,64 @@
 body {
-    text-align: center;
+    font-family: arial, serif;
+    color: white;
     background-color: black;
+    text-align: center;
+
     /* background-image: url('multi159.jpg'); */
-    font-family: monospace;
-    /* color: #E5E5E5; */
-    color: #FFA500;
 }
 
-.App {
-    width: 75%;
-    margin: auto;
-    margin-top: 10%;
-    border: 2px solid #FFA500;
-    border-radius: 4px;
+#title {
+    font-size: 42px;
+}
 
+h2 {
+    font-size: 45px;
+}
+
+/* the main body of the page */
+.App {
+    width: 60%;
+    margin: auto;
     background-color: black;
 }
 
 #QueryBar {
-    /* display: flex; */
+    display: flex;
     margin: auto;
-    justify-content: center;
+    flex-direction: column;
+}
+
+#QueryBar h2 {
+    font-size: 40px;
 }
 
 #QueryBar input {
     font-size: 22px;
 }
 
+#QueryBar #query-save-button {
+    font-size: 22px;
+    width: 50%;
+    margin-top: 10px;
+}
+
+
 #DigitalReductionBars {
     margin: auto;
-    width: 40%;
+    width: 50%;
+    font-size: 22px;
 }
 
 .DigitalReductionBar, .GlossaryBar {
-    justify-content: center;
+    /*justify-content: center;*/
     margin-bottom: 2px;
-    border: 1px #FFA500 solid;
+    border: 1px white solid;
 }
 
 #Glossary {
     padding-bottom: 10em;
     margin: auto;
-    width: 40%;
+    width: 50%;
 }
 
 #Credits {

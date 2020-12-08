@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-const { gematria, reduce, toAQ, QueryBar, App } = require('./App');
+//import { render, screen } from '@testing-library/react';
+const { gematria, reduce, toAQ, QueryBar, App } = require('./App.js');
 
 //test('renders learn react link', () => {
   //render(<App />);
@@ -63,15 +63,3 @@ test('toAQ', () => {
 	expect(toAQ('dowhatthouwiltshallbethewholeofthelaw')).toEqual(expect.arrayContaining([777, 21, 3]));
 	expect(toAQ('aynrand')).toEqual(expect.arrayContaining([140, 5]));
 });
-
-//~ test('toAQ', async() => {
-	//~ try {
-        //~ const count = await Service.count();
-        //~ await request(app).post('/api/services').send(service)
-        //~ const newCount = await Service.count()
-        //~ expect(newCount).toBe(count + 1);
-    //~ } catch (err) {
-        //~ // write test for failure here
-        //~ console.log(`Error ${err}`)
-    //~ }
-//~ });

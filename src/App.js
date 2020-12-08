@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-//import logo from "./logo.svg";
+import { useEffect, useState } from "react";
+import numogram from './numogram.png'
 import "./App.css";
 
 const API_URL = "http://localhost:42469/gematria/";
@@ -40,37 +40,34 @@ let AQ = [
 // input: neoroman encoded string
 // output: number, or 0 if error
 function gematria(str) {
-	// test for invalid input
-	// empty string, whitespace, number, array, object (in that order)
-	if (str.length === 0 || str === null) {
-		//~ console.error("ERROR: \'" + str + "\'" + "is empty or null.");
-		return 0;
-	} else if (/\s/.test(str)) {
-		//~ console.error("ERROR: \'" + str + "\'" + "contains whitespace.");
-		return 0;
-	} else if (/\d/.test(str)) {
-		//~ console.error("ERROR: \'" + str + "\'" + "contains a number.");
-		return 0;
-	} else if (Array.isArray(str)) {
-		//~ console.error("ERROR: \'" + str + "\'" + "is an array.");
-		return 0;
-	} else if (typeof str === 'object' && str !== null) {
-		//~ console.error("ERROR: \'" + str + "\'" + "is an object.");
-		return 0;
-	} 
-	
-    let iterations = [];
+    // test for invalid input
+    // empty string, whitespace, number, array, object (in that order)
+    if (str.length === 0 || str === null) {
+        //~ console.error("ERROR: \'" + str + "\'" + "is empty or null.");
+        return 0;
+    } else if (/\s/.test(str)) {
+        //~ console.error("ERROR: \'" + str + "\'" + "contains whitespace.");
+        return 0;
+    } else if (/\d/.test(str)) {
+        //~ console.error("ERROR: \'" + str + "\'" + "contains a number.");
+        return 0;
+    } else if (Array.isArray(str)) {
+        //~ console.error("ERROR: \'" + str + "\'" + "is an array.");
+        return 0;
+    } else if (typeof str === 'object' && str !== null) {
+        //~ console.error("ERROR: \'" + str + "\'" + "is an object.");
+        return 0;
+    }
+
     let strArr = [...str];
-    let finalReduction = strArr.reduce((acc, curr) => {
+    // console.log(finalReduction);
+    return strArr.reduce((acc, curr) => {
         let currReduction = AQ.find(
             // TODO: dynamic gematria selection
             (gematria) => gematria[0].toLowerCase() === curr.toLowerCase()
         );
-        iterations.push(acc + currReduction[1]);
         return acc + currReduction[1];
     }, 0);
-    // console.log(finalReduction);
-    return finalReduction;
 }
 
 // reduces an n digit number by summation
@@ -79,18 +76,18 @@ function gematria(str) {
 // input: positive n digit number
 // output: positive n-1 digit number
 //~ function reduceNonNegative(num) {
-    //~ let arr = [];
-    //~ // add each seperate digit into arr
-    //~ // ex: 999 => [9, 9, 9]
-    //~ while (num !== 0) {
-        //~ let currDigit = num % 10; 
-        //~ arr.push(currDigit);
-        //~ num = Math.trunc(num / 10);
-    //~ }
-    //~ // sum up the digits in arr
-    //~ return arr.reduce((acc, curr) => {
-        //~ return acc + curr;
-    //~ });
+//~ let arr = [];
+//~ // add each seperate digit into arr
+//~ // ex: 999 => [9, 9, 9]
+//~ while (num !== 0) {
+//~ let currDigit = num % 10;
+//~ arr.push(currDigit);
+//~ num = Math.trunc(num / 10);
+//~ }
+//~ // sum up the digits in arr
+//~ return arr.reduce((acc, curr) => {
+//~ return acc + curr;
+//~ });
 //~ }
 
 // reduces an n digit number by summation
@@ -99,26 +96,27 @@ function gematria(str) {
 // input: n digit number
 // output: n-1 digit number
 function reduce(num) {
-	let arr = [];
-	// stringify num and spread into an array,
-	// split each char into a separate nested array,
-	// parse ints and push into arr
-	let parsedArr = [...num.toString()];
-	let nestedparsedArr = parsedArr.map((elem) => {
-		return [elem];
-	});
-	// takes the first two elements (the leading digit and the number's sign)
-	// and concatenates them at the front of the array
-	if (num < 0) {
-		let flippedSignNum = nestedparsedArr[0].concat(nestedparsedArr[1]).join("");
-		nestedparsedArr = nestedparsedArr.slice(2);
-		nestedparsedArr = [flippedSignNum, ...nestedparsedArr].flat();
-	}
-	nestedparsedArr.forEach((char) => {
-		arr.push(parseInt(char));
-	});
-	// sum up the digits in arr
-	return arr.reduce((acc, curr) => {
+    let arr = [];
+    // stringify num and spread into an array,
+    // split each char into a separate nested array,
+    // parse ints and push into arr
+    let parsedArr = [...num.toString()];
+    let nestedparsedArr = parsedArr.map((elem) => {
+        return [elem];
+    });
+    // takes the first two elements (the leading digit and the number's sign)
+    // and concatenates them at the front of the array
+    // example input: -123
+    if (num < 0) {
+        let flippedSignNum = nestedparsedArr[0].concat(nestedparsedArr[1]).join(""); // output: "-1"
+        nestedparsedArr = nestedparsedArr.slice(2); // slice off the first two characters
+        nestedparsedArr = [flippedSignNum, ...nestedparsedArr]; // attach flippedSign to nestedArr
+    }
+    nestedparsedArr.forEach((char) => {
+        arr.push(parseInt(char));
+    });
+    // sum up the digits in arr
+    return arr.reduce((acc, curr) => {
         return acc + curr;
     });
 }
@@ -155,38 +153,39 @@ function QueryBar(props) {
     }
 
     function handleSubmit() {
-		console.log("handleSubmit (props.query):");
+        console.log("handleSubmit (props.query):");
         console.log(props.query);
         console.log("toAQ(props.query):");
         console.log(toAQ(props.query).toString());
-   
+
         fetch(API_URL, {
             method: "POST",
             headers: {
-				'Content-Type': 'application/json'
-			},
-            body: JSON.stringify({ "word": "" + props.query + "", "reductions": toAQ(props.query).toString() })
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"word": "" + props.query + "", "reductions": toAQ(props.query).toString()})
         })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (
         <div id="QueryBar">
-            <h2>Query:</h2>
+            <h2>Query</h2>
             <form>
                 <input
                     type="text"
-                    id="query"
+                    id="query-input"
                     name="query"
                     onChange={handleQuery}
                 />
-                <input type="button" value='Save' onClick={handleSubmit} />
+                <br />
+                <input type="button" value='Save' id="query-save-button" onClick={handleSubmit}/>
             </form>
         </div>
     );
@@ -195,19 +194,19 @@ function QueryBar(props) {
 // fetches a GET request on query state variable change
 function Glossary(props) {
     // const [isLoading, setIsLoading] = useState(false);
-    const { setGlossaryWords, glossaryWords, query } = props;
+    const {setGlossaryWords, glossaryWords, query} = props;
     // the first reduction from the array returned by toAQ
-    const QUERY = (query.length === 0) ? '' : toAQ(query)[0]; 
-    
+    const QUERY = (query.length === 0) ? '' : toAQ(query)[0];
+
     useEffect(
         () => {
-			console.log("GET request:");
-			console.log(query);
-			console.log(API_URL + QUERY);
+            console.log("GET request:");
+            console.log(query);
+            console.log(API_URL + QUERY);
             fetch(API_URL + QUERY, {
                 method: "GET",
                 headers: new Headers({
-                    Acccept: "application/json",
+                    Accept: "application/json",
                 }),
             })
                 .then((res) => res.json())
@@ -244,10 +243,10 @@ function Glossary(props) {
 // re-renders on Query state change
 // assumes QueryBar us handling input stripping
 function DigitalReductionBars(props) {
-    const { query } = props;
+    const {query} = props;
     return (
         <div id="DigitalReductionBars">
-            <h2>Digital Reduction:</h2>
+            <h2>Digital Reduction</h2>
             {query.length === 0 ? (
                 <div>Pending input...</div>
             ) : (
@@ -261,6 +260,12 @@ function DigitalReductionBars(props) {
     );
 }
 
+function MainGraphic() {
+    return (
+        <img src={numogram} alt="a picture of the numogram" />
+    );
+}
+
 function Credits() {
     return (
         <footer id="Credits">
@@ -270,15 +275,16 @@ function Credits() {
 }
 
 // holds the calculator itself
-function AbysmalNummificationOfTheSignifier(props) {
+function AbysmalNummificationOfTheSignifier() {
     const [glossaryWords, setGlossaryWords] = useState([]);
     const [query, setQuery] = useState('');
-    
+
     return (
         <div className="App">
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
-            <QueryBar setQuery={setQuery} query={query} />
-            <DigitalReductionBars query={query} />
+            <MainGraphic />
+            <QueryBar setQuery={setQuery} query={query}/>
+            <DigitalReductionBars query={query}/>
             <Glossary
                 query={query}
                 glossaryWords={glossaryWords}
@@ -290,20 +296,21 @@ function AbysmalNummificationOfTheSignifier(props) {
 
 // the webpage itself
 function App() {
-	
-    
+
+
     return (
         <div className="baselevel">
-            <AbysmalNummificationOfTheSignifier />
-            <Credits />
+            <AbysmalNummificationOfTheSignifier/>
+            <h2>———</h2>
+            <Credits/>
         </div>
     );
 }
 
 export default App;
-//~ exports.App = App;
-//~ exports.gematria = gematria;
-//~ exports.reduce = reduce;
-//~ exports.toAQ = toAQ;
-//~ exports.QueryBar = QueryBar;
-//~ exports.API_URL = API_URL;
+// exports.App = App;
+// exports.gematria = gematria;
+// exports.reduce = reduce;
+// exports.toAQ = toAQ;
+// exports.QueryBar = QueryBar;
+// exports.API_URL = API_URL;
