@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import numogram from './numogram.png'
 import "./App.css";
 
-const API_URL = "http://localhost:3001/gematria/";
-
 let AQ = [
     ["A", 10],
     ["B", 11],
@@ -223,7 +221,6 @@ function Glossary(props) {
             if (!isTyping) {
                 console.log("GET request:");
                 console.log(query);
-                console.log(API_URL + QUERY);
 
                 fetch(`/gematria/${QUERY}`, {
                     headers: {
@@ -343,4 +340,3 @@ export default App;
 // exports.reduce = reduce;
 // exports.toAQ = toAQ;
 // exports.QueryBar = QueryBar;
-// exports.API_URL = API_URL;
