@@ -3,6 +3,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -13,16 +14,13 @@ const port = process.env.PORT || 3001;
 const GlossaryEntry = require("./models/glossaryentry.js");
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-const cors = require("cors");
-app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
+// const cors = require("cors");
+// app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (req, res) {
-    // res.sendFile(__dirname + "/views/index.html");
-});
+// Express only serves static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 // connect to mongodb
 mongoose.connect(MONGO_URI, {
@@ -55,6 +53,10 @@ const findWordsByNummifiers = function (number, done) {
         done(null, wordsFound);
     });
 };
+
+/**
+ * GET /gematria/num
+ */
 app.get("/gematria/:num", urlencodedParser, function (req, res) {
     // 1. Get url request parameters
     const numbersArr = req.params.num.split(",");
@@ -87,6 +89,7 @@ const findWordBySignifier = function(word, done) {
         done(null, wordFound);
     });
 };
+
 app.post("/gematria", jsonParser, function (req, res) {
     // 1. Extract body parameters
     console.log("POST, /gematria, req.body= ");

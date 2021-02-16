@@ -4,7 +4,9 @@
 	"description": "API for Gematria",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js"
 	},
 	"dependencies": {
 		"cors": "^2.8.1",
@@ -22,5 +24,8 @@
 		"node",
 		"express"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"concurrently": "^5.3.0"
+	}
 }

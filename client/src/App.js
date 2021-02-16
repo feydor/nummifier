@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import numogram from './numogram.png'
 import "./App.css";
 
-const API_URL = "http://localhost:44243/gematria/";
+const API_URL = "http://localhost:3001/gematria/";
 
 let AQ = [
     ["A", 10],
@@ -176,7 +176,7 @@ function QueryBar(props) {
         console.log("toAQ(props.query):");
         console.log(toAQ(props.query).toString());
 
-        fetch(API_URL, {
+        fetch(`/gematria`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -224,11 +224,11 @@ function Glossary(props) {
                 console.log("GET request:");
                 console.log(query);
                 console.log(API_URL + QUERY);
-                fetch(API_URL + QUERY, {
-                    method: "GET",
-                    headers: new Headers({
-                        Accept: "application/json",
-                    }),
+
+                fetch(`/gematria/${QUERY}`, {
+                    headers: {
+                        "accepts": "application/json",
+                    },
                 })
                     .then((res) => res.json())
                     .then((response) => {
