@@ -20,6 +20,8 @@
 
 # ide specific
 /.idea
+.hyperdev-assets
+.replit
 
 npm-debug.log*
 yarn-debug.log*
