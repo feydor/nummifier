@@ -9,6 +9,7 @@ const app = express();
 const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGO_URI;
 const port = process.env.PORT || 3001;
+var promise;
 
 // import models
 const GlossaryEntry = require("./models/glossaryentry.js");
@@ -23,10 +24,19 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // connect to mongodb
-mongoose.connect(MONGO_URI, {
+promise = mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+
+// wipe the mongodb collection during development
+if (process.env.NODE_ENV !== "production") {
+  promise.then(function (db) {
+    GlossaryEntry.deleteMany({}, function () {
+      console.log("Glossary collection removed...");
+    });
+  });
+}
 
 /*
  * Middleware
@@ -49,7 +59,7 @@ const findWordsByNummifiers = function (number, done) {
         err,
         wordsFound
     ) {
-        if (err) return console.error(err);
+        if (err) return done(err, null);
         done(null, wordsFound);
     });
 };
@@ -67,11 +77,11 @@ app.get("/gematria/:num", urlencodedParser, function (req, res) {
     //    Sort the matches by their 'hits' value
     findWordsByNummifiers(numbersArr[0], function (err, entriesFound) {
         if (err) {
-            return next(err);
+            return console.error(err);
         }
         if (!entriesFound) {
-            console.log("Missing `done()` argument");
-            return next({ message: "Missing callback argument" });
+          console.log("No prior entries found.");
+          return res.json({ success: true, matches: [] });
         }
         console.log("ENTRIES FOUND:");
         console.log(entriesFound);
@@ -80,37 +90,44 @@ app.get("/gematria/:num", urlencodedParser, function (req, res) {
     });
 });
 
-// adds a word to the glossary
-// usage: [base url]/gematria
-// body: { word: 'katta', reductions: '98, 17, ...'}
+/**
+ * Searches the GlossaryEntry collection for the word param
+ * @param {string} word
+ * @param {function} done - callback function
+ * @throws mongodb connection errors
+ */
 const findWordBySignifier = function(word, done) {
     GlossaryEntry.findOne({ word: word }, (err, wordFound) => {
-        if (err) return console.error(err);
+        if (err) return done(err, null);
         done(null, wordFound);
     });
 };
 
+// adds a word to the glossary
+// usage: [base url]/gematria
+// body: { word: 'katta', reductions: '98, 17, ...'}
 app.post("/gematria", jsonParser, function (req, res) {
     // 1. Extract body parameters
     console.log("POST, /gematria, req.body= ");
     console.log(req.body);
     let word = req.body.word;
     let reductionsArr = req.body.reductions.split(",");
-    console.log("(word : reductionsArr): ");
+    console.log("(word : reductionsArr)=");
     console.log("(" + word + " : " + reductionsArr + ")");
     if (word === null || word === undefined || word.length === 0) {
         res.json({ success: false });
     }
+
     // 2. search for pre-existing word in glossary model
     let priorEntryFound = false;
     let priorEntry = null;
     findWordBySignifier(word, function(err, entryFound) {
         if (err) {
-            return next(err);
+            return console.error(err);
         }
         if (!entryFound) {
-            console.log("Missing `done()` argument");
-            return next({ message: "Missing callback argument" });
+            console.log("Prior entry not found.")
+            // return;
         }
         console.log("ENTRY FOUND:");
         console.log(entryFound);
@@ -130,7 +147,7 @@ app.post("/gematria", jsonParser, function (req, res) {
 				}
 			);
 		} else {
-			console.log("SAVE:");
+			console.log("SAVING ");
 			let newEntry = new GlossaryEntry({
 				word: word,
 				reductions: reductionsArr,
