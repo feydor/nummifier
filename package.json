@@ -4,14 +4,15 @@
 	"description": "API for Gematria",
 	"main": "server.js",
 	"scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node server.js",
-    "client": "node start-client.js"
+		"start": "concurrently \"npm run server\" \"npm run client\"",
+		"server": "node server.js",
+		"client": "node start-client.js"
 	},
 	"dependencies": {
 		"cors": "^2.8.1",
 		"dotenv": "^8.2.0",
 		"express": "^5.0.0-alpha.8",
+		"mongo-seeding": "^3.5.0",
 		"mongoose": "^5.10.13"
 	},
 	"engines": {
