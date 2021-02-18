@@ -3,6 +3,8 @@ body {
   color: white;
   background-color: black;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 #title {
@@ -18,36 +20,6 @@ h2 {
   background-color: black;
 }
 
-#QueryBar {
-  display: flex;
-  margin: auto;
-  flex-direction: column;
-}
-
-#QueryBar h2 {
-  font-size: 40px;
-}
-
-#QueryBar input {
-  font-size: 22px;
-}
-
-#QueryBar #query-save-button {
-  font-size: 22px;
-  width: 50%;
-  margin-top: 10px;
-}
-
-#DigitalReductionBars {
-  margin: auto;
-  width: 50%;
-  font-size: 22px;
-}
-
-/*.DigitalReductionBar, .GlossaryBar {*/
-
-/*}*/
-
 @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -60,15 +32,6 @@ h2 {
 .fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
-}
-
-#Glossary {
-  margin: auto;
-  width: 50%;
-}
-
-#Credits {
-  /*margin-top: 11em;*/
 }
 
 @media only screen and (max-width: 600px) {

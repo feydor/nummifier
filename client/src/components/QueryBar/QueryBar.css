@@ -1,0 +1,19 @@
+#QueryBar {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+}
+
+#QueryBar h2 {
+  font-size: 40px;
+}
+
+#QueryBar input {
+  font-size: 22px;
+}
+
+#QueryBar #query-save-button {
+  font-size: 22px;
+  width: 50%;
+  margin-top: 10px;
+}

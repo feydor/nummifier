@@ -79,8 +79,51 @@ app.get("/gematria/hello", function (req, res) {
 });
 
 /**
+ * POST /gematria/glossary
+ * Match reductions to words in Glossary collection
+ * @param {Array} reduction - an array of numbers
+ * @return {Array} glossary - an array of strings
+ */
+app.post("/gematria/glossary", jsonParser, function receiveReductions(req, res) {
+  if (!req.body.reduction) {
+    return res.json({ status: 400, statusTxt: "Missing reduction paramater." });
+  }
+
+  let reduction = req.body.reduction;
+  console.log("POST /gematria/glossary ", reduction);
+
+  // 1. Find all Glossary entries that have at least one matche between the query reduction array
+  //    and their own reduction array. Sort the matches by their 'hits' value. Add to glossary.
+  let glossary = [];
+  for (let val of reduction) {
+
+    // wrap callback in a closure to save the value of val for each iteration
+    (function(cls_val, cls_glossary) {
+      console.log(cls_val);
+
+      findWordsByNummifiers(cls_val, function handleEntriesFound(err, entriesFound) {
+        if (err) return console.error(err);
+
+        if (!entriesFound) {
+          console.log("No prior entries found for: ", cls_val);
+          return;
+        } else {
+          // TODO: entriesFound = entriesFound.sort((entry1, entry2) => entry1.hits - entry2.hits );
+          cls_glossary = [...cls_glossary, ...entriesFound];
+          console.log(entriesFound);
+        }
+      });
+    }) (val, glossary);
+
+  }
+
+  console.log(glossary);
+  return res.json({ glossary: glossary, status: 200, statusTxt: "OK" });
+});
+
+/**
  * GET /gematria/num
- * @param {string} num - a string of comma seperated values
+ * @param {string} num
  * @return { sucess:string, matches[strings] }
  */
 app.get("/gematria/:num", urlencodedParser, function (req, res) {
@@ -173,7 +216,7 @@ app.post("/gematria", jsonParser, function (req, res) {
 
 /**
  * gets an array of words from the glossary, by gematric number
- * @param {string} number
+ * @param {number} number
  * @param {function} done - callback
  * @return if wordsFound, done(null, wordsFound)
  *         else done(err, null)
