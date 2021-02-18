@@ -78,63 +78,25 @@ app.get("/gematria/hello", function (req, res) {
   res.json({ message: "hello, 140" });
 });
 
+
 /**
- * POST /gematria/glossary
- * Match reductions to words in Glossary collection
- * @param {Array} reduction - an array of numbers
+ * GET /gematria/:reduction
+ * Match reductions to words in the Glossary Collection
+ * @param {string} reduction - a string of dash (-) seperated numbers 
  * @return {Array} glossary - an array of strings
+ * @example /gematria/140-5
  */
-app.post("/gematria/glossary", jsonParser, function receiveReductions(req, res) {
-  if (!req.body.reduction) {
-    return res.json({ status: 400, statusTxt: "Missing reduction paramater." });
-  }
-
-  let reduction = req.body.reduction;
-  console.log("POST /gematria/glossary ", reduction);
-
-  // 1. Find all Glossary entries that have at least one matche between the query reduction array
-  //    and their own reduction array. Sort the matches by their 'hits' value. Add to glossary.
-  let glossary = [];
-  for (let val of reduction) {
-
-    // wrap callback in a closure to save the value of val for each iteration
-    (function(cls_val, cls_glossary) {
-      console.log(cls_val);
-
-      findWordsByNummifiers(cls_val, function handleEntriesFound(err, entriesFound) {
-        if (err) return console.error(err);
-
-        if (!entriesFound) {
-          console.log("No prior entries found for: ", cls_val);
-          return;
-        } else {
-          // TODO: entriesFound = entriesFound.sort((entry1, entry2) => entry1.hits - entry2.hits );
-          cls_glossary = [...cls_glossary, ...entriesFound];
-          console.log(entriesFound);
-        }
-      });
-    }) (val, glossary);
-
-  }
-
-  console.log(glossary);
-  return res.json({ glossary: glossary, status: 200, statusTxt: "OK" });
-});
-
-/**
- * GET /gematria/num
- * @param {string} num
- * @return { sucess:string, matches[strings] }
- */
-app.get("/gematria/:num", urlencodedParser, function (req, res) {
+app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req, res) {
   // 1. Get url request parameters
-  const numbersArr = req.params.num.split(",");
-  console.log("GET:");
-  console.log(numbersArr);
+  if (!req.params) {
+    return res.json({ status: 400, statusTxt: "Missing reduction parameter." });
+  }
+  const numbersArr = req.params.reduction.split("-");
+  console.log("GET:", numbersArr);
 
   // 2. Find all entries that have the num parameter in their reductions array
   //    Sort the matches by their 'hits' value
-  findWordsByNummifiers(numbersArr[0], function (err, entriesFound) {
+  findWordsByNummifiers(numbersArr, function handleEntriesFound(err, entriesFound) {
     if (err) {
       return console.error(err);
     }
@@ -142,10 +104,13 @@ app.get("/gematria/:num", urlencodedParser, function (req, res) {
       console.log("No prior entries found.");
       return res.json({ success: true, matches: [] });
     }
-    console.log("ENTRIES FOUND:");
-    console.log(entriesFound);
+    console.log("ENTRIES FOUND:", entriesFound);
 
-    res.json({ success: true, matches: entriesFound });
+    // 3. Create a glossary from each entry's word category
+    let glossary = entriesFound.map(entry => entry.word);
+    console.log("Returning: ", glossary);
+
+    res.json({ success: true, glossary: glossary });
   });
 });
 
@@ -158,6 +123,9 @@ app.get("/gematria/:num", urlencodedParser, function (req, res) {
  */
 app.post("/gematria", jsonParser, function (req, res) {
   // 1. Extract body parameters
+  if (req.body.word.length === 0 || !req.body.word) {
+    return res.json({ status: 400, statusTxt: "Missing parameter." });
+  }
   console.log("POST, /gematria, req.body= ");
   console.log(req.body);
   let word = req.body.word;
@@ -165,7 +133,7 @@ app.post("/gematria", jsonParser, function (req, res) {
   console.log("(word : reductionsArr)=");
   console.log("(" + word + " : " + reductionsArr + ")");
   if (word === null || word === undefined || word.length === 0) {
-    res.json({ success: false });
+    return res.json({ status: 400, statusTxt: "Invalid input." });
   }
 
   // 2. search for pre-existing word in glossary model
@@ -216,14 +184,20 @@ app.post("/gematria", jsonParser, function (req, res) {
 
 /**
  * gets an array of words from the glossary, by gematric number
- * @param {number} number
+ * @param {Array or number} number - can be just a number
  * @param {function} done - callback
  * @return if wordsFound, done(null, wordsFound)
  *         else done(err, null)
  * @throws mongodb connection errors
  */
-const findWordsByNummifiers = function (number, done) {
-  GlossaryEntry.find({ reductions: { $in: [number] } }, function (
+const findWordsByNummifiers = function handleNummifiers(nummifiers, done) {
+  if (!Array.isArray(nummifiers)) {
+    nummifiers = [nummifiers]; // turn into an array
+  }
+
+  console.log("nummifiers: ", nummifiers);
+
+  GlossaryEntry.find({ reductions: { $in: nummifiers } }, function (
     err,
     wordsFound
   ) {
@@ -240,7 +214,7 @@ const findWordsByNummifiers = function (number, done) {
  *         else done(err, null)
  * @throws mongodb connection errors
  */
-const findWordBySignifier = function(word, done) {
+const findWordBySignifier = function handleSignifiers(word, done) {
   GlossaryEntry.findOne({ word: word }, (err, wordFound) => {
     if (err) return done(err, null);
     if (wordFound === null || wordFound === undefined || wordFound.length === 0 ||

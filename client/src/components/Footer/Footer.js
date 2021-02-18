@@ -2,8 +2,8 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <footer id="Credits">
-      <p>© 202X rosazhou</p>
+    <footer id="Footer">
+      <p>&copy; 202X fedya</p>
     </footer>
   );
 }

@@ -15,7 +15,7 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, a
   // const [isLoading, setIsLoading] = useState(false);
 
   // add used reduction arrays to queries
-  const queries = [];
+  let queries = [];
 
   // fetches a GET request on query state variable change
   useEffect(() => {
@@ -25,29 +25,27 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, a
 
     if (query.length !== 0) {
       if (aqUsed) {
-        queries.push(ciphers['AQ'].reduce());
+        queries = [...queries, ...ciphers['AQ'].reduce()];
       } 
 
       if (gon1Used) {
-        queries.push(ciphers['GoN1'].reduce());
+        queries = [...queries, ...ciphers['GoN1'].reduce()];
       }
     }
 
     console.log("GET request:");
-    console.log(query);
+    console.log(queries.toString().replace(/,/g, "-"));
 
-    for (let query of queries) {
-      fetch(`/gematria/glossary`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ reduction: query }),
-      })
-        .then(res => res.json())
-        .then(response => handleQueryResponse(response, setGlossaryWords))
-        .catch(error => console.error(error));
-    }
+    fetch(`/gematria/${queries.toString().replace(/,/g, "-")}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(response => handleQueryResponse(response, setGlossaryWords))
+      .catch(error => console.error(error));
+
   }, [query]);
 
   return (
@@ -59,7 +57,7 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, a
         glossaryWords.map((word) => {
           return (
             <div key={word.toString()} className="GlossaryBar">
-              {query + "=" + word.toUpperCase()}
+              {query.toUpperCase() + "=" + word.toUpperCase()}
             </div>
           );
         })
@@ -74,17 +72,7 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, a
  */
 function handleQueryResponse(json, setGlossaryWords) {
   console.log("Response (from GET):");
-  console.log(json);
-  
-  /*
-  let matches = [];
-  json.matches.forEach(res => {
-    matches.push(res.word);
-  });
-
-  console.log(matches);
-  */
-  
+  console.log(json.glossary);
   setGlossaryWords(json.glossary);
 }
 

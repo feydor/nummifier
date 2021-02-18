@@ -1,4 +1,60 @@
 /* stylesheet for header.js */
-.settings-hidden {
-  display: none
+:root {
+  scroll-behavior: smooth;
 }
+
+header {
+  display: flex;
+  flex-direction: column;
+}
+
+a, button, .navbar, .navbar-brand {
+  color: white;
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 10px;
+}
+
+.navbar-brand {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.navbar-brand img {
+  width: 55px;
+  height: 55px;
+}
+
+.navbar-toggler {
+  border: none;
+  outline: inherit;
+  cursor: pointer;
+}
+
+.navbar-toggler svg {
+  width: 25px;
+  height: 25px;
+}
+
+
+#settings .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#settings .row form {
+  margin: 0 5px 0 5px;
+}
+

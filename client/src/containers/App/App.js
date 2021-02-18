@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import './App.css';
 import numogram from '../../images/numogram.png';
+
+import './App.css';
 
 // components
 import Header from '../../components/Header/Header.js';

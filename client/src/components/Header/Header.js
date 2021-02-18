@@ -1,32 +1,37 @@
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Sliders } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import { Gear } from 'react-bootstrap-icons';
 import logo from '../../images/logo.svg';
 
 import './Header.css';
 
 const Header = ({ aqSelected, gon1Selected }) => {
   return (
-    <Navbar bg="dark" expand="true" className="d-flex justify-content-between">
+    <header>
+      <Navbar expand="true">
 
-      <Navbar.Brand href="/">
-        <img 
-          alt="logo"
-          src={logo}
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-        />{' '}
-        ANS
-      </Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img 
+            alt="logo"
+            src={logo}
+            className="d-inline-block align-top"
+          />{' '}
+        </Navbar.Brand>
 
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Brand href="/">
+          <p>ANS</p>
+        </Navbar.Brand>
 
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Container fluid id="settings" className="settings-hidden justify-content-center">
+        <Navbar.Toggle onClick={toggleSettings}>
+          <Gear /> 
+        </Navbar.Toggle>
+
+      </Navbar>
+
+      <Navbar.Collapse id="basic-navbar-nav" style={{display: "none"}}>
+        <Container fluid id="settings" className="justify-content-center">
           <Row>
             <h5>Ciphers: </h5>
             <Form>
@@ -46,9 +51,17 @@ const Header = ({ aqSelected, gon1Selected }) => {
           </Row>
         </Container>
       </Navbar.Collapse>
-
-    </Navbar>
+    </header>
   );
+}
+
+function toggleSettings() {
+  let settings = document.getElementById("basic-navbar-nav");
+  if (settings.style.display === "none") {
+    settings.style.display = "";
+  } else {
+    settings.style.display = "none";
+  }
 }
 
 export default Header;

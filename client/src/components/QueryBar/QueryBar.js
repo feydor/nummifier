@@ -74,11 +74,23 @@ function QueryBar(props) {
           onKeyUp={handleQuery}
         />
         <br />
-        <Button
-          id="query-save-button"
-          onClick={handleSubmit}>
-          Save
-        </Button>
+        { props.query.length === 0 ?
+          <Button
+            variant="danger"
+            id="query-save-button"
+            onClick={handleSubmit}
+            disabled
+          >
+            Input
+          </Button>
+          :
+          <Button
+            id="query-save-button"
+            onClick={handleSubmit}
+          >
+            Save
+          </Button>
+        }
       </form>
     </div>
   );
