@@ -8,10 +8,9 @@ import { useEffect } from "react";
  * @param {string} query
  * @param {boolean} isTyping
  * @param {Object} ciphers { "AQ": { "method":string, "reduce":function  }, ... }
- * @param {boolean} aqUsed
- * @param {boolean} gon1Used
+ * @param {Object} selectedCiphers { "AQ": true, "GoN1": false, ... }
  */
-function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, aqUsed, gon1Used }) {
+function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, selectedCiphers }) {
   // const [isLoading, setIsLoading] = useState(false);
 
   // add used reduction arrays to queries
@@ -24,12 +23,10 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, a
     }
 
     if (query.length !== 0) {
-      if (aqUsed) {
-        queries = [...queries, ...ciphers['AQ'].reduce()];
-      } 
-
-      if (gon1Used) {
-        queries = [...queries, ...ciphers['GoN1'].reduce()];
+      for (let cipher in ciphers) {
+        if (selectedCiphers[cipher]) {
+          queries = [...queries, ...ciphers[cipher].reduce()];
+        }
       }
     }
 

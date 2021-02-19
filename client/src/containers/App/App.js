@@ -17,13 +17,12 @@ function App() {
   const [glossaryWords, setGlossaryWords] = useState([]);
   const [query, setQuery] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [aqUsed, setAqUsed] = useState(true);
-  const [gon1Used, setGon1Used] = useState(false);
+  const [selectedCiphers, setSelectedCiphers] = useState({ AQ: true, GoN1: false, GoN2: false, GoN3: false });
   const [ciphers, setCiphers] = useState({});
 
   return (
     <Container fluid className="baselevel">
-      <Header />
+      <Header setSelectedCiphers={setSelectedCiphers} />
       <br />
       <Container className="flex-column">
 
@@ -39,8 +38,7 @@ function App() {
                 glossaryWords={glossaryWords} 
                 setGlossaryWords={setGlossaryWords}
                 isTyping={isTyping}
-                aqUsed={aqUsed}
-                gon1Used={gon1Used}
+                selectedCiphers={selectedCiphers}
                 ciphers={ciphers}
               />
             }
@@ -51,7 +49,9 @@ function App() {
               query={query}
               setIsTyping={setIsTyping}
               isTyping={isTyping}
+              ciphers={ciphers}
               setCiphers={setCiphers}
+              selectedCiphers={selectedCiphers}
             />
           </Row>
         </Container>
@@ -63,21 +63,25 @@ function App() {
   );
 }
 
-function ShowMainGraphic({ query, glossaryWords, setGlossaryWords, isTyping, ciphers, aqUsed, gon1Used }) {
-  if (query.length === 0) {
+function ShowMainGraphic(props) {
+  
+  if (props.query.length === 0) {
     return <img src={numogram} alt="a picture of the numogram" />;
   } else {
    return (
      <div>
-       <Reductions query={query} />
+       <Reductions 
+        query={props.query} 
+        ciphers={props.ciphers}
+        selectedCiphers={props.selectedCiphers}
+       />
        <Glossary
-         query={query}
-         glossaryWords={glossaryWords}
-         setGlossaryWords={setGlossaryWords}
-         isTyping={isTyping}
-         aqUsed={aqUsed}
-         gon1Used={gon1Used}
-         ciphers={ciphers}
+         query={props.query}
+         glossaryWords={props.glossaryWords}
+         setGlossaryWords={props.setGlossaryWords}
+         isTyping={props.isTyping}
+         selectedCiphers={props.selectedCiphers}
+         ciphers={props.ciphers}
        />
      </div>
    ); 

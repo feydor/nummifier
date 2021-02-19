@@ -39,8 +39,14 @@ function QueryBar(props) {
   function handleSubmit() {
     console.log('handleSubmit (props.query):');
     console.log(props.query);
-    console.log("nummificate(props.query)['AQ'].reduce():");
-    console.log(nummificate(props.query)['AQ'].reduce().toString());
+
+    let reductions = [];
+    for (let cipher in props.ciphers) {
+      if (props.selectedCiphers[cipher]) {
+        reductions = [...reductions, ...props.ciphers[cipher].reduce()]; 
+      }
+    }
+    console.log(reductions);
 
     fetch(`/gematria`, {
       method: "POST",
@@ -49,7 +55,7 @@ function QueryBar(props) {
       },
       body: JSON.stringify({
         word: "" + props.query + "",
-        reductions: nummificate(props.query)['AQ'].reduce().toString(),
+        reductions: reductions.toString(),
       }),
     })
       .then((response) => response.json())
@@ -72,6 +78,7 @@ function QueryBar(props) {
           size={inputMaxLength / 2}
           maxLength={inputMaxLength}
           onKeyUp={handleQuery}
+          autoComplete="off"
         />
         <br />
         { props.query.length === 0 ?
@@ -84,16 +91,29 @@ function QueryBar(props) {
             Input
           </Button>
           :
-          <Button
-            id="query-save-button"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
+          <div>
+            <Button
+              id="query-save-button"
+              onClick={handleSubmit}
+            >
+              save
+            </Button>
+            <Button
+              id="query-clear-button"   
+              onClick={handleClear}
+            >
+              clear
+            </Button>
+          </div>
         }
       </form>
     </div>
   );
+}
+
+
+function handleClear() {
+  document.getElementById("query-input").value = "";
 }
 
 export default QueryBar;

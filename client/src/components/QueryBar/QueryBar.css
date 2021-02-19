@@ -12,8 +12,8 @@
   font-size: 22px;
 }
 
-#QueryBar #query-save-button {
+#QueryBar button {
   font-size: 22px;
-  width: 50%;
   margin-top: 10px;
+  margin-left: 10px;
 }

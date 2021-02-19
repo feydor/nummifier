@@ -7,7 +7,10 @@ import logo from '../../images/logo.svg';
 
 import './Header.css';
 
-const Header = ({ aqSelected, gon1Selected }) => {
+/**
+ * a header with slidedown settings
+ */
+const Header = ({ setSelectedCiphers }) => {
   return (
     <header>
       <Navbar expand="true">
@@ -35,17 +38,17 @@ const Header = ({ aqSelected, gon1Selected }) => {
           <Row>
             <h5>Ciphers: </h5>
             <Form>
-              <Form.Check 
-                type="switch"
-                id="switch-aq"
+              <CipherSetting 
                 label="AQ"
+                setState={setSelectedCiphers}
+                isChecked={true}
               />
             </Form>
             <Form>
-              <Form.Check 
-                type="switch"
-                id="switch-gon1"
+              <CipherSetting 
                 label="GoN1"
+                setState={setSelectedCiphers}
+                isChecked={false}
               />
             </Form>
           </Row>
@@ -55,6 +58,41 @@ const Header = ({ aqSelected, gon1Selected }) => {
   );
 }
 
+/**
+ * A checkbox element that calls the 'setState' param on click
+ * @param {string} label - id and label
+ * @param {function} setState - a setState function from react
+ * class is set to 'cipher-setting'
+ */
+const CipherSetting = ({ label, setState, isChecked }) => {
+  /**
+   * toggles and sets the state  
+   */
+  function handleClick(e) {
+    let isChecked = document.getElementById(e.target.id).checked;
+    setState(prevState => {
+      let newState = {};
+      let key = e.target.id;
+      newState[key] = isChecked;
+      return Object.assign(prevState, newState);
+    });
+  }
+
+  return (
+    <Form.Check 
+      type="switch"
+      id={label}
+      label={label}
+      className="cipher-setting"
+      onClick={handleClick}
+      defaultChecked={isChecked}
+    />
+  );
+};
+
+/**
+ * toggles the slide-down settings area
+ */
 function toggleSettings() {
   let settings = document.getElementById("basic-navbar-nav");
   if (settings.style.display === "none") {
@@ -63,5 +101,6 @@ function toggleSettings() {
     settings.style.display = "none";
   }
 }
+
 
 export default Header;
