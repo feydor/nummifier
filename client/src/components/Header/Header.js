@@ -41,14 +41,14 @@ const Header = ({ setSelectedCiphers }) => {
               <CipherSetting 
                 label="AQ"
                 setState={setSelectedCiphers}
-                isChecked={true}
+                defaultChecked={true}
               />
             </Form>
             <Form>
               <CipherSetting 
                 label="GoN1"
                 setState={setSelectedCiphers}
-                isChecked={false}
+                defaultChecked={false}
               />
             </Form>
           </Row>
@@ -64,7 +64,7 @@ const Header = ({ setSelectedCiphers }) => {
  * @param {function} setState - a setState function from react
  * class is set to 'cipher-setting'
  */
-const CipherSetting = ({ label, setState, isChecked }) => {
+const CipherSetting = ({ label, setState, defaultChecked }) => {
   /**
    * toggles and sets the state  
    */
@@ -74,7 +74,7 @@ const CipherSetting = ({ label, setState, isChecked }) => {
       let newState = {};
       let key = e.target.id;
       newState[key] = isChecked;
-      return Object.assign(prevState, newState);
+      return {...prevState, ...newState}
     });
   }
 
@@ -84,8 +84,8 @@ const CipherSetting = ({ label, setState, isChecked }) => {
       id={label}
       label={label}
       className="cipher-setting"
-      onClick={handleClick}
-      defaultChecked={isChecked}
+      onChange={handleClick}
+      defaultChecked={defaultChecked}
     />
   );
 };

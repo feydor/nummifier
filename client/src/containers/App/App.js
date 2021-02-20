@@ -22,7 +22,7 @@ function App() {
 
   return (
     <Container fluid className="baselevel">
-      <Header setSelectedCiphers={setSelectedCiphers} />
+      <Header setSelectedCiphers={setSelectedCiphers}/>
       <br />
       <Container className="flex-column">
 
@@ -30,7 +30,7 @@ function App() {
           <Row>
             <h1 id="title">Abysmal Nummification of the Signifier</h1>
           </Row>
-          <Row className="justify-content-center">
+          <Row className="main-content">
             {
               isTyping === true ? "" : 
               <ShowMainGraphic 
