@@ -68,7 +68,7 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
   if (!req.params) {
     return res.json({ status: 400, statusTxt: "Missing reduction parameter." });
   }
-  const numbersArr = req.params.reduction.split("-");
+  const numbersArr = req.params.reduction.split("-").map(str => parseInt(str)); // convert from strings to ints
   console.log("GET:", numbersArr);
 
   // 2. Find all entries that have the num parameter in their reductions array
@@ -77,9 +77,9 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
     if (err) {
       return console.error(err);
     }
-    if (!entriesFound) {
+    if (!entriesFound || entriesFound.length < 1) {
       console.log("No prior entries found.");
-      return res.json({ success: true, matches: [] });
+      return res.json({ success: true, glossary: [] });
     }
     console.log("ENTRIES FOUND:", entriesFound);
 

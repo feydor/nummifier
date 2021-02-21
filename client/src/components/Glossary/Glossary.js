@@ -16,7 +16,7 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, s
   // add used reduction arrays to queries
   let queries = [];
 
-  // fetches a GET request on query state variable change
+  // fetches a GET request on query or selectedCiphers state variable change
   useEffect(() => {
     if (isTyping) {
       return;
@@ -40,10 +40,10 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, s
       },
     })
       .then(res => res.json())
-      .then(response => handleQueryResponse(response, setGlossaryWords))
+      .then(response => handleQueryResponse(response, query, setGlossaryWords))
       .catch(error => console.error(error));
 
-  }, [query]);
+  }, [query, selectedCiphers]);
 
   return (
     <div id="Glossary">
@@ -67,9 +67,12 @@ function Glossary({ setGlossaryWords, glossaryWords, query, isTyping, ciphers, s
  * sets glossary words from query response
  * @param {Object} json - { matches:array[strings] }
  */
-function handleQueryResponse(json, setGlossaryWords) {
+function handleQueryResponse(json, query, setGlossaryWords) {
   console.log("Response (from GET):");
   console.log(json.glossary);
+
+  // filter out the query from the results
+  json.glossary = json.glossary.filter(word => word !== query );
   setGlossaryWords(json.glossary);
 }
 

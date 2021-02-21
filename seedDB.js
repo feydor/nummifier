@@ -11,7 +11,7 @@ function seedDB(connection) {
       for (let word of glossary) {
         let newEntry = {
           word: word,
-          reductions: [...nummificate(word)["AQ"].reduce(), ...nummificate(word)["GoN1"].reduce()],
+          reductions: [...nummificate(word)["AQ"].reduce()],
           hits: 0,
         };
         seedData.push(newEntry);
@@ -45,7 +45,11 @@ const glossary = [
   "ghostintheshell", "xenosytem", "thefirerises", "rationalistmovement", "slatestarcodex", "eliezeryudkowsky", "nickszabo",
   "nickbostrom", "futureofhumanityinstitute", "transhumanism", "superintelligence", "singularity", "lesswrong",
   "artificialgeneralintelligence", "alltoohuman", "secretgarden", "libidinalmaterialism", "dowhatthouwiltshallbethewholeofthelaw",
-  "theresmorebutletsnotgivetoomuchaway"
+  "theresmorebutletsnotgivetoomuchaway", "thirdimpact", "darwinism", "divisionoflabor", "phylundu", "nanospasm", "apotheosis",
+  "neolemuriantimewar", "thenumberofthebeast", "thethreehorsemenoftheapocalypse", "randolphcarter", "tellurianomegapoint",
+  "dowhatthouwilt", "aleistercrowley", "cthulhuclub", "decadence", "gregorian", "abstractthinkingmachines", "theultimateblasphemy",
+  "pentazygon", "cookinglobsterswithjakeanddinos", "humansecuritysystem", "lobsterman", "intotheheartofdarkness", "cookinglobsters",
+  "arbiteroftheuniverse", "natureornaturesgod", "greatpropeller", "vastabrupt", "impossibletoreplicate"
 ];
 
 module.exports = seedDB;
