@@ -1,5 +1,6 @@
 /* nummifier.js - digital reduction algorithm */
-import { gematria } from './ciphers.js';
+const ciph = require('./ciphers.js');
+// import { gematria } from './ciphers.js';
 
 /**
  * full digital reduction of any query string using ciphers.gematria() function
@@ -7,7 +8,7 @@ import { gematria } from './ciphers.js';
  * @return {Object} { 'AQ': { method:string, reduce: [numbers] } }
  */
 function nummificate(query) {
-  let ciphers = gematria(query);
+  let ciphers = ciph.gematria(query);
   
   let container = {};
   for (let key in ciphers) {
@@ -63,7 +64,8 @@ function reduce(num) {
   });
 }
 
-export default nummificate;
+module.exports = nummificate;
+// export default nummificate;
 
 // reduces an n digit number by summation
 // ex: 78 => 15

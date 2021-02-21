@@ -9,6 +9,7 @@ const app = express();
 const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGO_URI;
 const port = process.env.PORT || 3001;
+const seedDB = require("./seedDB");
 var promise;
 
 // import models
@@ -27,39 +28,15 @@ promise = mongoose.connect(MONGO_URI, {
 
 // wipe the mongodb collection during development
 if (process.env.NODE_ENV !== "production") {
-  /*
-  const path = require('path');
-  const { Seeder } = require('mongo-seeding');
-
-  const config = {
-    database: {
-      name: 'Glossary',
-    },
-    dropDatabase: true,
-  };
-  const seeder = new Seeder(config);
-  const collections = seeder.readCollectionsFromPath(
-    path.resolve('./data-import'),
-    {
-      transformers: [Seeder.Transformers.replaceDocumentIdWithUnderscoreId],
-    },
-  );
-  
-  seeder
-    .import(collections)
-    .then(() => {
-      console.log('Mongo-seeding: Success');
-    })
-    .catch(err => {
-      console.log('Mongo-seeding: Error', err);
-    });
-  */
-
   promise.then(function (db) {
     GlossaryEntry.deleteMany({}, function () {
       console.log("Glossary collection removed...");
+
+      seedDB(promise);
     });
+    
   });
+
 }
 
 // create middleware references
