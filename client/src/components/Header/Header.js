@@ -10,7 +10,7 @@ import './Header.css';
 /**
  * a header with slidedown settings
  */
-const Header = ({ setSelectedCiphers }) => {
+const Header = (props) => {
   return (
     <header>
       <Navbar expand="true">
@@ -40,14 +40,14 @@ const Header = ({ setSelectedCiphers }) => {
             <Form>
               <CipherSetting 
                 label="AQ"
-                setState={setSelectedCiphers}
+                onChangeHandler={props.onChangeHandler}
                 defaultChecked={true}
               />
             </Form>
             <Form>
               <CipherSetting 
                 label="GoN1"
-                setState={setSelectedCiphers}
+                onChangeHandler={props.onChangeHandler}
                 defaultChecked={false}
               />
             </Form>
@@ -59,32 +59,19 @@ const Header = ({ setSelectedCiphers }) => {
 }
 
 /**
- * A checkbox element that calls the 'setState' param on click
+ * A checkbox element that calls the 'onChangeHandler' param on click
  * @param {string} label - id and label
  * @param {function} setState - a setState function from react
  * class is set to 'cipher-setting'
  */
-const CipherSetting = ({ label, setState, defaultChecked }) => {
-  /**
-   * toggles and sets the state  
-   */
-  function handleClick(e) {
-    let isChecked = document.getElementById(e.target.id).checked;
-    setState(prevState => {
-      let newState = {};
-      let key = e.target.id;
-      newState[key] = isChecked;
-      return {...prevState, ...newState}
-    });
-  }
-
+const CipherSetting = ({ label, onChangeHandler, defaultChecked }) => {
   return (
     <Form.Check 
       type="switch"
       id={label}
       label={label}
       className="cipher-setting"
-      onChange={handleClick}
+      onChange={onChangeHandler}
       defaultChecked={defaultChecked}
     />
   );

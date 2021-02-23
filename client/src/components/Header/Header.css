@@ -10,7 +10,6 @@ header {
 
 a, button, .navbar, .navbar-brand {
   color: white;
-  background-color: black;
 }
 
 a {
@@ -37,6 +36,7 @@ a {
 }
 
 .navbar-toggler {
+  background-color: transparent;
   border: none;
   outline: inherit;
   cursor: pointer;

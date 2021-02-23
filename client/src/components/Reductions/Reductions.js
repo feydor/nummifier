@@ -28,7 +28,7 @@ function Reductions(props) {
   };
 
   useEffect(() => {
-    console.log(props.selectedCiphers)
+    //console.log(props.selectedCiphers)
   }, [props.selectedCiphers]);
 
   return (

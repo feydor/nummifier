@@ -16,7 +16,8 @@
 		"faker": "^5.4.0",
 		"mongo-seeding": "^3.5.0",
 		"mongoose": "^5.10.13",
-		"react-bootstrap": "^1.5.0"
+		"react-bootstrap": "^1.5.0",
+		"react-spinners": "^0.10.6"
 	},
 	"engines": {
 		"node": "4.4.5"

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.2.0",
     "body-parser": "^1.19.0",
     "klona": "^2.0.4",
+    "node-sass": "^5.0.0",
     "queue-microtask": "^1.2.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",

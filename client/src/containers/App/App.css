@@ -1,7 +1,7 @@
 body {
   font-family: 'Inconsolata', monospace;
-  color: white;
-  background-color: black;
+  color: #ffffed;
+  background-color: #152028;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -13,11 +13,6 @@ body {
 
 h2 {
   font-size: 32px;
-}
-
-/* the main body of the page */
-.App {
-  background-color: black;
 }
 
 @keyframes fadeOut {

@@ -79,7 +79,7 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
     }
     if (!entriesFound || entriesFound.length < 1) {
       console.log("No prior entries found.");
-      return res.json({ success: true, glossary: [] });
+      return res.json({ status: 204, statusTxt: 'No Content', glossary: [] });
     }
     console.log("ENTRIES FOUND:", entriesFound);
 
@@ -87,7 +87,7 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
     let glossary = entriesFound.map(entry => entry.word);
     console.log("Returning: ", glossary);
 
-    res.json({ success: true, glossary: glossary });
+    res.json({ status: 200, statusTxt: 'OK', glossary: glossary });
   });
 });
 
@@ -103,12 +103,14 @@ app.post("/gematria", jsonParser, function (req, res) {
   if (req.body.word.length === 0 || !req.body.word) {
     return res.json({ status: 400, statusTxt: "Missing parameter." });
   }
+
   console.log("POST, /gematria, req.body= ");
   console.log(req.body);
   let word = req.body.word;
   let reductionsArr = req.body.reductions.split(",");
   console.log("(word : reductionsArr)=");
   console.log("(" + word + " : " + reductionsArr + ")");
+
   if (word === null || word === undefined || word.length === 0) {
     return res.json({ status: 400, statusTxt: "Invalid input." });
   }
@@ -116,7 +118,7 @@ app.post("/gematria", jsonParser, function (req, res) {
   // 2. search for pre-existing word in glossary model
   let priorEntryFound = false;
   let priorEntry = null;
-  findWordBySignifier(word, function(err, entryFound) {
+  findWordBySignifier(word, function handleEntryFound(err, entryFound) {
     if (err) {
       return console.error(err);
     }
@@ -136,7 +138,7 @@ app.post("/gematria", jsonParser, function (req, res) {
         (err) => {
           if (err) return console.error(err);
           console.log("UPDATING:");
-          res.json({ success: true, savedWord: priorEntry });
+          res.json({ status: 200, statusTxt: 'Content Updated', savedWord: priorEntry });
         }
       );
     } else {
@@ -147,7 +149,7 @@ app.post("/gematria", jsonParser, function (req, res) {
       });
       newEntry.save((err, savedWord) => {
         if (err) return console.error(err);
-        res.json({ success: true, savedWord: savedWord });
+        res.json({ status: 201, statusTxt: "Created", savedWord: savedWord });
       });
     }
 
