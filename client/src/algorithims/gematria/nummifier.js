@@ -1,5 +1,5 @@
 /* nummifier.js - digital reduction algorithm */
-const ciph = require('./ciphers.js');
+const ciph = require("./ciphers.js");
 // import { gematria } from './ciphers.js';
 
 /**
@@ -9,15 +9,15 @@ const ciph = require('./ciphers.js');
  */
 function nummificate(query) {
   let ciphers = ciph.gematria(query);
-  
+
   let container = {};
   for (let key in ciphers) {
     container[key] = {
       method: key,
-      reduce: function() {
+      reduce: function () {
         let acc = ciphers[key].sum(); // initialize acc with first reduction
-        let res = [ acc ];         // results
-        
+        let res = [acc]; // results
+
         // reduce until single digit, keep track of reductions
         while (acc >= 10) {
           acc = reduce(acc);
@@ -25,8 +25,8 @@ function nummificate(query) {
         }
 
         return res;
-      }
-    }
+      },
+    };
   }
 
   return container;

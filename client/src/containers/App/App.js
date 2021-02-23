@@ -1,21 +1,21 @@
-import React from 'react';
-import { MoonLoader } from 'react-spinners';
+import React from "react";
+import Loader from "react-loader-spinner";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
-import numogram from '../../images/numogram.png';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import torus from "../../images/torus-pink.gif";
 
-import nummificate from '../../algorithims/gematria/nummifier';
+import nummificate from "../../algorithims/gematria/nummifier";
 
-import './App.css';
+import "./App.css";
 
 // components
-import Header from '../../components/Header/Header.js';
-import QueryBar from '../../components/QueryBar/QueryBar.js';
-import Glossary from '../../components/Glossary/Glossary.js';
-import Reductions from '../../components/Reductions/Reductions.js';
-import Footer from '../../components/Footer/Footer.js';
+import Header from "../../components/Header/Header.js";
+import QueryBar from "../../components/QueryBar/QueryBar.js";
+import Glossary from "../../components/Glossary/Glossary.js";
+import Reductions from "../../components/Reductions/Reductions.js";
+import Footer from "../../components/Footer/Footer.js";
+import Description from "../../components/Description/Description.js";
 
 // globals
 let typingTimer;
@@ -27,11 +27,11 @@ class App extends React.Component {
     glossary: [],
     query: "",
     isTyping: false,
-    selectedCiphers: {AQ: true, GoN1: false, GoN2: false, GoN3: false },
+    selectedCiphers: { AQ: true, GoN1: false, GoN2: false, GoN3: false },
     ciphers: {},
     loading: false,
     error: false,
-  }
+  };
 
   /**
    * toggles the selectedCiphers state object when a checkbox is clicked
@@ -42,10 +42,13 @@ class App extends React.Component {
     let newState = {};
     let key = e.target.id;
     newState[key] = isChecked;
-    this.setState({
-      selectedCiphers: {...this.state.selectedCiphers, ...newState}
-    }, () => console.log(this.state.selectedCiphers));
-  }
+    this.setState(
+      {
+        selectedCiphers: { ...this.state.selectedCiphers, ...newState },
+      },
+      () => console.log(this.state.selectedCiphers)
+    );
+  };
 
   /**
    * handler function to set the glossary state variable
@@ -64,74 +67,82 @@ class App extends React.Component {
       }
     }
 
-    // append each dash-seperated query to url 
+    // append each dash-seperated query to url
     let url = `/gematria/${queries.toString().replace(/,/g, "-")}`;
 
-    this.setState({
-      glossary: [],
-      loading: true,
-      error: false
-      /**
-       * fetches the current glossary from the server 
-       * @param {string} url - e.g. /gematria/140-5 
-       * sets the state variables: glossary, loading, and error
-       */
-    }, function fetchGlossary() {
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then(res => res.json())
-        .then(response => {
-          // throw error on non-200 status codes
-          if (response.status !== 200) throw new Error(`${response.status}: ${response.statusTxt}`)
-          console.log("Response (from GET):");
-          console.log(response.glossary);
-
-          // filter out the query from the results
-          response.glossary = response.glossary.filter(word => word !== this.state.query );
-          this.setState({
-            glossary: response.glossary,
-            loading: false
-          });
+    this.setState(
+      {
+        glossary: [],
+        loading: true,
+        error: false,
+        /**
+         * fetches the current glossary from the server
+         * @param {string} url - e.g. /gematria/140-5
+         * sets the state variables: glossary, loading, and error
+         */
+      },
+      function fetchGlossary() {
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .catch(error => {
-          console.error(error);
-          this.setState({
-            loading: false,
-            error: true
+          .then((res) => res.json())
+          .then((response) => {
+            // throw error on non-200 status codes
+            if (response.status !== 200)
+              throw new Error(`${response.status}: ${response.statusTxt}`);
+            console.log("Response (from GET):");
+            console.log(response.glossary);
+
+            // filter out the query from the results
+            response.glossary = response.glossary.filter(
+              (word) => word !== this.state.query
+            );
+            this.setState({
+              glossary: response.glossary,
+              loading: false,
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            this.setState({
+              loading: false,
+              error: true,
+            });
           });
-        });
-    });
-  }
+      }
+    );
+  };
 
   /**
    * saves this.state.query to server glossary
    * sets the state variables: loading, error
    */
   handleSaveWord = () => {
-    console.log('handleSaveWord (this.state.query):');
+    console.log("handleSaveWord (this.state.query):");
     console.log(this.state.query);
 
     // for each cipher used, load the results into reductions
     let reductions = [];
     for (let cipher in this.state.ciphers) {
       if (this.state.selectedCiphers[cipher]) {
-        reductions = [...reductions, ...this.state.ciphers[cipher].reduce()]; 
+        reductions = [...reductions, ...this.state.ciphers[cipher].reduce()];
       }
     }
     console.log(reductions);
 
-    this.setState({
-      loading: true,
-      error: false
-    }, function postWord() {
-      fetch(`/gematria`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    this.setState(
+      {
+        loading: true,
+        error: false,
+      },
+      function postWord() {
+        fetch(`/gematria`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             word: `${this.state.query}`,
@@ -140,33 +151,27 @@ class App extends React.Component {
         })
           .then((response) => response.json())
           .then((data) => {
-            if (data.status !== 201 || data.status !== 200) {
+            console.log(data.status);
+            // status code is not 20X
+            if (data.status === 400) {
               throw new Error(`${data.status}: ${data.statusTxt}`);
             }
 
             console.log("Success:", data);
             this.setState({
-              loading: false
+              loading: false,
             });
           })
           .catch((error) => {
             console.error("Error:", error);
             this.setState({
               loading: false,
-              error: true
+              error: true,
             });
-        });
-    });
-  }
-
-  /**
-   * handler for changing isTyping state variable
-   */
-  toggleIsTyping = () => {
-    this.setState(prevState => {
-      return prevState ? false : true;
-    });
-  }
+          });
+      }
+    );
+  };
 
   /**
    * event handler for query change, onKeyUp
@@ -185,7 +190,7 @@ class App extends React.Component {
   handleQueryKeyDown = () => {
     clearTimeout(typingTimer);
     this.setState({
-      isTyping: true
+      isTyping: true,
     });
   };
 
@@ -195,71 +200,101 @@ class App extends React.Component {
    * sets the state variables: query, ciphers, isTyping
    */
   handleQueryChange = () => {
-      // returns an array if query is not empty, else null
-      let query = document.getElementById('query-input').value.match(/[A-Z]/gi); 
-      query = !query ? '' : query.join(''); // removes spaces, invalid characters, etc
-      if (query === null) query = ''; // query must never be null
+    // returns an array if query is not empty, else null
+    let query = document.getElementById("query-input").value.match(/[A-Z]/gi);
+    query = !query ? "" : query.join(""); // removes spaces, invalid characters, etc
+    if (query === null) query = ""; // query must never be null
 
-      // first set the query state, then the ciphers
-      this.setState({
+    // first set the query state, then the ciphers
+    this.setState(
+      {
         query: query,
-        isTyping: false
-      }, function setCiphers() {
+        isTyping: false,
+      },
+      function setCiphers() {
         this.setState({
-          ciphers: nummificate(query)
+          ciphers: nummificate(query),
         });
-      });
-      this.setGlossary();
+      }
+      );
+    this.setGlossary();
+  };
+
+  handleQueryClear = () => {
+    this.setState({
+      query: "",
+      glossary: []
+    });
   }
 
   render() {
-    let content = <img src={numogram} alt="a picture of the numogram" /> ;
+    let content = <img src={torus} alt="a picture of a torus" />;
     if (this.state.loading) {
-      // TODO: <Loader />
-      content = <MoonLoader />;
+      content = <Loader 
+        type="Grid"
+        color="#ff0266"
+        height={100}
+        width={100}
+        timeout={3000} />;
     } else if (this.state.error) {
       // TODO: <ErrorNotice onClickHandler={this.tryAgainHandler}/>
-      content = <h2>Error</h2>; 
+      content = <h2>Error</h2>;
     } else if (this.state.glossary.length > 0) {
-      content = <div>
-        <Reductions 
-          query={this.state.query} 
-          ciphers={this.state.ciphers}
-          selectedCiphers={this.state.selectedCiphers}
-        />
-        <Glossary query={this.state.query} glossary={this.state.glossary} setGlossary={this.state.setGlossary} />
-
-      </div>;
+      content = (
+        <div>
+          <Reductions
+            query={this.state.query}
+            ciphers={this.state.ciphers}
+            selectedCiphers={this.state.selectedCiphers}
+          />
+          <Glossary
+            query={this.state.query}
+            glossary={this.state.glossary}
+            setGlossary={this.state.setGlossary}
+          />
+        </div>
+      );
     }
 
     return (
-      <Container fluid className="baselevel">
-        <Header onChangeHandler={this.handleSelectedCiphersChange}/>
-        <br />
-        <Container className="flex-column">
-
-          <Container className="App">
+      <div className="baselevel">
+        <Header onChangeHandler={this.handleSelectedCiphersChange} />
+        <div className="flex-column">
+          <Container className="App shadow">
             <Row>
               <h1 id="title">Abysmal Nummification of the Signifier</h1>
             </Row>
             <Row className="main-content">
-                {content}
-            </Row>
-            <Row>
+              {content}
               <QueryBar
                 id="query-input"
                 query={this.state.query}
                 handleQueryKeyUp={this.handleQueryKeyUp}
                 handleQueryKeyDown={this.handleQueryKeyDown}
+                handleSaveWord={this.handleSaveWord}
+                handleQueryClear={this.handleQueryClear}
               />
             </Row>
+            <Row>
+              <Description>
+                <h4>Instructions</h4>
+                <p>Enter your query above. Select the desired cipher from the settings.</p>
+              </Description>
+            </Row>
+          </Container>
+
+          <Container>
+            <Description>
+              <h3>Cumulation</h3>
+              <p>Cumulation is the operation used to define the value of the gates of the numogram,each of which opens their respective channel (which in turn is defined by plexing).</p>
+            </Description>
           </Container>
 
           <h2>———</h2>
 
           <Footer />
-        </Container>
-      </Container>
+        </div>
+      </div>
     );
   }
 }

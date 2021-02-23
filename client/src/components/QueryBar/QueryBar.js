@@ -1,5 +1,6 @@
 import "./QueryBar.css";
-import Button from "../../elements/Button/Button";
+import Button from 'react-bootstrap/Button';
+import styles from '../../elements/Button/Button.module.css';
 
 /**
  * sets the query state variable, POSTs a word on button press
@@ -8,6 +9,12 @@ import Button from "../../elements/Button/Button";
  */
 function QueryBar(props) {
   const inputMaxLength = 30;
+
+  const handleClear = () => {
+    console.log(document.getElementById("query-input"));
+    document.getElementById("query-input").value = "";
+    props.handleQueryClear();
+  }
 
   return (
     <div id="QueryBar">
@@ -24,31 +31,32 @@ function QueryBar(props) {
           autoComplete="off"
         />
         <br />
-        { props.query.length === 0 ?
-          <Button
-            id="query-save-button"
-            clicked={props.handleSaveWord}
-            disabled
-          >Input</Button>
-          :
+        {props.query.length === 0 ? (
           <div>
-            <Button
-              id="query-save-button"
-              clicked={props.handleSaveWord}
-            >Save</Button>
-            <Button
-              id="query-clear-button"   
-              clicked={handleClear}
-            >Clear</Button>
+          <Button className={styles.Button}
+            id="query-save-button"
+            onClick={props.handleSaveWord}
+            disabled
+          >
+            INPUT
+          </Button>
+            <Button className={styles.Button} id="query-clear-button" onClick={handleClear}>
+              CLEAR
+            </Button>
           </div>
-        }
+        ) : (
+          <div>
+            <Button className={styles.Button} id="query-save-button" onClick={props.handleSaveWord}>
+              SAVE
+            </Button>
+            <Button className={styles.Button} id="query-clear-button" onClick={handleClear}>
+              CLEAR
+            </Button>
+          </div>
+        )}
       </form>
     </div>
   );
-}
-
-function handleClear() {
-  document.getElementById("query-input").value = "";
 }
 
 export default QueryBar;

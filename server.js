@@ -62,6 +62,7 @@ app.get("/gematria/hello", function (req, res) {
  * @param {string} reduction - a string of dash (-) seperated numbers 
  * @return {Array} glossary - an array of strings
  * @example /gematria/140-5
+ * NOTE: Only use the first element of the reductions array to match with the server
  */
 app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req, res) {
   // 1. Get url request parameters
@@ -73,7 +74,7 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
 
   // 2. Find all entries that have the num parameter in their reductions array
   //    Sort the matches by their 'hits' value
-  findWordsByNummifiers(numbersArr, function handleEntriesFound(err, entriesFound) {
+  findWordsByNummifiers(numbersArr[0], function handleEntriesFound(err, entriesFound) {
     if (err) {
       return console.error(err);
     }
@@ -122,8 +123,9 @@ app.post("/gematria", jsonParser, function (req, res) {
     if (err) {
       return console.error(err);
     }
-    if (!entryFound) {
-      console.log("Prior entry not found.")
+
+    if (!entryFound || (Object.keys(entryFound).length === 0 && entryFound.constructor === Object)) {
+      console.log("Prior entry not found.");
     } else {
       console.log("ENTRY FOUND: ", entryFound);
       priorEntryFound = entryFound === null ? false : true; 
@@ -137,12 +139,12 @@ app.post("/gematria", jsonParser, function (req, res) {
         { $inc: { hits: 1 } },
         (err) => {
           if (err) return console.error(err);
-          console.log("UPDATING:");
+          console.log("UPDATING...");
           res.json({ status: 200, statusTxt: 'Content Updated', savedWord: priorEntry });
         }
       );
     } else {
-      console.log("SAVING:");
+      console.log("SAVING...");
       let newEntry = new GlossaryEntry({
         word: word,
         reductions: reductionsArr,
@@ -196,9 +198,8 @@ const findWordsByNummifiers = function handleNummifiers(nummifiers, done) {
 const findWordBySignifier = function handleSignifiers(word, done) {
   GlossaryEntry.findOne({ word: word }, (err, wordFound) => {
     if (err) return done(err, null);
-    if (wordFound === null || wordFound === undefined || wordFound.length === 0 ||
-      (Object.keys(wordFound).length === 0 && wordFound.constructor === Object)) {
-      done(new Error("wordFound is null, undefined or an empty object."), null);
+    if (wordFound === null || wordFound === undefined) {
+      done(new Error("wordFound is null or undefined."), null);
     }
     done(null, wordFound);
   });

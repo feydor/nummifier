@@ -1,11 +1,11 @@
-import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import { Gear } from 'react-bootstrap-icons';
-import logo from '../../images/logo.svg';
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import { Gear } from "react-bootstrap-icons";
+import logo from "../../images/torus-inv.png";
 
-import './Header.css';
+import "./Header.css";
 
 /**
  * a header with slidedown settings
@@ -14,13 +14,8 @@ const Header = (props) => {
   return (
     <header>
       <Navbar expand="true">
-
         <Navbar.Brand href="/">
-          <img 
-            alt="logo"
-            src={logo}
-            className="d-inline-block align-top"
-          />{' '}
+          <img alt="logo" src={logo} className="d-inline-block align-top" />{" "}
         </Navbar.Brand>
 
         <Navbar.Brand href="/">
@@ -28,24 +23,23 @@ const Header = (props) => {
         </Navbar.Brand>
 
         <Navbar.Toggle onClick={toggleSettings}>
-          <Gear /> 
+          <Gear />
         </Navbar.Toggle>
-
       </Navbar>
 
-      <Navbar.Collapse id="basic-navbar-nav" style={{display: "none"}}>
+      <Navbar.Collapse id="basic-navbar-nav" style={{ display: "none" }}>
         <Container fluid id="settings" className="justify-content-center">
           <Row>
             <h5>Ciphers: </h5>
             <Form>
-              <CipherSetting 
+              <CipherSetting
                 label="AQ"
                 onChangeHandler={props.onChangeHandler}
                 defaultChecked={true}
               />
             </Form>
             <Form>
-              <CipherSetting 
+              <CipherSetting
                 label="GoN1"
                 onChangeHandler={props.onChangeHandler}
                 defaultChecked={false}
@@ -56,7 +50,7 @@ const Header = (props) => {
       </Navbar.Collapse>
     </header>
   );
-}
+};
 
 /**
  * A checkbox element that calls the 'onChangeHandler' param on click
@@ -66,7 +60,7 @@ const Header = (props) => {
  */
 const CipherSetting = ({ label, onChangeHandler, defaultChecked }) => {
   return (
-    <Form.Check 
+    <Form.Check
       type="switch"
       id={label}
       label={label}
@@ -88,6 +82,5 @@ function toggleSettings() {
     settings.style.display = "none";
   }
 }
-
 
 export default Header;

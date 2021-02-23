@@ -8,7 +8,6 @@ import { useEffect } from "react";
  * @param {function} setGlossary
  */
 function Glossary(props) {
-
   // fetches a GET request on query or selectedCiphers state variable change
   /*
   useEffect(() => {

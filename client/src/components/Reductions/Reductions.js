@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import './Reductions.css';
+import { useEffect } from "react";
+import "./Reductions.css";
 
 // re-renders on Query state change
 // assumes QueryBar us handling input stripping
 function Reductions(props) {
   const { query } = props;
   const pendingInput = <div>Pending input...</div>;
-  let textContent = '';
+  let textContent = "";
 
   /**
    * @return {string} res - a string of the following format:
@@ -32,12 +32,12 @@ function Reductions(props) {
   }, [props.selectedCiphers]);
 
   return (
-    <div id="DigitalReductionBars">
+    <div className="Reductions">
       <h2>Digital Reduction</h2>
       {query.length === 0 || !props.ciphers ? (
         pendingInput
       ) : (
-        <div id="digitalReductions"> 
+        <div id="digitalReductions">
           <ul id="reductionjsx">
             <ReductionsJsx />
           </ul>
