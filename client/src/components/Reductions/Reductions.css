@@ -2,7 +2,14 @@
   text-align: center;
 }
 
-ul {
+.Reductions ul {
   padding: 0;
   margin-bottom: 0;
+  font-size: 22px;
+}
+
+@media (min-width: 576px) {
+  .Reductions ul {
+    font-size: 23px;
+  }
 }

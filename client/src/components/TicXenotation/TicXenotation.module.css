@@ -1,7 +1,9 @@
-.TicXenotation {
-  
+.TicXenotation p {
+  font-size: 22px;
 }
 
-p {
-  font-size: 20px;
+@media (min-width: 576px) {
+  .TicXenotation p {
+    font-size: 24px;
+  }
 }

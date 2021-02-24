@@ -3,6 +3,14 @@
   scroll-behavior: smooth;
 }
 
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -21,6 +29,7 @@ a {
 }
 
 .navbar {
+  background-color: #121212;
   display: flex;
   justify-content: space-between;
   align-items: center;

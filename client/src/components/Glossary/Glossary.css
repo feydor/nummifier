@@ -1,8 +1,15 @@
-#Glossary {
+.Glossary div {
+  font-size: 22px;
+}
+
+@media (min-width: 576px) {
+  .Glossary div {
+    font-size: 23px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-  #Glossary h2 {
+  .Glossary h2 {
     word-break: break-word;
   }
 }

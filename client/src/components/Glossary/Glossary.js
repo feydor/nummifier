@@ -15,7 +15,7 @@ function Glossary(props) {
   */
 
   return (
-    <div id="Glossary">
+    <div className="Glossary">
       <h2>Hyperglossolalary</h2>
       {props.glossary.length === 0 ? (
         <div>Pending response...</div>
