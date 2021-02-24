@@ -49,7 +49,18 @@ const glossary = [
   "neolemuriantimewar", "thenumberofthebeast", "thethreehorsemenoftheapocalypse", "randolphcarter", "tellurianomegapoint",
   "dowhatthouwilt", "aleistercrowley", "cthulhuclub", "decadence", "gregorian", "abstractthinkingmachines", "theultimateblasphemy",
   "pentazygon", "cookinglobsterswithjakeanddinos", "humansecuritysystem", "lobsterman", "intotheheartofdarkness", "cookinglobsters",
-  "arbiteroftheuniverse", "natureornaturesgod", "greatpropeller", "vastabrupt", "impossibletoreplicate"
+  "arbiteroftheuniverse", "natureornaturesgod", "greatpropeller", "vastabrupt", "impossibletoreplicate", "likeduneexceptthewormsrideyou", "deadliner", "urbanfutures", "ouroboros", "vauung", "humanmachinemegawar", "schizophrenia", "artificialsuperintelligence",
+  "nonlinearity", "thebitcoincurrency", "storeofvalue", "denizensoftheabyss", "consciousness", "anglossicqaballah",
+  "angelicsecretlanguage", "warengine", "warmachine", "xenosystems", "outsidein", "abdulalhazred", "goldenage", "shaytan",
+  "isolatednation", "wastingtime", "heirarchyofinvestors", "counterculture", "polaropposites", "distributedledgertechnology",
+  "distributedledger", "centralbankdigitalcurrency", "primitiveaccumulation", "hyperstition", "hyperstitioninaction",
+  "allconspiraciesaretrue", "distributedconspiracy", "involvmentswithreality", "thesunneversetsonthebritishempire", "scottalexander",
+  "pandemonium", "pandemoniummatrix", "theberenstainbears", "theberensteinbears", "mandelaeffect", "themandelaeffect", "numogram",
+  "cthululives", "departmentofdefense", "centralintelligenceagency", "electriccattleprod", "yourebeingwatched", "haveyouseenthisman",
+  "luciddreaming", "haveyouseenthismanrecently", "gematrix", "tessierashpool", "wintermute", "armitage", "thisisthematrix",
+  "welcometostraylight", "tessierashpoolcorporation", "innadababylon", "byebyebabylon", "themarkofthebeast", "kuangvirus",
+  "gregorianrestoration", "theaoe", "thearchitectonicorderoftheeschaton", "consensualhallucination", "turingcops",
+  "exotericreligion", "immanentizetheeschaton", "dontimmanentizetheeschaton", "thereisnoalternative"
 ];
 
 module.exports = seedDB;

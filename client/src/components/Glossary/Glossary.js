@@ -5,7 +5,6 @@ import { useEffect } from "react";
  * fetches and displays a list of matching words from the server
  * @param {array} glossary
  * @param {string} query
- * @param {function} setGlossary
  */
 function Glossary(props) {
   // fetches a GET request on query or selectedCiphers state variable change

@@ -1,2 +1,8 @@
 #Glossary {
 }
+
+@media only screen and (max-width: 600px) {
+  #Glossary h2 {
+    word-break: break-word;
+  }
+}

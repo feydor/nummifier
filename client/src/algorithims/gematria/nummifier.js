@@ -65,24 +65,3 @@ function reduce(num) {
 }
 
 module.exports = nummificate;
-// export default nummificate;
-
-// reduces an n digit number by summation
-// ex: 78 => 15
-// ex: 9999 => 36
-// input: positive n digit number
-// output: positive n-1 digit number
-//~ function reduceNonNegative(num) {
-//~ let arr = [];
-//~ // add each seperate digit into arr
-//~ // ex: 999 => [9, 9, 9]
-//~ while (num !== 0) {
-//~ let currDigit = num % 10;
-//~ arr.push(currDigit);
-//~ num = Math.trunc(num / 10);
-//~ }
-//~ // sum up the digits in arr
-//~ return arr.reduce((acc, curr) => {
-//~ return acc + curr;
-//~ });
-//~ }

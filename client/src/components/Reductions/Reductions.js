@@ -6,7 +6,6 @@ import "./Reductions.css";
 function Reductions(props) {
   const { query } = props;
   const pendingInput = <div>Pending input...</div>;
-  let textContent = "";
 
   /**
    * @return {string} res - a string of the following format:

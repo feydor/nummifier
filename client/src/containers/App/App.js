@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import torus from "../../images/torus-pink.gif";
 
 import nummificate from "../../algorithims/gematria/nummifier";
+import * as TX from '../../algorithims/ticxenotation/ticxenotation';
 
 import "./App.css";
 
@@ -16,10 +17,11 @@ import Glossary from "../../components/Glossary/Glossary.js";
 import Reductions from "../../components/Reductions/Reductions.js";
 import Footer from "../../components/Footer/Footer.js";
 import Description from "../../components/Description/Description.js";
+import TicXenotation from "../../components/TicXenotation/TicXenotation.js";
 
 // globals
-let typingTimer;
-const typingInterval = 1000;
+let gTypingTimer;
+const gTypingInterval = 1000;
 
 // the webpage itself
 class App extends React.Component {
@@ -91,7 +93,7 @@ class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             // throw error on non-200 status codes
-            if (response.status !== 200)
+            if (response.status === 400)
               throw new Error(`${response.status}: ${response.statusTxt}`);
             console.log("Response (from GET):");
             console.log(response.glossary);
@@ -100,6 +102,7 @@ class App extends React.Component {
             response.glossary = response.glossary.filter(
               (word) => word !== this.state.query
             );
+
             this.setState({
               glossary: response.glossary,
               loading: false,
@@ -178,8 +181,8 @@ class App extends React.Component {
    * sets a timer for 'typingInterval' ms
    */
   handleQueryKeyUp = () => {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(this.handleQueryChange, typingInterval);
+    clearTimeout(gTypingTimer);
+    gTypingTimer = setTimeout(this.handleQueryChange, gTypingInterval);
   };
 
   /**
@@ -188,7 +191,7 @@ class App extends React.Component {
    * sets isTyping to true
    */
   handleQueryKeyDown = () => {
-    clearTimeout(typingTimer);
+    clearTimeout(gTypingTimer);
     this.setState({
       isTyping: true,
     });
@@ -226,6 +229,22 @@ class App extends React.Component {
       glossary: []
     });
   }
+  
+  /**
+   * Returns an array of TX encoded strings
+   * @example:
+   * - getTics() = ['(:)', ':::'], where ciphers['AQ'].reduce() = [3, 8]
+   */
+  getTics = () => {
+    let tics = [];
+    for (let cipher in this.state.ciphers) {
+      if (this.state.selectedCiphers[cipher]) {
+        tics = [...tics, ...this.state.ciphers[cipher].reduce()];
+      }
+    }
+
+    return tics.map(n => TX.convert(n));
+  }
 
   render() {
     let content = <img src={torus} alt="a picture of a torus" />;
@@ -247,13 +266,31 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
+          <TicXenotation 
+            ciphers={this.state.ciphers}
+            getTics={this.getTics}
+          />
           <Glossary
             query={this.state.query}
             glossary={this.state.glossary}
-            setGlossary={this.state.setGlossary}
           />
         </div>
       );
+    } else if (this.state.query !== "" && this.state.glossary.length === 0) {
+      content = (
+        <div>
+          <Reductions
+            query={this.state.query}
+            ciphers={this.state.ciphers}
+            selectedCiphers={this.state.selectedCiphers}
+          />
+          <TicXenotation 
+            ciphers={this.state.ciphers}
+            getTics={this.getTics}
+          />
+        </div>
+      );
+
     }
 
     return (
@@ -285,8 +322,15 @@ class App extends React.Component {
 
           <Container>
             <Description>
-              <h3>Cumulation</h3>
-              <p>Cumulation is the operation used to define the value of the gates of the numogram,each of which opens their respective channel (which in turn is defined by plexing).</p>
+              <h2>Gematrixography for the Perplexed</h2>
+              <h3>Digital Reduction, or Plexing</h3>
+              <p>Plexing is the act of reducing a number from an <code>n</code>-digit number to a single-digit number via accumulation (<code>418 = 13 = 4</code>). The act of a number 'collapsing into itself' continously reintroduces the problematic of overcoding. That semiotics is 'always already cryptography' is plexing's original and only Weltanschauung. To reduce further, into its contituent <code>1</code>'s (its 'tics') would fall under the category of Tic-Xenotation. </p>
+              <h3>Tic-Xenotation</h3>
+              <p>A numerical system developed by Dr. D.C. Barker wherein notation and arithemtical operation is reduced to the concepts of tic-clusters (<code>:</code>) and implextions (<code>()</code>). Primes constitute a magnitude value (the absolute value) and an ordinate value (its place on the prime number line), thus primes can be represented as tic-clusters and further implextions of tic-clusters (<code>32 = 2<sup>5</sup> = :::::</code>). Implextion is the operation of transforming a magnitude into an ordinate value (<code>11 = 5<sup>th</sup> prime = (((((:))))); (11) = ((((((:)))))) = 6<sup>th</sup>prime=13</code>) Non-primes can also be implexted (<code>8 = :::; (8) = (:::) = 8<sup>th</sup>prime=19</code>); and compounds are products of their prime factors (<code>15 = 5 x 3 = 3<sup>rd</sup> prime x 2<sup>nd</sup> prime = ((:))(:)</code>). Finally to constitute <code>1</code> and <code>0</code>, there is the deplextion operator (<code>-P</code>), which decreases a TX-value's ordinate value (<code>1 = (-P):; 0 = ((-P)):</code>).</p>
+              <h3>Qabbala</h3>
+              <p>A class of 'rigourously constructible procedures' intended to explicate a 'signal from the Outside' in which discovering and correcting 'formal errors' are a 'procedural requirement' intended for its 'continued development'. Roughly equivalent to the bio-scientific pursuit for epistimological verification, Qabbala's gnoetic goals are distinguishable from its 'verifiable' content in much the same way as the theory of causality stands to a plain, 'transcendently aware' description of events. To have reached the level of certainty at the 'procedural-problematic' level is to have said enough. Anything further, and it would have to be classified in that unfortunate grouping of ideas whose forms are beautiful but whose content remains empty sophistry.</p>
+              
+              <footer><em>Quotations taken from COLLAPSE I, ed. R. Mackay (Oxford: Urbanomic, September 2007)</em></footer>
             </Description>
           </Container>
 
