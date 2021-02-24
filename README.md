@@ -1,78 +1,73 @@
 <div align="center">
-  ![](./client/src/images/torus-pink.gif)
+  ![](./examples/banner.png)
 </div>
 
+# Nummifier
+
 <p align="center">
-  <a href="https://github.com/feydor/nummifier/commits/master" target="_blank">
-    <img src="https://img.shields.io/github/last-commit/feydor/nummifier?style=flat-square" alt="GitHub last commit">
-  </a>
-
-  <a href="https://standardjs.com" target="_blank">
-    <img alt="ESLint" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square">
-  </a>
-
-  <a href="https://github.com/feydor/nummifier/blob/master/LICENSE" target="_blank">
-    <img alt="LICENSE" src="https://img.shields.io/github/license/feydor/nummifier?style=flat-square&color=yellow">
-    </a>
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/feydor/nummifier?include_prereleases)
+![GitHub last commit](https://img.shields.io/github/last-commit/feydor/nummifier)
+![GitHub issues](https://img.shields.io/github/issues-raw/feydor/nummifier)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/feydor/nummifier)
+![GitHub](https://img.shields.io/github/license/feydor/nummifier)
+![Github StandardJS](https://img.shields.io/badge/code_style-standard-brightgreen.svg)
 </p>
 
 <hr>
 
-A React.js webapp 
-
-<p align="center">
-  <img alt='logo name' src='./src/images/favicon.ico'>
-</p>
+ A React.js web app to aid in anorganic numerological and lexical investigations. 
 
 # Table of contents
 
-- [Usage](#usage)
+- [Live Version](#liveversion)
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Development](#development)
   - [Codebase](#codebase)
     - [Technologies](#technologies)
     - [Folder Structure](#folderstructure)
+  - [Design Overview](#designoverview)
 - [License](#license)
 
-# Usage
+# Live Version
+[(Back to top)](#table-of-contents)
 
-![Heroku](http://heroku-badge.herokuapp.com/?app=nummifier&style=flat&svg=1&root=index.html)
+![Heroku](http://heroku-badge.herokuapp.com/?app=nummifier&svg=1&root=client/build/index.html)
 
 # Screenshots
+[(Back to top)](#table-of-contents)
 
 ![](./examples/main.png)
 ![](./examples/function.png)
 
 # Installation
+[(Back to top)](#table-of-contents)
 
 Clone this repository, navigate into the project folder, and build the dependencies by executing:
 
 ```sh
+git clone https://github.com/feydor/nummifier.git
+cd nummifier
 npm install
 ```
 
-After installing the dependencies, build the app by executing:
-
-```sh
-npm build
-```
-
-Finally run it by executing:
+After installing the dependencies, start the development server by executing:
 
 ```sh
 npm start
 ```
 
-By default a development server will start at ![]("http://localhost:8080"). To develop, set the appropriate environment variables in .env:
+By default a development server will start at ``http://localhost:3001``. 
+
+To develop, set the appropriate environment variables in .env:
 
 ```sh
-connectionString='mongodb+srv://dev:<password>@cluster0.rn8t3.mongodb.net/<dbname>?retryWrites=true&w=majority'
-PORT='8080'
-DOMAIN='localhost:8080'
+DB_URI='mongodb+srv://<user>:<password>@cluster0.rn8t3.mongodb.net/Glossary?retryWrites=true&w=majority'
+PORT='3001'
 ```
 
 # Development
+[(Back to top)](#table-of-contents)
 
 ## Codebase
 
@@ -80,12 +75,11 @@ DOMAIN='localhost:8080'
 
 Technologies used in this mono repo include:
 
-- Full-stack JavaScript: Backend uses Node.js, frontend is in plain JS.
+- Full-stack JavaScript: Backend uses Node.js, Frontend uses React.js.
 - ExpressJS: RESTful api
 - MongoDB: NoSQL database
-- Sass: CSS framework
-- Bootstrap: CSS and HTML framework
-- Parcel: Web application bundler
+- React-Bootstrap: CSS and HTML framework
+- create-react-app: Web application bundler and setup
 - Prettier: JS code style formatter
 - Jest: Testing framework
 
@@ -93,19 +87,26 @@ Technologies used in this mono repo include:
 
 ```sh
 nummifier/
-├── dist       # Compiled files
+├── client     # Front-end React.js app
+│   ├── build               # Static build, served by server.js
+│   ├── public              # HTML, favicons, etc
+│   └── src                 # React components, containers, tests, numerological methods
+│       ├── algorithims     # Gematria, Tic-Xenotation, digital reduction
+│       ├── components      # Function components
+│       ├── images          # gifs, resources
+│       └── containers      # Stateful class container and entrypoint
+├── db         # Database seeding functions
 ├── examples   # Screenshots and assorted images
 ├── models     # MongoDB schemas, models, and pre-hooks
-├── src        # Source files
-│   ├── images              # Images, logos, favicons
-│   ├── javascripts         # JavaScript code
-│   ├── stylesheets         # Sass and CSS sources
-│   ├── vendor              # Bootstrap-icons
-│   └── views               # HTML
-├── tests      # Jest tests
-└── server.js  # backend entrypoint
+└── server.js  # Back-end Express.js app
 ```
 
+## Design Overview
+[(Back to top)](#table-of-contents)
+
+
+
 # License
+[(Back to top)](#table-of-contents)
 
 MIT, see the [LICENSE](./LICENSE) file.

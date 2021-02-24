@@ -1,5 +1,5 @@
 /* nummifier.js - digital reduction algorithm */
-import * as ciph from './ciphers.js';
+import * as ciph from "./ciphers.js";
 // import { gematria } from './ciphers.js';
 
 /**

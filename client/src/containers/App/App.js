@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import torus from "../../images/torus-pink.gif";
 
 import nummificate from "../../algorithims/gematria/nummifier";
-import * as TX from '../../algorithims/ticxenotation/ticxenotation';
+import * as TX from "../../algorithims/ticxenotation/ticxenotation";
 
 import "./App.css";
 
@@ -219,17 +219,17 @@ class App extends React.Component {
           ciphers: nummificate(query),
         });
       }
-      );
+    );
     this.setGlossary();
   };
 
   handleQueryClear = () => {
     this.setState({
       query: "",
-      glossary: []
+      glossary: [],
     });
-  }
-  
+  };
+
   /**
    * Returns an array of TX encoded strings
    * @example:
@@ -243,18 +243,21 @@ class App extends React.Component {
       }
     }
 
-    return tics.map(n => TX.convert(n));
-  }
+    return tics.map((n) => TX.convert(n));
+  };
 
   render() {
     let content = <img src={torus} alt="a picture of a torus" />;
     if (this.state.loading) {
-      content = <Loader 
-        type="Grid"
-        color="#ff0266"
-        height={100}
-        width={100}
-        timeout={3000} />;
+      content = (
+        <Loader
+          type="Grid"
+          color="#ff0266"
+          height={100}
+          width={100}
+          timeout={3000}
+        />
+      );
     } else if (this.state.error) {
       // TODO: <ErrorNotice onClickHandler={this.tryAgainHandler}/>
       content = <h2>Error</h2>;
@@ -266,14 +269,8 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
-          <TicXenotation 
-            ciphers={this.state.ciphers}
-            getTics={this.getTics}
-          />
-          <Glossary
-            query={this.state.query}
-            glossary={this.state.glossary}
-          />
+          <TicXenotation ciphers={this.state.ciphers} getTics={this.getTics} />
+          <Glossary query={this.state.query} glossary={this.state.glossary} />
         </div>
       );
     } else if (this.state.query !== "" && this.state.glossary.length === 0) {
@@ -284,20 +281,20 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
-          <TicXenotation 
-            ciphers={this.state.ciphers}
-            getTics={this.getTics}
-          />
+          <TicXenotation ciphers={this.state.ciphers} getTics={this.getTics} />
         </div>
       );
-
     }
 
     return (
       <div className="baselevel">
         <Header onChangeHandler={this.handleSelectedCiphersChange} />
         <div id="top"></div>
-        <div id ="container" className="flex-column" style={{ paddingTop: '10vh' }}>
+        <div
+          id="container"
+          className="flex-column"
+          style={{ paddingTop: "10vh" }}
+        >
           <Container className="App shadow">
             <Row>
               <h1 id="title">Abysmal Nummification of the Signifier</h1>
@@ -316,7 +313,10 @@ class App extends React.Component {
             <Row>
               <Description>
                 <h4>Instructions</h4>
-                <p>Enter your query above. Select the desired cipher from the settings.</p>
+                <p>
+                  Enter your query above. Select the desired cipher from the
+                  settings.
+                </p>
               </Description>
             </Row>
           </Container>
@@ -325,13 +325,71 @@ class App extends React.Component {
             <Description>
               <h2>Gematrixography for the Perplexed</h2>
               <h3>Digital Reduction, or Plexing</h3>
-              <p>Plexing is the act of reducing a number from an <code>n</code>-digit number to a single-digit number via accumulation (<code>418 = 13 = 4</code>). The act of a number 'collapsing into itself' continously reintroduces the problematic of overcoding. That semiotics is 'always already cryptography' is plexing's original and only Weltanschauung. To reduce further, into its contituent <code>1</code>'s (its 'tics') would fall under the category of Tic-Xenotation. </p>
+              <p>
+                Plexing is the act of reducing a number from an <code>n</code>
+                -digit number to a single-digit number via accumulation (
+                <code>418 = 13 = 4</code>). The act of a number 'collapsing into
+                itself' continously reintroduces the problematic of overcoding.
+                That semiotics is 'always already cryptography' is plexing's
+                original and only Weltanschauung. To reduce further, into its
+                contituent <code>1</code>'s (its 'tics') would fall under the
+                category of Tic-Xenotation.{" "}
+              </p>
               <h3>Tic-Xenotation</h3>
-              <p>A numerical system developed by Dr. D.C. Barker wherein notation and arithemtical operation is reduced to the concepts of tic-clusters (<code>:</code>) and implextions (<code>()</code>). Primes constitute a magnitude value (the absolute value) and an ordinate value (its place on the prime number line), thus primes can be represented as tic-clusters and further implextions of tic-clusters (<code>32 = 2<sup>5</sup> = :::::</code>). Implextion is the operation of transforming a magnitude into an ordinate value (<code>11 = 5<sup>th</sup> prime = (((((:))))); (11) = ((((((:)))))) = 6<sup>th</sup> prime=13</code>) Non-primes can also be implexted (<code>8 = :::; (8) = (:::) = 8<sup>th</sup> prime=19</code>); and compounds are products of their prime factors (<code>15 = 5 x 3 = 3<sup>rd</sup> prime x 2<sup>nd</sup> prime = ((:))(:)</code>). Finally to constitute <code>1</code> and <code>0</code>, there is the deplextion operator (<code>-P</code>), which decreases a TX-value's ordinate value (<code>1 = (-P):; 0 = ((-P)):</code>).</p>
+              <p>
+                A numerical system developed by Dr. D.C. Barker wherein notation
+                and arithemtical operation is reduced to the concepts of
+                tic-clusters (<code>:</code>) and implextions (<code>()</code>).
+                Primes constitute a magnitude value (the absolute value) and an
+                ordinate value (its place on the prime number line), thus primes
+                can be represented as tic-clusters and further implextions of
+                tic-clusters (
+                <code>
+                  32 = 2<sup>5</sup> = :::::
+                </code>
+                ). Implextion is the operation of transforming a magnitude into
+                an ordinate value (
+                <code>
+                  11 = 5<sup>th</sup> prime = (((((:))))); (11) = ((((((:))))))
+                  = 6<sup>th</sup> prime=13
+                </code>
+                ) Non-primes can also be implexted (
+                <code>
+                  8 = :::; (8) = (:::) = 8<sup>th</sup> prime=19
+                </code>
+                ); and compounds are products of their prime factors (
+                <code>
+                  15 = 5 x 3 = 3<sup>rd</sup> prime x 2<sup>nd</sup> prime =
+                  ((:))(:)
+                </code>
+                ). Finally to constitute <code>1</code> and <code>0</code>,
+                there is the deplextion operator (<code>-P</code>), which
+                decreases a TX-value's ordinate value (
+                <code>1 = (-P):; 0 = ((-P)):</code>).
+              </p>
               <h3>Qabbala</h3>
-              <p>A class of 'rigourously constructible procedures' intended to explicate a 'signal from the Outside' in which discovering and correcting 'formal errors' are a 'procedural requirement' intended for its 'continued development'. Roughly equivalent to the bio-scientific pursuit for epistimological verification, Qabbala's gnoetic goals are distinguishable from its 'verifiable' content in much the same way as the theory of causality stands to a plain, 'transcendently aware' description of events. To have reached the level of certainty at the 'procedural-problematic' level is to have said enough. Anything further, and it would have to be classified in that unfortunate grouping of ideas whose forms are beautiful but whose content remains empty sophistry.</p>
-              
-              <footer><em>Quotations taken from COLLAPSE I, ed. R. Mackay (Oxford: Urbanomic, September 2007)</em></footer>
+              <p>
+                A class of 'rigourously constructible procedures' intended to
+                explicate a 'signal from the Outside' in which discovering and
+                correcting 'formal errors' are a 'procedural requirement'
+                intended for its 'continued development'. Roughly equivalent to
+                the bio-scientific pursuit for epistimological verification,
+                Qabbala's gnoetic goals are distinguishable from its
+                'verifiable' content in much the same way as the theory of
+                causality stands to a plain, 'transcendently aware' description
+                of events. To have reached the level of certainty at the
+                'procedural-problematic' level is to have said enough. Anything
+                further, and it would have to be classified in that unfortunate
+                grouping of ideas whose forms are beautiful but whose content
+                remains empty sophistry.
+              </p>
+
+              <footer>
+                <em>
+                  Quotations taken from COLLAPSE I, ed. R. Mackay (Oxford:
+                  Urbanomic, September 2007)
+                </em>
+              </footer>
             </Description>
           </Container>
 

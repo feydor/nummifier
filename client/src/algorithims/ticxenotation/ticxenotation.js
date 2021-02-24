@@ -17,8 +17,9 @@ const MAX = 4294967296;
  * see alphaToTx for details
  */
 export function convert(n) {
-  if (!n || isNaN(n) || n < 0 || n >= MAX) throw new RangeError("Argument is invalid");
-  return alphaToTx(n).map(stringify).join('');
+  if (!n || isNaN(n) || n < 0 || n >= MAX)
+    throw new RangeError("Argument is invalid");
+  return alphaToTx(n).map(stringify).join("");
 }
 
 /**
@@ -31,10 +32,10 @@ export function convert(n) {
  * - alphaToTx(1) = ':(-P)'
  */
 export function alphaToTx(n) {
-  if (n < 2) return [''];
+  if (n < 2) return [""];
   const factors = factor(n);
-  
-  return factors.map(f => f == 2 ? ':' : alphaToTx(indexOfPrime(f)));
+
+  return factors.map((f) => (f == 2 ? ":" : alphaToTx(indexOfPrime(f))));
 }
 
 /**
@@ -43,12 +44,12 @@ export function alphaToTx(n) {
  * @example:
  * - stringify(['::']) = ['(::)']
  */
-export const stringify = arr => {
+export const stringify = (arr) => {
   if (Array.isArray(arr)) {
-    return `(${ arr.reduce((prev, curr) => prev + stringify(curr), '') })`;
+    return `(${arr.reduce((prev, curr) => prev + stringify(curr), "")})`;
   }
   return arr;
-}
+};
 
 /*
  * Returns the prime factorization of n
@@ -59,7 +60,7 @@ export const stringify = arr => {
  */
 export function factor(n) {
   let factors = [];
-  if (!n || isNaN(n) || n < 1 || n >= MAX ) {
+  if (!n || isNaN(n) || n < 1 || n >= MAX) {
     return factors;
   }
 
@@ -68,7 +69,7 @@ export function factor(n) {
     factors.push(f);
     n /= f;
   }
-  
+
   return factors;
 }
 
@@ -83,9 +84,9 @@ export function factor(n) {
 function smallestFactor(n) {
   if (n < 2) throw new RangeError("Argument must be 2 or greater.");
   if (n % 2 === 0) return 2;
-  
+
   let end = Math.floor(Math.sqrt(n));
-  
+
   for (let i = 3; i <= end; i += 2) {
     if (n % i === 0) return i;
   }
@@ -122,7 +123,7 @@ function factorPowers(factors) {
 /*
  * Returns all prime numbers from 2 through n
  * @param {number} n
- * @return {array} 
+ * @return {array}
  * @example:
  * - sieve(5) = [2, 3, 5]
  * - sieve(29) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
@@ -137,7 +138,10 @@ function sieve(n) {
     }
   }
 
-  primes = a.map((n, i) => !n ? i : 0).filter(n => n).slice(1);
+  primes = a
+    .map((n, i) => (!n ? i : 0))
+    .filter((n) => n)
+    .slice(1);
   return primes;
 }
 

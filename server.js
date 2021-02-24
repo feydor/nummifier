@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.DB_URI;
 const port = process.env.PORT || 3001;
 const seedDB = require("./db/seedDB");
 var promise;

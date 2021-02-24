@@ -6,7 +6,7 @@ import { Gear } from "react-bootstrap-icons";
 import logo from "../../images/torus-inv.png";
 
 import "./Header.css";
-  
+
 // constants
 const PADDING_TOP = "10vh";
 
@@ -14,7 +14,6 @@ const PADDING_TOP = "10vh";
  * a header with slidedown settings
  */
 const Header = (props) => {
-
   return (
     <header>
       <Navbar expand="true" className="fixed-top">
@@ -31,7 +30,10 @@ const Header = (props) => {
         </Navbar.Toggle>
       </Navbar>
 
-      <Navbar.Collapse id="basic-navbar-nav" style={{ display: "none", paddingTop: PADDING_TOP }}>
+      <Navbar.Collapse
+        id="basic-navbar-nav"
+        style={{ display: "none", paddingTop: PADDING_TOP }}
+      >
         <Container fluid id="settings" className="justify-content-center">
           <Row>
             <h5>Ciphers: </h5>
@@ -89,7 +91,6 @@ function toggleSettings() {
     // return padding to div#container
     document.getElementById("container").style.paddingTop = PADDING_TOP;
   }
-
 }
 
 export default Header;

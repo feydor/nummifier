@@ -1,5 +1,5 @@
 /* ticxenotation.test.js - tests Tic-Xenotation functions */
-import * as TX from './ticxenotation.js';
+import * as TX from "./ticxenotation.js";
 
 test("indexOfPrime works", () => {
   expect(TX.indexOfPrime(53)).toEqual(16);
@@ -12,8 +12,8 @@ test("factor works", () => {
 });
 
 test("stringify works", () => {
-  expect(TX.stringify([':'])).toEqual('(:)');
-  expect(TX.stringify([''])).toEqual('()');
+  expect(TX.stringify([":"])).toEqual("(:)");
+  expect(TX.stringify([""])).toEqual("()");
 });
 
 test("does 1-10 in TX correctly", () => {

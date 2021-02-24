@@ -19,7 +19,7 @@
 .env.production.local
 
 # ide specific
-/.idea
+.idea
 .hyperdev-assets
 .replit
 
