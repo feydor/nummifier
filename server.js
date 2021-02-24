@@ -1,7 +1,7 @@
 /* server.js - RESTful api for gematria */
 
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").load();
+  require("dotenv").config();
 }
 
 const express = require("express");
