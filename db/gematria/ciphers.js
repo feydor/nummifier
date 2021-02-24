@@ -1,5 +1,5 @@
 /* ciphers.js */
-export const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**
  * like range() in python
@@ -8,7 +8,7 @@ export const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  * @param {number} step - optional, defaults to 1
  * @return {array} starting from 'start' and ending at 'end', inclusive
  */
-export function range(start, end, step = 1) {
+function range(start, end, step = 1) {
   return Array(Math.ceil((end - start) / step))
     .fill(start)
     .map((x, y) => x + y * step);
@@ -60,7 +60,7 @@ const ciphers = {
  * @return {Object} { "AQ": { method:string, sum:function }, ... }
  * NOTE: sum is returned as a function for individual, on-demand computation
  */
-export function gematria(str) {
+function gematria(str) {
   let map = [];
 
   // maps str to indices of ALPHANUM
@@ -84,8 +84,10 @@ export function gematria(str) {
   return container;
 }
 
-export function run_gematria() {
+function run_gematria() {
   for (let itr in gematria("aoe")) {
     console.log(itr);
   }
 }
+
+module.exports = { ALPHANUM, range, gematria, run_gematria };

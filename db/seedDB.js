@@ -1,5 +1,5 @@
-const nummificate = require('./client/src/algorithims/gematria/nummifier.js');
-const GlossaryEntry = require("./models/glossaryentry.js");
+const nummificate = require('./gematria/nummifier.js');
+const GlossaryEntry = require("../models/glossaryentry.js");
 
 /**
  * @param (function) connection - a mongoose connection

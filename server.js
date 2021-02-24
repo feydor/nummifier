@@ -9,7 +9,7 @@ const app = express();
 const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGO_URI;
 const port = process.env.PORT || 3001;
-const seedDB = require("./seedDB");
+const seedDB = require("./db/seedDB");
 var promise;
 
 // import models

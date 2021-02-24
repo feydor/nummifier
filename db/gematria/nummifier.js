@@ -1,5 +1,5 @@
 /* nummifier.js - digital reduction algorithm */
-import * as ciph from './ciphers.js';
+const ciph = require("./ciphers.js");
 // import { gematria } from './ciphers.js';
 
 /**
@@ -7,7 +7,7 @@ import * as ciph from './ciphers.js';
  * @param {string} query
  * @return {Object} { 'AQ': { method:string, reduce: [numbers] } }
  */
-function nummificate(query) {
+module.exports = function nummificate(query) {
   let ciphers = ciph.gematria(query);
 
   let container = {};
@@ -63,5 +63,3 @@ function reduce(num) {
     return acc + curr;
   });
 }
-
-export default nummificate;
