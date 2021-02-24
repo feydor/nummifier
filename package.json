@@ -20,7 +20,7 @@
 		"react-spinners": "^0.10.6"
 	},
 	"engines": {
-		"node": "4.4.5"
+		"node": "^14.16.0"
 	},
 	"repository": {
 		"type": "git"
