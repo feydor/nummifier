@@ -9,7 +9,7 @@
 ![GitHub](https://img.shields.io/github/license/feydor/nummifier)
 ![Github StandardJS](https://img.shields.io/badge/code_style-standard-brightgreen.svg)
 
-A React.js web app to aid in anorganic numerological and lexical investigations. 
+A React.js web app to aid in anorganic, numerological, and lexical investigations. 
 
 # Table of contents
 
@@ -98,7 +98,21 @@ nummifier/
 ## Design Overview
 [(Back to top)](#table-of-contents)
 
+On query input, a ``ciphers`` object is created and put into the state. The ``ciphers`` object is shown below:
+```sh
+cipher = {
+  'AQ': {
+    method: 'AQ',
+    reduce: function() { ... }
+  },
+  'GoN1': {
+    ...
+  },
+  ...
+}
+```
 
+This object is passed to various event handler functions in order to compute digital reductions on-demand and only when strictly required. Since Object properties are iterable in JavaScript, new ciphers can be implemented simply by adding them to the ``ciphers`` object.
 
 # License
 [(Back to top)](#table-of-contents)
