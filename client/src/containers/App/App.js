@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import torus from "../../images/torus-pink.gif";
 
-import nummificate from "../../algorithims/gematria/nummifier";
+import * as nmu from "../../algorithims/gematria/nummifier";
 import * as TX from "../../algorithims/ticxenotation/ticxenotation";
 
 import "./App.css";
@@ -216,7 +216,7 @@ class App extends React.Component {
       },
       function setCiphers() {
         this.setState({
-          ciphers: nummificate(query),
+          ciphers: nmu.nummificate(query),
         });
       }
     );

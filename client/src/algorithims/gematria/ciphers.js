@@ -1,5 +1,38 @@
 /* ciphers.js */
-export const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+/**
+ * nine twin-summing
+ * @param {string} str
+ * @return {Object} { "AQ": { method:string, sum:function }, ... }
+ * NOTE: sum is returned as a function for individual, on-demand computation
+ * @example:
+ * - gematria("aok")["AQ"].sum() = 140;
+ */
+export function gematria(str) {
+  let map = [];
+
+  // maps str to indices of ALPHANUM
+  for (let i of str.toUpperCase()) {
+    if ([...ALPHANUM].includes(i)) map.push([...ALPHANUM].indexOf(i));
+  }
+
+  // sums map-cipher mapped values for each cipher
+  let container = {};
+  for (let key in ciphers) {
+    container[key] = {
+      cipher: key,
+      sum: function () {
+        let sum = 0;
+        for (let j of map) sum += ciphers[this.cipher][j];
+        return sum;
+      },
+    };
+  }
+
+  return container;
+}
 
 /**
  * like range() in python
@@ -7,6 +40,9 @@ export const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  * @param {number} end - exclusive
  * @param {number} step - optional, defaults to 1
  * @return {array} starting from 'start' and ending at 'end', inclusive
+ * @example:
+ * - range(0, 3) = [0, 1, 2]
+ * - range(2, 8, 2) = [2, 4, 6]
  */
 export function range(start, end, step = 1) {
   return Array(Math.ceil((end - start) / step))
@@ -53,39 +89,3 @@ const ciphers = {
     ],
   ],
 };
-
-/**
- * nine twin-summing
- * @param {string} str
- * @return {Object} { "AQ": { method:string, sum:function }, ... }
- * NOTE: sum is returned as a function for individual, on-demand computation
- */
-export function gematria(str) {
-  let map = [];
-
-  // maps str to indices of ALPHANUM
-  for (let i of str.toUpperCase()) {
-    if ([...ALPHANUM].includes(i)) map.push([...ALPHANUM].indexOf(i));
-  }
-
-  // sums map-cipher mapped values for each cipher
-  let container = {};
-  for (let key in ciphers) {
-    container[key] = {
-      cipher: key,
-      sum: function () {
-        let sum = 0;
-        for (let j of map) sum += ciphers[this.cipher][j];
-        return sum;
-      },
-    };
-  }
-
-  return container;
-}
-
-export function run_gematria() {
-  for (let itr in gematria("aoe")) {
-    console.log(itr);
-  }
-}

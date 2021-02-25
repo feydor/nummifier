@@ -24,3 +24,10 @@ test("does GoN2", () => {
   expect(gon2.cipher).toEqual("GoN2");
   expect(gon2.sum()).toEqual(14);
 });
+
+test("range works", () => {
+  expect(cipher.range(2, 8, 2)).toEqual([2, 4, 6]);
+  expect(cipher.range(0, 3)).toEqual([0, 1, 2]);
+  expect(cipher.range(-4, 1)).toEqual([-4, -3, -2, -1, 0]);
+  expect(cipher.range(-4, 1, 2)).toEqual([-4, -2, 0]);
+});

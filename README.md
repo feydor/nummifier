@@ -1,21 +1,15 @@
-<div align="center">
-  ![](./examples/banner.png)
-</div>
+![](./examples/banner.png)
 
 # Nummifier
 
-<p align="center">
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/feydor/nummifier?include_prereleases)
 ![GitHub last commit](https://img.shields.io/github/last-commit/feydor/nummifier)
 ![GitHub issues](https://img.shields.io/github/issues-raw/feydor/nummifier)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/feydor/nummifier)
+![GitHub stars](https://img.shields.io/github/stars/feydor/nummifier)
 ![GitHub](https://img.shields.io/github/license/feydor/nummifier)
 ![Github StandardJS](https://img.shields.io/badge/code_style-standard-brightgreen.svg)
-</p>
 
-<hr>
-
- A React.js web app to aid in anorganic numerological and lexical investigations. 
+A React.js web app to aid in anorganic numerological and lexical investigations. 
 
 # Table of contents
 
@@ -25,14 +19,14 @@
 - [Development](#development)
   - [Codebase](#codebase)
     - [Technologies](#technologies)
-    - [Folder Structure](#folderstructure)
-  - [Design Overview](#designoverview)
+    - [Folder Structure](#folder-structure)
+  - [Design Overview](#design-overview)
 - [License](#license)
 
 # Live Version
 [(Back to top)](#table-of-contents)
 
-![Heroku](http://heroku-badge.herokuapp.com/?app=nummifier&svg=1&root=client/build/index.html)
+[![Heroku](https://heroku-badges.herokuapp.com/?app=nummifier&root=index.html)]
 
 # Screenshots
 [(Back to top)](#table-of-contents)
@@ -83,7 +77,7 @@ Technologies used in this mono repo include:
 - Prettier: JS code style formatter
 - Jest: Testing framework
 
-### Folder structure
+### Folder Structure
 
 ```sh
 nummifier/

@@ -1,13 +1,14 @@
 /* nummifier.js - digital reduction algorithm */
 import * as ciph from "./ciphers.js";
-// import { gematria } from './ciphers.js';
 
 /**
  * full digital reduction of any query string using ciphers.gematria() function
  * @param {string} query
  * @return {Object} { 'AQ': { method:string, reduce: [numbers] } }
+ * @example:
+ * - nummificate("aok")["AQ"].reduce() = [54, 9]
  */
-function nummificate(query) {
+export function nummificate(query) {
   let ciphers = ciph.gematria(query);
 
   let container = {};
@@ -23,12 +24,10 @@ function nummificate(query) {
           acc = reduce(acc);
           res.push(acc);
         }
-
         return res;
       },
     };
   }
-
   return container;
 }
 
@@ -36,32 +35,12 @@ function nummificate(query) {
  * reduces an n digit number by summation
  * @param {number} num
  * @return {number}
- * @example 78 => 15, 9999 => 36
+ * @example:
+ * - reduce(78) = 15
+ * - reduce(9999) = 36
  */
-function reduce(num) {
-  let arr = [];
-  // stringify num and spread into an array,
-  // split each char into a separate nested array,
-  // parse ints and push into arr
-  let parsedArr = [...num.toString()];
-  let nestedparsedArr = parsedArr.map((elem) => {
-    return [elem];
-  });
-  // takes the first two elements (the leading digit and the number's sign)
-  // and concatenates them at the front of the array
-  // example input: -123
-  if (num < 0) {
-    let flippedSignNum = nestedparsedArr[0].concat(nestedparsedArr[1]).join(""); // output: "-1"
-    nestedparsedArr = nestedparsedArr.slice(2); // slice off the first two characters
-    nestedparsedArr = [flippedSignNum, ...nestedparsedArr]; // attach flippedSign to nestedArr
-  }
-  nestedparsedArr.forEach((char) => {
-    arr.push(parseInt(char));
-  });
-  // sum up the digits in arr
-  return arr.reduce((acc, curr) => {
-    return acc + curr;
-  });
+export function reduce(num) {
+  if (isNaN(num)) throw new Error('Argument is NaN.');
+  let digits = String(num).match(/-?\d/g).map(Number); // match positive or negative nums
+  return digits.reduce((prev, curr) => prev + curr);
 }
-
-export default nummificate;

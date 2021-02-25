@@ -8,8 +8,8 @@
  */
 
 /* globals */
-let primes = [];
-primes = sieve(5);
+let gPrimes = [];
+gPrimes = sieve(5);
 const MAX = 4294967296;
 
 /**
@@ -19,6 +19,7 @@ const MAX = 4294967296;
 export function convert(n) {
   if (!n || isNaN(n) || n < 0 || n >= MAX)
     throw new RangeError("Argument is invalid");
+  if (n < 2) return '(-P):'
   return alphaToTx(n).map(stringify).join("");
 }
 
@@ -129,7 +130,7 @@ function factorPowers(factors) {
  * - sieve(29) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
  */
 function sieve(n) {
-  if (primes[primes.length - 1] >= n) return primes;
+  if (gPrimes[gPrimes.length - 1] >= n) return gPrimes;
   const a = new Array(n + 1).fill(0);
 
   for (let i = 2; i < a.length; i++) {
@@ -138,11 +139,11 @@ function sieve(n) {
     }
   }
 
-  primes = a
+  gPrimes = a
     .map((n, i) => (!n ? i : 0))
     .filter((n) => n)
     .slice(1);
-  return primes;
+  return gPrimes;
 }
 
 /**
@@ -154,6 +155,6 @@ function sieve(n) {
  */
 export function indexOfPrime(n) {
   if (n < 2) throw new RangeError("Argument must be 2 or greater.");
-  if (primes.includes(n)) return primes.indexOf(n) + 1;
+  if (gPrimes.includes(n)) return gPrimes.indexOf(n) + 1;
   return sieve(n).indexOf(n) + 1;
 }
