@@ -9,6 +9,7 @@ const app = express();
 const mongoose = require("mongoose");
 const MONGO_URI = process.env.DB_URI;
 const port = process.env.PORT || 3001;
+const { param, body, validationResult } = require("express-validator");
 const seedDB = require("./db/seedDB");
 var promise;
 
@@ -64,7 +65,11 @@ app.get("/gematria/hello", function (req, res) {
  * @example /gematria/140-5
  * NOTE: Only use the first element of the reductions array to match with the server
  */
-app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req, res) {
+app.get("/gematria/:reduction", 
+  [
+    param("reduction").isAscii().trim().escape()
+  ]
+  , urlencodedParser, function receiveReductions(req, res) {
   // 1. Get url request parameters
   if (!req.params) {
     return res.json({ status: 400, statusTxt: "Missing reduction parameter." });
@@ -99,7 +104,12 @@ app.get("/gematria/:reduction", urlencodedParser, function receiveReductions(req
  * @param body: { word, reductions[strings] }
  * @return { sucess:bool, savedWord:string (if saved) }
  */
-app.post("/gematria", jsonParser, function (req, res) {
+app.post("/gematria",
+  [
+    body("word").isAlphanumeric().not().isEmpty().trim().escape(),
+    body("reductions").isArray().notEmpty()
+  ],
+  jsonParser, function (req, res) {
   // 1. Extract body parameters
   if (req.body.word.length === 0 || !req.body.word) {
     return res.json({ status: 400, statusTxt: "Missing parameter." });

@@ -106,6 +106,7 @@ class App extends React.Component {
             this.setState({
               glossary: response.glossary,
               loading: false,
+              error: false
             });
           })
           .catch((error) => {
@@ -204,9 +205,13 @@ class App extends React.Component {
    */
   handleQueryChange = () => {
     // returns an array if query is not empty, else null
-    let query = document.getElementById("query-input").value.match(/[A-Z]/gi);
-    query = !query ? "" : query.join(""); // removes spaces, invalid characters, etc
-    if (query === null) query = ""; // query must never be null
+    let query = undefined;
+    try {
+      query = document.getElementById("query-input").value.match(/[A-Z]/gi).join("");
+    } catch (err) {
+      console.log(err);
+    }
+    if (!query) query = "";
 
     // first set the query state, then the ciphers
     this.setState(
@@ -260,7 +265,7 @@ class App extends React.Component {
       );
     } else if (this.state.error) {
       // TODO: <ErrorNotice onClickHandler={this.tryAgainHandler}/>
-      content = <h2>Error</h2>;
+      content = <h2>Error: Try again.</h2>;
     } else if (this.state.glossary.length > 0) {
       content = (
         <div>
@@ -281,7 +286,7 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
-          <TicXenotation ciphers={this.state.ciphers} getTics={this.getTics} />
+          <TicXenotation ciphers={this.state.ciphers} query={this.state.query} getTics={this.getTics} />
         </div>
       );
     }

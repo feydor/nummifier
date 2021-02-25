@@ -5,7 +5,7 @@ const TicXenotation = (props) => {
     <div className={styles.TicXenotation}>
       <h2>Tic-Xenotation</h2>
       <p>
-        {props.ciphers && Object.keys(props.ciphers).length > 0
+        {props.ciphers["AQ"] && document.getElementById("query-input").value
           ? props.getTics().map((tic) => <span key={tic}>{tic} </span>)
           : ""}
       </p>

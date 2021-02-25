@@ -60,7 +60,9 @@ const glossary = [
   "luciddreaming", "haveyouseenthismanrecently", "gematrix", "tessierashpool", "wintermute", "armitage", "thisisthematrix",
   "welcometostraylight", "tessierashpoolcorporation", "innadababylon", "byebyebabylon", "themarkofthebeast", "kuangvirus",
   "gregorianrestoration", "theaoe", "thearchitectonicorderoftheeschaton", "consensualhallucination", "turingcops",
-  "exotericreligion", "immanentizetheeschaton", "dontimmanentizetheeschaton", "thereisnoalternative"
+  "exotericreligion", "immanentizetheeschaton", "dontimmanentizetheeschaton", "thereisnoalternative", "theunbanked",
+  "monadology", "preestablishedharmony", "bestofallpossibleworlds", "worstofallpossibleworlds", "principleofsufficentreason",
+  "sufficientreason"
 ];
 
 module.exports = seedDB;

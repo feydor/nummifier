@@ -26,7 +26,8 @@ A React.js web app to aid in anorganic, numerological, and lexical investigation
 # Live Version
 [(Back to top)](#table-of-contents)
 
-[![Heroku](https://heroku-badges.herokuapp.com/?app=nummifier&root=index.html)]
+![Heroku](https://heroku-badges.herokuapp.com/?app=nummifier&root=index.html)
+![Go to live version.](https://nummifier.herokuapp.com/)
 
 # Screenshots
 [(Back to top)](#table-of-contents)
@@ -100,13 +101,14 @@ nummifier/
 
 On query input, a ``ciphers`` object is created and put into the state. The ``ciphers`` object is shown below:
 ```sh
-cipher = {
+ciphers = {
   'AQ': {
     method: 'AQ',
-    reduce: function() { ... }
+    reduce: function() { /* return digital reduction */ }
   },
   'GoN1': {
-    ...
+    method: 'GoN1',
+    reduce: function() { ... }
   },
   ...
 }
