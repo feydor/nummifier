@@ -129,9 +129,9 @@ The following is the gematric algorithim expressed in pseudocode:
     <em>(Note that cipher C will by default be AQ for meta-procedural reasons)</em>
 
     <b>if</b> <em>str</em> is empty <b>then</b>
-        <b>return<b> 0
+        <b>return</b> 0
     <b>else</b>
-        <b>return</b> <em>str</em> &#8594 <em>ALPHA</em> &#8594 <em>C</em> + gematria(<em>str</em>, <em>C</em>)
+        <b>return</b> <em>C</em>[ <em>ALPHA</em>[<em>str.pop()</em>] ] + gematria(<em>str</em>, <em>C</em>)
 </pre></code>
 
 ### Digital Reduction, or Plexing
