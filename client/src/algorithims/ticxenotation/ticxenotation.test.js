@@ -31,3 +31,8 @@ test("stringify works", () => {
   expect(TX.stringify([""])).toEqual("()");
 });
 
+test("alphaToTx works", () => {
+  expect(TX.alphaToTx(18)).toEqual([ ":", [":"], [":"] ]);
+  expect(TX.alphaToTx(8)).toEqual([ ":", ":", ":" ]);
+  expect(TX.alphaToTx(21)).toEqual([ [":"], [":", ":"] ]);
+});

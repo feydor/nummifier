@@ -54,7 +54,7 @@ export function nummificate(query) {
 export function gematria(str, cipher = CIPHERS['AQ']) {
   let _str = str.toUpperCase(); // sanitize input
   if (_str.length == 0) {
-    return cipher[ALPHANUM.indexOf(_str)];
+    return 0;
   } else {
     let strArr = [..._str];
     return cipher[ALPHANUM.indexOf(strArr.pop())] + gematria(strArr.join(''), cipher);

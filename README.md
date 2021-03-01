@@ -101,14 +101,12 @@ nummifier/
 
 ### Closure Optimization
 On query input, a ``ciphers`` object is created and put into the state. The ``ciphers`` object is shown below:
-```sh
+```javascript
 ciphers = {
   'AQ': {
-    method: 'AQ',
     reduce: function() { /* return digital reduction */ }
   },
   'GoN1': {
-    method: 'GoN1',
     reduce: function() { ... }
   },
   ...
@@ -120,39 +118,48 @@ This object is passed to various event handler functions in order to compute dig
 ## Psuedocode
 
 ### Gematria
-The following is the gematric algorithim expressed in psuedocode:
+The following is the gematric algorithim expressed in pseudocode:
 
-algorithm Sieve of Eratosthenes is
-    input: an integer n > 1.
-    output: all prime numbers from 2 through n.
+```psuedocode
+algorithm gematria is
+    input: an alphanumeric string str without whitespace,
+           a cipher C such that its relationship to the Alphanumericals ALPHA is injective
+    output: the same returned as a qabbalastically encoded number n
 
-    let A be an array of Boolean values, indexed by integers 2 to n,
-    initially all set to true.
+    (Note that cipher C will by default be AQ for meta-procedural reasons)
+
+    if str is empty then
+        return 0
+    else
+        return str &#8594 ALPHA &#8594 C + gematria(str, C)
+```
+
+### Digital Reduction, or Plexing
+The following is the digital reduction algorithim expressed in pseudocode:
+```math
+algorithim reduce is
+    input: a number n
+    output: the same digitally reduced by one level
+
+    if n is a single digit number then
+        return n
+    else
+       return &#007C n &#007C mod 10 + reduce(n / 10 truncated)
+```
+
+### Tic-Xenotation
+And finally tic-xenotation expressed in pseudocode:
+```math
+algorithim tx is
+    input: a number n > 1
+    output: an array of strings and nested strings representing the input in TX
     
-    for i = 2, 3, 4, ..., not exceeding √n do
-        if A[i] is true
-            for j = i2, i2+i, i2+2i, i2+3i, ..., not exceeding n do
-                A[j] := false
-
-    return all i such that A[i] is true.
-
-```sh
-algorithm Gematria is
-    input: an alphanumeric string str,
-           a cipher C such that its relationship to the alphabet ALPHA is injective
-    output: the same returned as a qabbalastically encoded number q
-
-    (Note that cipher C will by default be AQ for socio-practical reasons)
-
-    let A be an array of integer values, indexed by C
-    let M be an empty array
-    
-    for each i in C
-        if ALPHA includes i
-           M := i 
-
-
-    
+    if n < 2 then
+        return an implextion, ['']
+    else 
+        let f be the prime factorization of n
+        return [ if f == 2 then return a tic, ':'
+                 else return tx(the index of n on the prime number line) ]
 ```
 # License
 [(Back to top)](#table-of-contents)

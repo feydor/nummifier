@@ -13,8 +13,13 @@ gPrimes = sieve(5);
 const MAX = 4294967296;
 
 /**
- * interface/entry point
- * see alphaToTx for details
+ * Returns the Tic-Xenotation overcoding of n
+ * @param {number} n
+ * @return {string} tx
+ * @throws RangeError if n is NaN or out of range (0, MAX)
+ * @example:
+ * - convert(5) = '((:))'
+ * - convert(1) = ':(-P)'
  */
 export function convert(n) {
   if (!n || isNaN(n) || n < 0 || n >= MAX)
@@ -24,13 +29,14 @@ export function convert(n) {
 }
 
 /**
- * Returns the Tic-Xenotation overcoding of n
+ * Returns the number as a product of its primes factoriziation implexed,
+ * implex is the operation of replacing a number with its index on the prime number line
  * @param {number} n
- * @return {string} tx
- * @throws RangeError if n is NaN or out of range (0, MAX)
+ * @return {Array} 
  * @example:
- * - alphaToTx(5) = '((:))'
- * - alphaToTx(1) = ':(-P)'
+ * - alphaToTx(18) = [':', [':'], [':']]
+ * - alphaToTx(8) = [':', ':', ':']
+ * - alphaToTx(21) = [':', [':', ':']]
  */
 export function alphaToTx(n) {
   if (n < 2) return [""];
@@ -40,10 +46,11 @@ export function alphaToTx(n) {
 }
 
 /**
- * Returns a tic-cluster wrapped in a implextion
+ * Returns a tic-cluster array wrapped in a implextion
  * @param {array} arr
  * @example:
  * - stringify(['::']) = ['(::)']
+ * - stringify([':', ['::']]) = [':(::)']
  */
 export const stringify = (arr) => {
   if (Array.isArray(arr)) {
