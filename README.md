@@ -120,48 +120,48 @@ This object is passed to various event handler functions in order to compute dig
 
 ### Gematria
 The following is the gematric algorithim expressed in pseudocode:
+<pre><code>
+<b>algorithm</b> gematria is
+    <b>input:</b> an alphanumeric string <em>str</em> without whitespace,
+           a cipher <em>C</em> such that its relationship to the Alphanumericals <em>ALPHA</em> is injective
+    <b>output:</b> the same returned as a qabbalastically encoded number <em>n</em>
 
-```mediawiki
-**algorithm** gematria is
-    **input:** an alphanumeric string str without whitespace,
-           a cipher C such that its relationship to the Alphanumericals ALPHA is injective
-    **output:** the same returned as a qabbalastically encoded number n
+    <em>(Note that cipher C will by default be AQ for meta-procedural reasons)</em>
 
-    *(Note that cipher C will by default be AQ for meta-procedural reasons)*
-
-    **if** str is empty **then**
-        **return** 0
-    **else**
-        **return** str &#8594 ALPHA &#8594 C + gematria(str, C)
-```
+    <b>if</b> <em>str</em> is empty <b>then</b>
+        <b>return<b> 0
+    <b>else</b>
+        <b>return</b> <em>str</em> &#8594 <em>ALPHA</em> &#8594 <em>C</em> + gematria(<em>str</em>, <em>C</em>)
+</pre></code>
 
 ### Digital Reduction, or Plexing
 The following is the digital reduction algorithim expressed in pseudocode:
-```mediawiki
-algorithim reduce is
-    input: a number n
-    output: the same digitally reduced by one level
+<pre><code>
+<b>algorithim</b> reduce is
+    <b>input:</b> a number <em>n</em>
+    <b>output:</b> the same digitally reduced by one level
 
-    if n is a single digit number then
-        return n
-    else
-       return &#007C n &#007C mod 10 + reduce(n / 10 truncated)
-```
+    <b>if</b> <en>n</em> is a single digit number then
+        <b>return</b> <em>n</em>
+    <b>else</b>
+       <b>return</b> &#124;<em>n</em>&#124; mod 10 + reduce(<em>n</em> / 10 truncated)
+</pre></code>
 
 ### Tic-Xenotation
 And finally tic-xenotation expressed in pseudocode:
-```mediawiki
-algorithim tx is
-    input: a number n > 1
-    output: an array of strings and nested strings representing the input in TX
+<pre><code>
+<b>algorithim</b> tx is
+    <b>input:</b> a number <em>n</em> where <em>n</em> > 1
+    <b>output:</b> an array of strings and nested strings representing the input in TX
     
-    if n < 2 then
-        return an implextion, ['']
-    else 
-        let f be the prime factorization of n
-        return [ if f == 2 then return a tic, ':'
-                 else return tx(the index of n on the prime number line) ]
-```
+    <b>if</b> <em>n</em> < 2 then
+        <b>return</b> an implextion, ['']
+    <b>else</b> 
+        let <em>F</em> be the prime factorization of <em>n</em>
+        <b>return</b> [ <b>for each</b> factor <em>f</em> in <em>F</em> <b>do</b>
+                        <b>if</b> <em>f</em> == 2 then return a tic, ':'
+                        <b>else return</b> tx(the index of <em>n</em> on the prime number line) ]
+</pre></code>
 # License
 [(Back to top)](#table-of-contents)
 
