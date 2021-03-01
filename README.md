@@ -115,28 +115,29 @@ ciphers = {
 
 This object is passed to various event handler functions in order to compute digital reductions on-demand and only when strictly required. Since Object properties are iterable in JavaScript, new ciphers can be implemented simply by adding them to the ``ciphers`` object.
 
-## Psuedocode
+## Pseudocode
+[(Back to top)](#table-of-contents)
 
 ### Gematria
 The following is the gematric algorithim expressed in pseudocode:
 
-```psuedocode
-algorithm gematria is
-    input: an alphanumeric string str without whitespace,
+```mediawiki
+**algorithm** gematria is
+    **input:** an alphanumeric string str without whitespace,
            a cipher C such that its relationship to the Alphanumericals ALPHA is injective
-    output: the same returned as a qabbalastically encoded number n
+    **output:** the same returned as a qabbalastically encoded number n
 
-    (Note that cipher C will by default be AQ for meta-procedural reasons)
+    *(Note that cipher C will by default be AQ for meta-procedural reasons)*
 
-    if str is empty then
-        return 0
-    else
-        return str &#8594 ALPHA &#8594 C + gematria(str, C)
+    **if** str is empty **then**
+        **return** 0
+    **else**
+        **return** str &#8594 ALPHA &#8594 C + gematria(str, C)
 ```
 
 ### Digital Reduction, or Plexing
 The following is the digital reduction algorithim expressed in pseudocode:
-```math
+```mediawiki
 algorithim reduce is
     input: a number n
     output: the same digitally reduced by one level
@@ -149,7 +150,7 @@ algorithim reduce is
 
 ### Tic-Xenotation
 And finally tic-xenotation expressed in pseudocode:
-```math
+```mediawiki
 algorithim tx is
     input: a number n > 1
     output: an array of strings and nested strings representing the input in TX
