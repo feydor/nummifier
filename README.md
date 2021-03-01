@@ -99,6 +99,7 @@ nummifier/
 ## Design Overview
 [(Back to top)](#table-of-contents)
 
+### Closure Optimization
 On query input, a ``ciphers`` object is created and put into the state. The ``ciphers`` object is shown below:
 ```sh
 ciphers = {
@@ -116,6 +117,43 @@ ciphers = {
 
 This object is passed to various event handler functions in order to compute digital reductions on-demand and only when strictly required. Since Object properties are iterable in JavaScript, new ciphers can be implemented simply by adding them to the ``ciphers`` object.
 
+## Psuedocode
+
+### Gematria
+The following is the gematric algorithim expressed in psuedocode:
+
+algorithm Sieve of Eratosthenes is
+    input: an integer n > 1.
+    output: all prime numbers from 2 through n.
+
+    let A be an array of Boolean values, indexed by integers 2 to n,
+    initially all set to true.
+    
+    for i = 2, 3, 4, ..., not exceeding √n do
+        if A[i] is true
+            for j = i2, i2+i, i2+2i, i2+3i, ..., not exceeding n do
+                A[j] := false
+
+    return all i such that A[i] is true.
+
+```sh
+algorithm Gematria is
+    input: an alphanumeric string str,
+           a cipher C such that its relationship to the alphabet ALPHA is injective
+    output: the same returned as a qabbalastically encoded number q
+
+    (Note that cipher C will by default be AQ for socio-practical reasons)
+
+    let A be an array of integer values, indexed by C
+    let M be an empty array
+    
+    for each i in C
+        if ALPHA includes i
+           M := i 
+
+
+    
+```
 # License
 [(Back to top)](#table-of-contents)
 
