@@ -27,7 +27,7 @@ A React.js web app to aid in anorganic, numerological, and lexical investigation
 [(Back to top)](#table-of-contents)
 
 ![Heroku](https://heroku-badges.herokuapp.com/?app=nummifier&root=index.html)
-![Go to live version.](https://nummifier.herokuapp.com/)
+[Go to live version.](https://nummifier.herokuapp.com/)
 
 # Screenshots
 [(Back to top)](#table-of-contents)
