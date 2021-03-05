@@ -62,7 +62,15 @@ const glossary = [
   "gregorianrestoration", "theaoe", "thearchitectonicorderoftheeschaton", "consensualhallucination", "turingcops",
   "exotericreligion", "immanentizetheeschaton", "dontimmanentizetheeschaton", "thereisnoalternative", "theunbanked",
   "monadology", "preestablishedharmony", "bestofallpossibleworlds", "worstofallpossibleworlds", "principleofsufficentreason",
-  "sufficientreason"
+  "sufficientreason", "hyperstitional", "handbooktothegame", "theholyofholies", "theonegreatunit", "pseudochristos",
+  "xenotation", "implextion", "ticxenotation", "barkerspiral", "dcbarker", "professordcbarker", "geotraumatics",
+  "ticmaterial", "thebeingofnumber", "thebeingofbeings", "padbbha", "yodtta", "ziltth", "wummno", "umneo", "tactt", "sigol", "rakht",
+  "qush", "ohmga", "neom", "moan", "los", "kul", "ink", "jaeo", "hagg", "god", "cipher", "oldnick", "ahriman", "crypt",
+  "cryptocurrents", "ibdhjad", "anglossiccycle", "worldsdescent", "gatewayofthegods", "ordinatenumber", "cardinalnumber",
+  "programmingwithnothing", "gematriaofnothing", "birthofthegodess", "hyperfunctional", "zeroknowledgerollups", "zeroknowledge",
+  "zkrollups", "randomx", "controlledopposition", "breathingroom", "fourmoreyears", "feelsgoodman", "proofofwork", "btcisnotbitcoin",
+  "craigwrightissatoshinakamoto", "satoshi", "tominaganakamoto", "hashrateplutocracy", "xijinping", "atomicswap", "atomicswaps",
+  "infinitetailemission", "tailemission", "ellipticcurves"
 ];
 
 module.exports = seedDB;

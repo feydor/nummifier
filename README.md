@@ -9,7 +9,7 @@
 ![GitHub](https://img.shields.io/github/license/feydor/nummifier)
 ![Github StandardJS](https://img.shields.io/badge/code_style-standard-brightgreen.svg)
 
-A React.js web app to aid in anorganic, numerological, and lexical investigations. 
+A React.js web app to aid in anorganic, numerical, and semiotic investigations. 
 
 # Table of contents
 
