@@ -1,6 +1,7 @@
 /* ticxenotation.js - functions for conversion to Tic-Xenotation
  * for specifications see:
  * https://mvupress.net/tic-xenotation/
+ * https://hyperstition.abstracydynamics.org/archives/005047.html
  * prime factorization functions based on:
  * https://www.nayuki.io/res/calculate-prime-factorization-javascript
  * TX functions based on:
@@ -23,26 +24,43 @@ const MAX = 4294967296;
  */
 export function convert(n) {
   if (!n || isNaN(n) || n < 0 || n >= MAX)
-    throw new RangeError("Argument is invalid");
+    throw new RangeError('Argument is invalid');
   if (n < 2) return '(-P):'
-  return alphaToTx(n).map(stringify).join("");
+  return alphaToTx(n, ':').map(stringify).join('');
+}
+
+/**
+ * Returns the Reduced Tic-Xenotation overcoding of n
+ * @param {number} n
+ * @return {string} rtx
+ * @throws RangeError if n is NaN or out of range (0, MAX)
+ * @example:
+ * - reduce(5) = '((((0))))'
+ * - reduce(86) = '((0))(((0))(((0))((0))))'
+ */
+export function reduce(n) {
+  if (!n || isNaN(n) || n < 0 || n >= MAX)
+    throw new RangeError('Argument is invalid');
+  if (n < 2) return '(0)';
+  return alphaToTx(n, '((0))').map(stringify).join('');
 }
 
 /**
  * Returns the number as a product of its primes factoriziation implexed,
  * implex is the operation of replacing a number with its index on the prime number line
  * @param {number} n
+ * @param {string} prim - primitive to be used
  * @return {Array} 
  * @example:
- * - alphaToTx(18) = [':', [':'], [':']]
- * - alphaToTx(8) = [':', ':', ':']
- * - alphaToTx(21) = [':', [':', ':']]
+ * - alphaToTx(18, ':') = [':', [':'], [':']]
+ * - alphaToTx(8, ':') = [':', ':', ':']
+ * - alphaToTx(21, ':') = [':', [':', ':']]
  */
-export function alphaToTx(n) {
+export function alphaToTx(n, prim) {
   if (n < 2) return [""];
   const factors = factor(n);
 
-  return factors.map((f) => (f == 2 ? ":" : alphaToTx(indexOfPrime(f))));
+  return factors.map( (f) => ( f == 2 ? prim : alphaToTx( indexOfPrime(f), prim ) ) );
 }
 
 /**

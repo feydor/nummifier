@@ -250,6 +250,22 @@ class App extends React.Component {
 
     return tics.map((n) => TX.convert(n));
   };
+  
+  /**
+   * Returns an array of RTX encoded strings
+   * @example:
+   * - getReducedTics() = ['(((0)))', '((0))((0))((0))'], where ciphers['AQ'].reduce() = [3, 8]
+   */
+  getReducedTics = () => {
+    let rtics = [];
+    for (let cipher in this.state.ciphers) {
+      if (this.state.selectedCiphers[cipher]) {
+        rtics = [...rtics, ...this.state.ciphers[cipher].reduce()];
+      }
+    }
+
+    return rtics.map((n) => TX.reduce(n));
+  };
 
   render() {
     let content = <img src={torus} alt="a picture of a torus" />;
@@ -274,7 +290,7 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
-          <TicXenotation ciphers={this.state.ciphers} getTics={this.getTics} />
+          <TicXenotation ciphers={this.state.ciphers} getTics={this.getTics} getReducedTics={this.getReducedTics} />
           <Glossary query={this.state.query} glossary={this.state.glossary} />
         </div>
       );
@@ -286,7 +302,7 @@ class App extends React.Component {
             ciphers={this.state.ciphers}
             selectedCiphers={this.state.selectedCiphers}
           />
-          <TicXenotation ciphers={this.state.ciphers} query={this.state.query} getTics={this.getTics} />
+          <TicXenotation ciphers={this.state.ciphers} query={this.state.query} getTics={this.getTics} getReducedTics={this.getReducedTics}/>
         </div>
       );
     }

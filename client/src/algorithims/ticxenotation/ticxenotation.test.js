@@ -16,6 +16,12 @@ test("does 1-10 in TX correctly", () => {
   expect(TX.convert(91)).toEqual("(::)(:(:))");
 });
 
+test("does RTX correctly", () => {
+  expect(TX.reduce(86)).toEqual("((0))(((0))(((0))((0))))");
+  expect(TX.reduce(140)).toEqual("((0))((0))((((0))))(((0))((0)))");
+  expect(TX.reduce(5)).toEqual("((((0))))");
+});
+
 test("indexOfPrime works", () => {
   expect(TX.indexOfPrime(53)).toEqual(16);
   expect(TX.indexOfPrime(7)).toEqual(4);
@@ -32,7 +38,7 @@ test("stringify works", () => {
 });
 
 test("alphaToTx works", () => {
-  expect(TX.alphaToTx(18)).toEqual([ ":", [":"], [":"] ]);
-  expect(TX.alphaToTx(8)).toEqual([ ":", ":", ":" ]);
-  expect(TX.alphaToTx(21)).toEqual([ [":"], [":", ":"] ]);
+  expect(TX.alphaToTx(18, ":")).toEqual([ ":", [":"], [":"] ]);
+  expect(TX.alphaToTx(8, ":")).toEqual([ ":", ":", ":" ]);
+  expect(TX.alphaToTx(21, ":")).toEqual([ [":"], [":", ":"] ]);
 });
