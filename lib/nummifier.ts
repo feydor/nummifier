@@ -71,7 +71,7 @@ export const NummifierCiphers = {
   if (_str.length == 0) {
     return 0;
   } else {
-    let strArr = [..._str];
+    let strArr = Array.from(_str);
     return cipher[ALPHANUM.indexOf(strArr.pop())] + gematria(strArr.join(''), cipher);
   }
 }
