@@ -5,6 +5,8 @@
 
 .clearButton {
     min-width: 30px;
+    background-color: #010101;
+    color: #f7f7f7;
 }
 
 .textInput {
@@ -12,6 +14,8 @@
     min-width: 408px;
     min-height: 204px;
     width: 100%;
+    background-color: #010101;
+    color: #f7f7f7;
 }
 
 .textInput:focus {

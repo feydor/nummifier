@@ -43,7 +43,7 @@ export default function QueryBar({ input, onInputChange, onClear, onSubmit}: Que
                     onKeyDown={handleQuery}
                     className={`${styles.textInput}`}/>
             </form>
-            <button className={styles.clearButton} onClick={handleOnClear}>C</button>
+            <button className={styles.clearButton} onClick={handleOnClear}>∅</button>
         </div>
     );
 }
