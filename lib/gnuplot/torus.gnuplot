@@ -19,6 +19,6 @@ radius=0.5
 
 do for [i=1:360/circles] {
   set view 25, i, 1, 1
-  set output sprintf('game-of-life-torus.%03.0f.png', i)
-  splot cos(u)+radius*cos(u)*cos(v),sin(u)+radius*sin(u)*cos(v),radius*sin(v) lt rgb "#ff0266"
+  set output sprintf('d-torus.%03.0f.png', i)
+  splot cos(u)+radius*cos(u)*cos(v),sin(u)+radius*sin(u)*cos(v),radius*sin(v) lt rgb "#f7f7f7"
 }
