@@ -9,7 +9,7 @@ interface QueryBarProps {
 };
 
 export default function QueryBar({ input, onInputChange, onClear, onSubmit}: QueryBarProps) {
-    const inputRef = useRef(input);
+    const inputRef = useRef<HTMLInputElement>(null);
     const MAX_INPUT = 30;
 
     function handleQuery(event) {
