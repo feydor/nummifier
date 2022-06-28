@@ -1,38 +1,24 @@
 {
-	"name": "gematria-api",
-	"version": "0.0.1",
-	"description": "API for Gematria",
-	"main": "server.js",
-	"scripts": {
-		"start": "concurrently \"npm run server\" \"npm run client\"",
-		"server": "node server.js",
-		"client": "node start-client.js"
-	},
-	"dependencies": {
-		"bootstrap": "^4.6.0",
-		"concurrently": "^5.3.0",
-		"cors": "^2.8.1",
-		"dotenv": "^8.2.0",
-		"express": "^5.0.0-alpha.8",
-		"express-validator": "^6.10.0",
-		"faker": "^5.4.0",
-		"mongo-seeding": "^3.5.0",
-		"mongoose": "^5.10.13",
-		"react-bootstrap": "^1.5.0",
-		"react-spinners": "^0.10.6"
-	},
-	"engines": {
-		"node": "^14.16.0"
-	},
-	"repository": {
-		"type": "git"
-	},
-	"keywords": [
-		"node",
-		"express"
-	],
-	"license": "MIT",
-	"devDependencies": {
-		"concurrently": "^5.3.0"
-	}
+  "name": "nummifier",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bulma": "^0.9.4",
+    "next": "12.1.6",
+    "node-sass": "^7.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.1.6"
+  }
 }

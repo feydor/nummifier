@@ -82,8 +82,7 @@ export default function Home() {
           <OptionsBar onCipherChange={handleCipherChange}/>
         </section>
         <div className='section'>
-          <h4>Instructions</h4>
-          <p>Enter your query above. Select the desired cipher from the settings.</p>
+          <p>enter your query above. select the desired cipher.</p>
         </div>
       </section>
       <section className='section'>
