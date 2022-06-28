@@ -17,9 +17,8 @@ const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: R
     <div className='section'>
         <div>
             <h2>Digital Reduction</h2>
-            {input} = {reductions
-                        .map((n, i) => i < reductions.length-1 ? `${cipher}-${n} = `
-                                                               : `${cipher}-${n}`)}
+            {input} = {reductions.map(n => `${cipher}-${n}`)
+                                 .join(' = ')}
         </div>
         <div>
             <h2>Tic-Xenotation</h2>
@@ -28,7 +27,11 @@ const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: R
         <div>
             <h2>Hyperglossolalary</h2>
             <ul>
-                {matches.map(match => input !== match ? <li>{input} = {match}</li> : '')}
+                {matches.length === 0 && '∅'}
+                {matches.length !== 0 && '{ '}
+                {matches.filter(x => x !== input)
+                        .join(", ")}
+                {matches.length !== 0 && ' }'}
             </ul>
         </div>
     </div>
