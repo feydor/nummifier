@@ -1,3 +1,4 @@
+import Image from '../node_modules/next/image';
 import styles from './layout.module.css';
 
 export default function Layout({ children }) {
@@ -6,9 +7,11 @@ export default function Layout({ children }) {
     return (
     <div>
         <header className={styles.Header}>
-            <p>ANS</p>
+
+            <Image src="/images/multi35.jpg" width={35} height={35}/>
             <p>{month+1}.{day}.{year}</p>
             <p><em>INDEX</em></p>
+            
         </header>
         {children}
     </div>
