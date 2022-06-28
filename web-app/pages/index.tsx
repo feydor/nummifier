@@ -8,6 +8,7 @@ import Results from '../components/results';
 import styles from '../styles/home.module.css';
 
 import initNummifier from '../lib/nummifier';
+import xenotate from '../lib/tx'
 
 interface Cipher {
   name: string;
@@ -41,6 +42,10 @@ export default function Home() {
     setCipher({ name: key });
   }
 
+  function handleResultsIsEmpty() {
+    setSubmitted(false);
+  }
+
   // digital reduction
   function reduce(x: string): number[] {
     let res = nummifier[cipher.name].reduce(x);
@@ -49,9 +54,12 @@ export default function Home() {
   }
 
   // xenotation
-  function tx(x: string): string {
-    // TODO: call rust wasm code?
-    return "::((:))(::) ((:))";
+  function tx(x: number): string {
+    try {
+      return xenotate(x);
+    } catch (e) {
+      return '';
+    }
   }
 
 
@@ -60,7 +68,14 @@ export default function Home() {
       <section className='section'>
         <h1>Abysmal Nummification of the Signifier</h1>
         <section className='section'>
-          {submitted ? <Results input={input} reductions={reduce(input)} xenotations={tx(input)}/> : <Logo />}
+          {submitted ?
+          <Results
+            input={input}
+            reductions={reduce(input)}
+            xenotations={tx(reduce(input)[0])}
+            onEmpty={handleResultsIsEmpty}
+          />
+          : <Logo />}
         </section>
         <section className={`${styles.querySection} section`}>
           {input}

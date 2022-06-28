@@ -20,7 +20,7 @@ const MAX = 4294967296;
  * - convert(5) = '((:))'
  * - convert(1) = ':(-P)'
  */
-export function convert(n: number): string {
+export default function xenotate(n: number): string {
   if (!n || isNaN(n) || n < 0 || n >= MAX)
     throw new RangeError('Argument is invalid');
   if (n < 2) return '(-P):'
@@ -34,7 +34,7 @@ export function convert(n: number): string {
  * - reduce(5) = '((((0))))'
  * - reduce(86) = '((0))(((0))(((0))((0))))'
  */
-export function reduce(n: number): string {
+function reduce(n: number): string {
   if (!n || isNaN(n) || n < 0 || n >= MAX)
     throw new RangeError('Argument is invalid');
   if (n < 2) return '(0)';
@@ -50,7 +50,7 @@ export function reduce(n: number): string {
  * - alphaToTx(8, ':') = [':', ':', ':']
  * - alphaToTx(21, ':') = [':', [':', ':']]
  */
-export function alphaToTx(n: number, primitive: string) {
+function alphaToTx(n: number, primitive = ':') {
   if (n < 2) return [""];
   const factors = factor(n);
 
@@ -64,7 +64,7 @@ export function alphaToTx(n: number, primitive: string) {
  * - stringify(['::']) = ['(::)']
  * - stringify([':', ['::']]) = [':(::)']
  */
-export const stringify = (arr: []) => {
+const stringify = (arr: []) => {
   if (Array.isArray(arr)) {
     return `(${arr.reduce((prev, curr) => prev + stringify(curr), "")})`;
   }
@@ -78,7 +78,7 @@ export const stringify = (arr: []) => {
  * @example:
  * - factor(60) = [2, 2, 3, 5]
  */
-export function factor(n: number): number[] {
+function factor(n: number): number[] {
   let factors = [];
   if (!n || isNaN(n) || n < 1 || n >= MAX) {
     return factors;
@@ -167,7 +167,7 @@ function sieve(n: number): number[] {
  * - indexOfPrime(7) = 4
  * - indexOfPrime(53) = 16
  */
-export function indexOfPrime(n: number): number {
+function indexOfPrime(n: number): number {
   if (n < 2) throw new RangeError("Argument must be 2 or greater.");
   if (gPrimes.includes(n)) return gPrimes.indexOf(n) + 1;
   return sieve(n).indexOf(n) + 1;

@@ -3,9 +3,14 @@ interface ResultsProps {
     input: string;
     reductions: number[];
     xenotations: string;
+    onEmpty: () => void;
 };
 
-const Results = ({ input, reductions, xenotations }: ResultsProps) => {
+const Results = ({ input, reductions, xenotations, onEmpty }: ResultsProps) => {
+    if (reductions.length == 0) {
+        onEmpty();
+    }
+
     return (
     <div className='section'>
         <div>
