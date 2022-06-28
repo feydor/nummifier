@@ -16,8 +16,9 @@ const defaultCipher = 'aq';
 
 export default function Home() {
   const [input, setInput] = useState('');
-  const [cipher, setCipher] = useState<Cipher>({ name: 'aq' });
+  const [cipher, setCipher] = useState<Cipher>({ name: defaultCipher });
   const [submitted, setSubmitted] = useState(false);
+
 
   function handleSubmit(input: string) {
     setInput(input);
@@ -38,10 +39,9 @@ export default function Home() {
   }
 
   // digital reduction
-  function reduce(x: string): number[] {
+function reduce(x: string): number[] {
     // TODO: call rust wasm code?
-    // switch on cipher
-    return [140, 5];
+    return [];
   }
 
   // xenotation
@@ -49,6 +49,7 @@ export default function Home() {
     // TODO: call rust wasm code?
     return "::((:))(::) ((:))";
   }
+
 
   return (
     <Layout>
@@ -73,3 +74,5 @@ export default function Home() {
     </Layout>
   )
 }
+
+

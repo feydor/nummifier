@@ -6,7 +6,7 @@ export default function OptionsBar({ onCipherChange }) {
     }
 
     return (
-        <div className={styles.optionsBar} class='control' onChange={handleOnChange}>
+        <div className={`${styles.optionsBar} control`} onChange={handleOnChange}>
             <p>cipher: </p>
             <label className={`${styles.label} `}>
                 AQ
