@@ -1,5 +1,20 @@
-.flexRow {
+.All {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+}
+
+.clearButton {
+    min-width: 30px;
+}
+
+.textInput {
+    font-size: 1rem;
+    min-width: 408px;
+    min-height: 204px;
+    width: 100%;
+}
+
+.textInput:focus {
+    outline: none;
+    outline-width: 0;
 }

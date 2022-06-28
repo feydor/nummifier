@@ -9,35 +9,41 @@ interface QueryBarProps {
 };
 
 export default function QueryBar({ input, onInputChange, onClear, onSubmit}: QueryBarProps) {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const MAX_INPUT = 30;
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const MAX_INPUT = 333;
 
-    function handleQuery(event) {
-        event.preventDefault();
-        onSubmit(inputRef.current.value);
-        inputRef.current.value = '';
+    function handleQuery(e) {
+        if (e.keyCode === 13 && e.shiftKey === false) {
+            e.preventDefault();
+            onSubmit(inputRef.current.value);
+        }
+
     }
 
     // handles input sanitizing
     function handleOnChange() {
         const isNotAlphaNum = /[^A-Za-z|^" "]/g;
-        onInputChange(inputRef.current.value.replace(isNotAlphaNum, '').trim());
+        inputRef.current.value = inputRef.current.value.replace(isNotAlphaNum, '').trim().toUpperCase();
+        onInputChange(inputRef.current.value);
+    }
+
+    function handleOnClear() {
+        inputRef.current.value = "";
+        onClear();
     }
 
     return (
-        <div className={styles.flexRow}>
-            <form className={styles.flexRow} onSubmit={handleQuery}>
-                <input type="text"
+        <div className={styles.All}>
+            <form onSubmit={handleQuery}>
+                <textarea
                     ref={inputRef}
-                    size={MAX_INPUT}
                     maxLength={MAX_INPUT}
                     autoComplete='off'
-                    value={input}
                     onChange={handleOnChange}
-                    className={styles.input}/>
-                <button className={styles.button}>INPUT</button>
+                    onKeyDown={handleQuery}
+                    className={`${styles.textInput}`}/>
             </form>
-            <button className={styles.button} onClick={() => onClear()}>CLEAR</button>
+            <button className={styles.clearButton} onClick={handleOnClear}>C</button>
         </div>
     );
 }

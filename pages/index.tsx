@@ -63,9 +63,9 @@ export default function Home() {
 
   return (
     <Layout>
-      <section className='section'>
-        <h1 className={styles.title}>Abysmal Nummification of the Signifier</h1>
-        <section className='section'>
+      <section className={`${styles.Layout} ${styles.margins}`}>
+        <h1 className={styles.title}>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
+        <section className={`${styles.margins}`}>
           {submitted ?
           <Results
             input={input}
@@ -77,13 +77,10 @@ export default function Home() {
           />
           : <Logo />}
         </section>
-        <section className={`${styles.querySection} section`}>
+        <section className={`${styles.querySection} ${styles.margins}`}>
           <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
           <OptionsBar onCipherChange={handleCipherChange}/>
         </section>
-        <div className='section'>
-          <p>enter your query above. select the desired cipher.</p>
-        </div>
       </section>
       <section className='section'>
 

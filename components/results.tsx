@@ -1,3 +1,4 @@
+import styles from './results.module.css';
 
 interface ResultsProps {
     input: string;
@@ -14,18 +15,18 @@ const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: R
     }
 
     return (
-    <div className='section'>
+    <div className={`${styles.All}`}>
         <div>
-            <h2>Digital Reduction</h2>
+            <h2 className={styles.subtitle}><em>DIGITAL REDUCTION</em></h2>
             {input} = {reductions.map(n => `${cipher}-${n}`)
                                  .join(' = ')}
         </div>
         <div>
-            <h2>Tic-Xenotation</h2>
+            <h2 className={styles.subtitle}><em>TIC-XENOTATION</em></h2>
             {xenotations}
         </div>
         <div>
-            <h2>Hyperglossolalary</h2>
+            <h2 className={styles.subtitle}><em>HYPERGLOSSOLALARY</em></h2>
             <ul>
                 {matches.length === 0 && '∅'}
                 {matches.length !== 0 && '{ '}

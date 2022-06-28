@@ -41,7 +41,7 @@ function computeTheGlossaryReductions() {
     for (const [cipherName] of Object.entries(NummifierCiphers)) {
         TheGlossaryReductions[cipherName] = {};
         for (const entry of TheGlossary) {
-            TheGlossaryReductions[cipherName][entry] = nummifer[cipherName].reduce(entry.length === 0 ? "" : entry);
+            TheGlossaryReductions[cipherName][entry.toUpperCase()] = nummifer[cipherName].reduce(entry.length === 0 ? "" : entry);
         }
     }
 }

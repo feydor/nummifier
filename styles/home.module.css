@@ -1,11 +1,39 @@
+.Layout {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	max-width: 100%;
+	margin-left: 1rem;
+}
+
+.margins {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
 
 .querySection {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
-	gap: 10px;
+	align-items: stretch;
+	gap: 1rem;
 }
 
 .title {
-	font-size: 22px;
+	font-size: 2rem;
+}
+
+@media only screen and (max-width: 800px) {
+	.title {
+		font-size: 1rem;
+	}
+
+	.Layout {
+		max-width: 100%;
+		align-items: center;
+	}
+
+	.querySection {
+		max-width: 100%;
+		align-items: center;
+	}
 }
