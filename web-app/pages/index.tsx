@@ -1,16 +1,15 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Layout from '../components/layout';
 import Logo from '../components/logo';
+import OptionsBar from '../components/options-bar';
 import QueryBar from '../components/query-bar';
 import Results from '../components/results';
-// import styles from '../styles/home.module.css';
+import styles from '../styles/home.module.css';
 
 export default function Home() {
-  let [input, setInput] = useState('');
-  let [submitted, setSubmitted] = useState(false);
+  const [input, setInput] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(input: string) {
     setInput(input);
@@ -19,6 +18,11 @@ export default function Home() {
 
   function handleInputChange(input: string) {
     setInput(input);
+  }
+
+  function handleQueryClear() {
+    setInput('');
+    setSubmitted(false);
   }
 
   // digital reduction
@@ -40,9 +44,10 @@ export default function Home() {
         <section className='section'>
           {submitted ? <Results input={input} reductions={reduce(input)} xenotations={tx(input)}/> : <Logo />}
         </section>
-        <section className='section'>
+        <section className={`${styles.querySection} section`}>
           {input}
-          <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit}/>
+          <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
+          <OptionsBar />
         </section>
         <div className='section'>
           <h4>Instructions</h4>
