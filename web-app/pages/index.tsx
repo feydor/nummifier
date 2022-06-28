@@ -7,17 +7,20 @@ import QueryBar from '../components/query-bar';
 import Results from '../components/results';
 import styles from '../styles/home.module.css';
 
+import initNummifier from '../lib/nummifier';
+
 interface Cipher {
   name: string;
   // TODO: add array for a-z ciphering
 };
 
-const defaultCipher = 'aq';
+const defaultCipher = 'AQ';
 
 export default function Home() {
   const [input, setInput] = useState('');
   const [cipher, setCipher] = useState<Cipher>({ name: defaultCipher });
   const [submitted, setSubmitted] = useState(false);
+  const nummifier = initNummifier();
 
 
   function handleSubmit(input: string) {
@@ -39,9 +42,10 @@ export default function Home() {
   }
 
   // digital reduction
-function reduce(x: string): number[] {
-    // TODO: call rust wasm code?
-    return [];
+  function reduce(x: string): number[] {
+    let res = nummifier[cipher.name].reduce(x);
+    console.log(res);
+    return res;
   }
 
   // xenotation

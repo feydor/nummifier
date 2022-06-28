@@ -10,7 +10,8 @@ const Results = ({ input, reductions, xenotations }: ResultsProps) => {
     <div className='section'>
         <div>
             <h2>Digital Reduction</h2>
-            {input} = {reductions.map(n => `AQ-${n}`)}
+            {input} = {reductions
+                        .map((n, i) => i < reductions.length-1 ? `AQ-${n} = ` : `AQ-${n}`)}
         </div>
         <div>
             <h2>Tic-Xenotation</h2>
