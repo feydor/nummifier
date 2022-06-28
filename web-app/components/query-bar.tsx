@@ -12,7 +12,7 @@ const MAX_INPUT = 30;
 const isNotAlphaNum = /[^A-Za-z|^" "]/g;
 
 export default function QueryBar({ input, onInputChange, onClear, onSubmit}: QueryBarProps) {
-    const inputRef = useRef('');
+    const inputRef = useRef(input);
 
     function handleQuery(event) {
         event.preventDefault();

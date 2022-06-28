@@ -7,8 +7,16 @@ import QueryBar from '../components/query-bar';
 import Results from '../components/results';
 import styles from '../styles/home.module.css';
 
+interface Cipher {
+  name: string;
+  // TODO: add array for a-z ciphering
+};
+
+const defaultCipher = 'aq';
+
 export default function Home() {
   const [input, setInput] = useState('');
+  const [cipher, setCipher] = useState<Cipher>({ name: 'aq' });
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(input: string) {
@@ -25,9 +33,14 @@ export default function Home() {
     setSubmitted(false);
   }
 
+  function handleCipherChange(key: string) {
+    setCipher({ name: key });
+  }
+
   // digital reduction
   function reduce(x: string): number[] {
     // TODO: call rust wasm code?
+    // switch on cipher
     return [140, 5];
   }
 
@@ -47,7 +60,7 @@ export default function Home() {
         <section className={`${styles.querySection} section`}>
           {input}
           <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
-          <OptionsBar />
+          <OptionsBar onCipherChange={handleCipherChange}/>
         </section>
         <div className='section'>
           <h4>Instructions</h4>
