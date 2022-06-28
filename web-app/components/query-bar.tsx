@@ -8,11 +8,9 @@ interface QueryBarProps {
     onSubmit: (s: string) => void;
 };
 
-const MAX_INPUT = 30;
-const isNotAlphaNum = /[^A-Za-z|^" "]/g;
-
 export default function QueryBar({ input, onInputChange, onClear, onSubmit}: QueryBarProps) {
     const inputRef = useRef(input);
+    const MAX_INPUT = 30;
 
     function handleQuery(event) {
         event.preventDefault();
@@ -22,6 +20,7 @@ export default function QueryBar({ input, onInputChange, onClear, onSubmit}: Que
 
     // handles input sanitizing
     function handleOnChange() {
+        const isNotAlphaNum = /[^A-Za-z|^" "]/g;
         onInputChange(inputRef.current.value.replace(isNotAlphaNum, '').trim());
     }
 

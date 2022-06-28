@@ -3,7 +3,7 @@
  * GoN source: https://eianorange.zenseiderz.org/gon/
  */
 
-interface NummifierResult {
+export interface NummifierResult {
   [cipher: string]: {
     reduce: (query: string) => number[];
   }
@@ -31,7 +31,7 @@ export const NummifierCiphers = {
     for (const [key, cipher] of Object.entries(NummifierCiphers)) {
       nummifier[key] = {
         reduce: function(query: string): number[] {
-          if (query.length == 0) return [];
+          if (query.length === 0 || query === null) return [];
           let n = gematria(query.match(/[A-Z]/ig).join(""), cipher); // get the first reduction
           let results = [n];
           
