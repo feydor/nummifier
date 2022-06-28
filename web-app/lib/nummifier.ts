@@ -3,12 +3,10 @@
  * GoN source: https://eianorange.zenseiderz.org/gon/
  */
 
-interface reductionFunction {
-  reduce: (query: string) => number[];
-}
-
 interface NummifierResult {
-  [cipher: string]: reductionFunction;
+  [cipher: string]: {
+    reduce: (query: string) => number[];
+  }
 };
 
 const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -28,13 +26,13 @@ export const NummifierCiphers = {
  * - const nummifier = initNummifier()
  * - nummifier["AQ"].reduce("aok") = [54, 9]
  */
- export default function initNummifier(ciphers = NummifierCiphers.AQ): NummifierResult {
+ export default function initNummifier(): NummifierResult {
     let nummifier = {};
-    for (let cipher in NummifierCiphers) {
-      nummifier[cipher] = {
+    for (const [key, cipher] of Object.entries(NummifierCiphers)) {
+      nummifier[key] = {
         reduce: function(query: string): number[] {
           if (query.length == 0) return [];
-          let n = gematria(query.match(/[A-Z]/ig).join("")); // get the first reduction
+          let n = gematria(query.match(/[A-Z]/ig).join(""), cipher); // get the first reduction
           let results = [n];
           
           while (Math.abs(n) > 9) {

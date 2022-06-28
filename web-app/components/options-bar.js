@@ -10,11 +10,11 @@ export default function OptionsBar({ onCipherChange }) {
             <p>cipher: </p>
             <label className={`${styles.label} `}>
                 AQ
-                <input type='radio' name='cipher' value='aq' defaultChecked/>
+                <input type='radio' name='cipher' value='AQ' defaultChecked/>
             </label>
             <label className={`${styles.label}`}>
                 GoN1
-                <input type='radio' name='cipher' value='gon1'/>
+                <input type='radio' name='cipher' value='GoN1'/>
             </label>
         </div>
     );

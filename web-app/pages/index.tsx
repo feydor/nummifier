@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <Layout>
       <section className='section'>
-        <h1>Abysmal Nummification of the Signifier</h1>
+        <h1 className={styles.title}>Abysmal Nummification of the Signifier</h1>
         <section className='section'>
           {submitted ?
           <Results
