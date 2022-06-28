@@ -7,7 +7,7 @@ A js web app to aid in anorganic, numerical, and semiotic investigations
 # build
 ```shell
 git clone https://github.com/feydor/nummifier.git
-cd nummifier/web-app
+cd nummifier
 npm install
 npm run dev
 ```
@@ -25,17 +25,6 @@ npm run dev
         <b>return</b> 0
     <b>else</b>
         <b>return</b> <em>C</em>[ <em>ALPHA</em>[<em>str.pop()</em>] ] + gematria(<em>str</em>, <em>C</em>)
-</pre></code>
-
-### digital reduction, or plexing
-<pre><code><b>algorithim</b> reduce is
-    <b>input:</b> a number <em>n</em>
-    <b>output:</b> the same digitally reduced by one level
-
-    <b>if</b> <en>n</em> is a single digit number then
-        <b>return</b> <em>n</em>
-    <b>else</b>
-       <b>return</b> &#124;<em>n</em>&#124; mod 10 + reduce(<em>n</em> / 10 truncated)
 </pre></code>
 
 ### tic-xenotation
