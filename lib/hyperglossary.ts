@@ -70,7 +70,7 @@ const TheGlossary = [
     "angelic secret language", "war engine", "a grin without a cat", "war machine", "xenosystems", "outside in", "abdul alhazred", "golden age", "shaytan",
     "isolated nation", "wasting time", "heirarchy of investors", "counterculture", "polar opposites","northanger", "distributed ledger technology",
     "distributed ledger", "central bank digital currency", "primitive accumulation", "hyperstition", "hyperstition in action", "the abyss",
-    "all conspiracies are true", "distributed conspiracy", "involvements with reality", "scott alexander", "the queen of hearts she made some tarts",
+    "all conspiracies are true", "distributed conspiracy", "involvements with reality", "the queen of hearts she made some tarts",
     "pandemonium", "pandemonium matrix", "the berenstain bears", "the berenstein bears", "mandelaeffect", "the mandela effect", "numogram",
     "cthulu lives", "department of defense", "central intelligence agency", "electric cattleprod", "youre being watched", "have you seen this man",
     "lucid dreaming", "have you seen this man recently","charles dodgson", "gematrix", "tessier ashpool", "wintermute", "armitage", "false sky",
@@ -85,12 +85,14 @@ const TheGlossary = [
     "cryptocurrents", "ibdhjad", "anglossic cycle", "worlds descent", "gateway of the gods", "ordinate number", "cardinal number", "dispersion",
     "programming with nothing", "gematria of nothing", "cube machine", "birth of the goddess", "hyperfunctional", "zero knowledge rollups", "zero knowledge",
     "zk rollups", "randomx", "one eight nine zero", "controlled opposition", "breathing room", "four more years", "feels good man", "proof of work", "btc is not bitcoin",
-    "craigwrightissatoshinakamoto", "satoshi", "tominaga nakamoto", "hash rate plutocracy", "xi jinping", "cold rationalism", "atomic swap", "atomic swaps",
+    "craigwrightissatoshinakamoto", "satoshi", "tominaga nakamoto", "hash rate plutocracy", "cold rationalism", "atomic swap", "atomic swaps",
     "infinite tail emission", "zodh", "elliptic curves", "rift", "chasm", "cargo", "gnu", "blonde beast", "satan", "the apotheosis of the dance",
     "book of paths", "the silver key", "how is a raven like a writing desk", "polytics", "monkeys paw effect", "mine is a long and sad tale", "looking glass world",
     "null pointer dereferencing", "curiouser and curiouser", "Tchukululok", "worm behind the world", "fabled city of the worms", "the whisperer in the darkness",
     "you are being watched", "entry of the gods into valhalla", "lemuria", "alice liddell", "tarts are made of pepper", "sutter cane", "all cats can grin and most of them do",
-    "eroica", "nothing human", "how doth the little crocodile improve his shining tail", "art has a right to defend itself", "deng xiaoping", "decadology", "anglobal communications",
+    "eroica", "nothing human", "how doth the little crocodile improve his shining tail", "art has a right to defend itself", "decadology", "anglobal communications",
     "fig or pig", "murdering the time", "dark enlightenment", "tabysshe",  "thelema", "crossing the abyss", "coronzonic abyss", "binah", "keter", "hokhmah", "stellar dispersion",
-    "zero philisophy", "inordinate prime", "nomos", "metatron", "lovecraft", "brownian motion", "jack the ripper", "desert of the real", "circuit city", "moon cake break"
+    "zero philisophy", "inordinate prime", "nomos", "metatron", "lovecraft", "brownian motion", "jack the ripper", "desert of the real", "circuit city", "moon cake break",
+    "wonderland", "puppies of his race", "moral sensibilities", "put nature th the rack", "four lettered name", "zom the octopus", "running out of time", "our girl katak", "al crowley and crew",
+    "out girl khatak", "luurgo", "royal road to science", "djynxx", "uttunul", "murrumur", "oddubb", "meat hook", "chilled meatstore"
   ];

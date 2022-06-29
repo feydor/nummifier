@@ -1,6 +1,8 @@
 # ABYSMAL NUMMIFICATION OF THE SIGNIFIER
+anglossic gematria in the system of August Barrow; glossary occasionally updated with some of my 'findings'
 
-A js web app to aid in anorganic, numerical, and semiotic investigations
+# screenshot
+![results]('/screenshots/example.png')
 
 # build
 ```shell
