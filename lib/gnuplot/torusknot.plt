@@ -18,6 +18,6 @@ do for[i=1:10800/circles] {
   set output sprintf('knot-torus.%03.0f.png', i)
   splot (r+s*cos(q*u)+t*cos(v))*cos(p*u), \
   (r+s*cos(q*u)+t*cos(v))*sin(p*u), \
-  s*sin(q*u)+t*sin(v) lt rgb "#403539"
+  s*sin(q*u)+t*sin(v) lt rgb "#f7f7f7"
 }
 

@@ -32,7 +32,9 @@ export const NummifierCiphers = {
       nummifier[key] = {
         reduce: function(query: string): number[] {
           if (query.length === 0 || query === null) return [];
-          let n = gematria(query.match(/[A-Z]/ig).join(""), cipher); // get the first reduction
+          let sanitized_query = query.match(/[A-Z]/ig);
+          if (!sanitized_query) return [];
+          let n = gematria(sanitized_query.join(""), cipher); // get the first reduction
           let results = [n];
           
           while (Math.abs(n) > 9) {

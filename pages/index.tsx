@@ -47,7 +47,6 @@ export default function Home() {
   function reduce(x: string): number[] {
     let res = nummifier[cipher].reduce(x);
     matches = glossaryMatches(res, cipher);
-    console.log(matches);
     return res;
   }
 
@@ -64,8 +63,8 @@ export default function Home() {
   return (
     <Layout>
       <section className={`${styles.Layout} ${styles.margins}`}>
-        <h1 className={styles.title}>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
-        <section className={`${styles.margins}`}>
+        <h1 className={`${styles.title} ${styles.margins}`}>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
+        <section>
           {submitted ?
           <Results
             input={input}
@@ -81,9 +80,6 @@ export default function Home() {
           <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
           <OptionsBar onCipherChange={handleCipherChange}/>
         </section>
-      </section>
-      <section className='section'>
-
       </section>
     </Layout>
   )

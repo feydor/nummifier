@@ -22,8 +22,8 @@ export default function QueryBar({ input, onInputChange, onClear, onSubmit}: Que
 
     // handles input sanitizing
     function handleOnChange() {
-        const isNotAlphaNum = /[^A-Za-z|^" "]/g;
-        inputRef.current.value = inputRef.current.value.replace(isNotAlphaNum, '').trim().toUpperCase();
+        const isNotAlphaNum = /[^A-Za-z\s]/g;
+        inputRef.current.value = inputRef.current.value.replace(isNotAlphaNum, '').toUpperCase();
         onInputChange(inputRef.current.value);
     }
 
