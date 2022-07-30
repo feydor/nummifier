@@ -37,3 +37,5 @@ yarn-error.log*
 
 # bun stuff
 *.bun
+node_modules.bun
+node_modules.server.bun

@@ -1,11 +1,10 @@
 import { useState } from 'react';
-
-import Layout from '../../components/layout';
 import Logo from '../../components/logo';
 import OptionsBar from '../../components/options-bar';
 import QueryBar from '../../components/query-bar';
 import Results from '../../components/results';
 import styles from './index.module.css';
+import Link from 'next/link';
 
 import initNummifier from '../../lib/nummifier';
 import xenotate from '../../lib/tx'
@@ -78,7 +77,13 @@ export default function Nummifier() {
             <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
             <OptionsBar onCipherChange={handleCipherChange}/>
         </section>
-        <footer><p><a href="/">/</a></p></footer>
+        <footer>
+          <p>
+            <Link href="/">
+              <a>/</a>
+            </Link>
+          </p>
+          </footer>
     </section>
   )
 }
