@@ -34,3 +34,6 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+# bun stuff
+*.bun
