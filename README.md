@@ -1,4 +1,4 @@
-# [ABYSMAL NUMMIFICATION OF THE SIGNIFIER](https://nummifier.netlify.app/)
+# [ABYSMAL NUMMIFICATION OF THE SIGNIFIER](https://feydor.netlify.app/nummifier/)
 anglossic gematria in the system of August Barrow; glossary occasionally updated with some of my 'findings'
 
 ## screenshot
