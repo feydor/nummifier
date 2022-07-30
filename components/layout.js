@@ -1,8 +1,9 @@
 import Header from "./header";
+import styles from "./layout.module.css";
 
 export default function Layout({ children }) {
     return (
-        <div>
+        <div className={styles.Margins}>
             <Header />
             {children}
         </div>
