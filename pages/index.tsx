@@ -63,8 +63,8 @@ export default function Home() {
   return (
     <Layout>
       <section className={`${styles.Layout} ${styles.margins}`}>
-        <h1 className={`${styles.title} ${styles.margins}`}>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
-        <section>
+        <h1>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
+        <section className={styles.ResultsLayout}>
           {submitted ?
           <Results
             input={input}
@@ -76,7 +76,7 @@ export default function Home() {
           />
           : <Logo />}
         </section>
-        <section className={`${styles.querySection} ${styles.margins}`}>
+        <section className={`${styles.querySection}`}>
           <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
           <OptionsBar onCipherChange={handleCipherChange}/>
         </section>

@@ -2,5 +2,10 @@
 .optionsBar {
     display: flex;
     flex-direction: row;
+    justify-items: center;
     gap: 7px;
+}
+
+.optionsBar label {
+    padding-top: 24px;
 }

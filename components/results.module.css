@@ -4,9 +4,19 @@
     align-items: flex-start;
     align-content: flex-start;
     text-align: flex-start;
-    margin-bottom: 42.5px;
+}
+
+.Result {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 0;
+}
+
+.Result p {
+    margin-top: 4px;
 }
 
 .subtitle {
-    margin-top: 1rem;
+    margin-top: 5px;
 }

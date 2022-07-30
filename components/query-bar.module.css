@@ -4,13 +4,14 @@
 }
 
 .clearButton {
-    min-width: 30px;
+    font-size: 18px;
+    min-width: 408px;
     background-color: #010101;
     color: #f7f7f7;
 }
 
 .textInput {
-    font-size: 1rem;
+    font-size: 18px;
     min-width: 408px;
     min-height: 204px;
     width: 100%;

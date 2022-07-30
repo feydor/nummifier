@@ -8,6 +8,6 @@ anglossic gematria in the system of August Barrow; glossary occasionally updated
 ```shell
 git clone https://github.com/feydor/nummifier.git
 cd nummifier
-npm install
-npm run dev
+bun install
+bun dev
 ```

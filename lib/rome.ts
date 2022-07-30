@@ -28,7 +28,6 @@ function toRomanNumerals(s: number, i: number): string {
     // iterate DIGITS until whole number remainders
     return toRomanNumerals(s, i + 1);
   }
-  // append numerals
   const rem = s % DIGITS[i];
   const numDigitsToAppend = (s - rem) / DIGITS[i];
   let str = "";

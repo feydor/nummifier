@@ -16,24 +16,26 @@ const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: R
 
     return (
     <div className={`${styles.All}`}>
-        <div>
-            <h2 className={styles.subtitle}><em>DIGITAL REDUCTION</em></h2>
-            {input} = {reductions.map(n => `${cipher}-${n}`)
-                                 .join(' = ')}
+        <div className={styles.Result}>
+            <h4 className={styles.subtitle}>(DIGITAL REDUCTION) </h4>
+            <p>
+                {input} = {reductions.map(n => `${cipher}-${n}`)
+                                    .join(' = ')}
+            </p>
         </div>
-        <div>
-            <h2 className={styles.subtitle}><em>TIC-XENOTATION</em></h2>
-            {xenotations}
+        <div className={styles.Result}>
+            <h4 className={styles.subtitle}>(TIC-XENOTATION) </h4>
+            <p>{xenotations}</p>
         </div>
-        <div>
-            <h2 className={styles.subtitle}><em>HYPERGLOSSOLALARY</em></h2>
-            <ul>
-                {matches.length === 0 && '∅'}
-                {matches.length !== 0 && '{ '}
-                {matches.filter(x => x !== input)
-                        .join(", ")}
-                {matches.length !== 0 && ' }'}
-            </ul>
+        <div className={styles.Result}>
+            <h4 className={styles.subtitle}>(HYPERGLOSSOLALARY) </h4>
+                <p>
+                    {matches.length === 0 && '∅'}
+                    {matches.length !== 0 && '{ '}
+                    {matches.filter(x => x !== input)
+                            .join(", ")}
+                    {matches.length !== 0 && ' }'}
+                </p>
         </div>
     </div>
     );
