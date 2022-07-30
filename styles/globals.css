@@ -29,6 +29,10 @@ body {
   font-size: 26px;
 }
 
+a, a:visited {
+  color: blue;
+  text-decoration: underline;
+}
 
 * {
   box-sizing: border-box;

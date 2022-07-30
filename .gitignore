@@ -39,3 +39,6 @@ yarn-error.log*
 *.bun
 node_modules.bun
 node_modules.server.bun
+
+# Local Netlify folder
+.netlify

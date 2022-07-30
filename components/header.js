@@ -1,4 +1,3 @@
-import Image from '../node_modules/next/image';
 import styles from './header.module.css';
 
 export default function Header() {
