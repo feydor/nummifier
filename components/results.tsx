@@ -20,7 +20,7 @@ const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: R
     return (
     <div className={`${styles.All}`}>
         <div className={styles.Result}>
-            <h4>(define X '{input})</h4>
+            <h4>(define X &apos;{input})</h4>
         </div>
         <div className={styles.Result}>
             <h4 className={styles.subtitle}>(DIGITAL REDUCTION X) </h4>
