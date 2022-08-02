@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import romanize from '../lib/rome';
-import pzcalc from "../lib/pzcal";
 import styles from './current-date.module.css';
 export default function CurrentDate() {
     const date = new Date();
@@ -8,7 +7,6 @@ export default function CurrentDate() {
     return (
         <Fragment>
             <p className={styles.Date}>{romanize(month+1)}.{romanize(day)}.{romanize(year)}</p>
-            {pzcalc().map(s => <p>{s}</p>)}
         </Fragment>
     );
 }

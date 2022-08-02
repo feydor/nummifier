@@ -11,6 +11,10 @@ export default function Home() {
           <Link href="/nummifier">
             <a>/nummifier</a>
           </Link>
+          <br />
+          <Link href="/pzcal">
+            <a>/pzcal</a>
+          </Link>
         </p>
       </ul>
       <CurrentDate />
