@@ -1,4 +1,4 @@
-
+// TODO: Output an HTML table
 export default class Table<T> {
     rows: [T[]];
 

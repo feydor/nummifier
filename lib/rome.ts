@@ -1,11 +1,11 @@
 const NUMERALS = "MDCLXVI";
 const DIGITS = [1000, 500, 100, 50, 10, 5, 1];
 
-export default function romanize(s: number, i = 0): string {
+export function romanize(s: number, i = 0): string {
   if (s === 0) return "";
-  const [msdigit, place] = mostSigPlace(s);
+  const [msdigit, places] = mostSigPlace(s);
   const diff = DIGITS[i] - msdigit;
-  if (diff === Math.pow(10, place)) {
+  if (diff === Math.pow(10, places)) {
     // do substitution like 90 => XC instead of LXXXX
     return (
       NUMERALS[DIGITS.findIndex((x) => x == diff)] +
@@ -17,9 +17,8 @@ export default function romanize(s: number, i = 0): string {
     return romanize(s, i + 1);
   }
   const rem = s % DIGITS[i];
-  const numDigitsToAppend = (s - rem) / DIGITS[i];
   let str = "";
-  for (let j = 0; j < numDigitsToAppend; ++j) {
+  for (let j = 0; j < (s - rem) / DIGITS[i]; ++j) {
     str += NUMERALS[i];
   }
   return str + romanize(rem, i + 1);
@@ -33,7 +32,7 @@ function mostSigPlace(s: number): [number, number] {
   return [msdigit * Math.pow(10, places - 1), places - 1];
 }
 
-function testRomanize() {
+export function testRomanize() {
   console.assert("V" === romanize(5));
   console.assert("IV" === romanize(4));
   console.assert("XC" === romanize(90));
@@ -42,4 +41,5 @@ function testRomanize() {
   console.assert("XI" === romanize(11));
   console.assert("XL" === romanize(40));
   console.assert("MMXVII" == romanize(2017));
+  console.assert("MCMXC" == romanize(1990));
 }
