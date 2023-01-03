@@ -71,7 +71,7 @@ const TheGlossary = [
     "isolated nation", "wasting time", "heirarchy of investors", "counterculture", "polar opposites","northanger", "distributed ledger technology",
     "distributed ledger", "central bank digital currency", "primitive accumulation", "hyperstition", "hyperstition in action", "the abyss",
     "all conspiracies are true", "distributed conspiracy", "involvements with reality", "the queen of hearts she made some tarts",
-    "pandemonium", "pandemonium matrix", "the berenstain bears", "the berenstein bears", "mandelaeffect", "the mandela effect", "numogram",
+    "pandemonium", "pandemonium matrix", "the berenstain bears", "the berenstein bears", "mandela effect", "the mandela effect", "numogram",
     "cthulu lives", "department of defense", "central intelligence agency", "electric cattleprod", "youre being watched", "have you seen this man",
     "lucid dreaming", "have you seen this man recently","charles dodgson", "gematrix", "tessier ashpool", "wintermute", "armitage", "false sky",
     "welcome to straylight", "tessier ashpool corporation", "innadababylon", "bye bye babylon", "the mark of the beast", "kuang virus",
@@ -93,6 +93,12 @@ const TheGlossary = [
     "eroica", "nothing human", "how doth the little crocodile improve his shining tail", "art has a right to defend itself", "decadology", "anglobal communications",
     "fig or pig", "murdering the time", "dark enlightenment", "tabysshe",  "thelema", "crossing the abyss", "coronzonic abyss", "binah", "keter", "hokhmah", "stellar dispersion",
     "zero philisophy", "inordinate prime", "nomos", "metatron", "lovecraft", "brownian motion", "jack the ripper", "desert of the real", "circuit city", "moon cake break",
-    "wonderland", "puppies of his race", "moral sensibilities", "put nature th the rack", "four lettered name", "zom the octopus", "running out of time", "our girl katak", "al crowley and crew",
-    "out girl khatak", "luurgo", "royal road to science", "djynxx", "uttunul", "murrumur", "oddubb", "meat hook", "chilled meatstore"
+    "wonderland", "puppies of his race", "moral sensibilities", "put nature on the the rack", "four lettered name", "zom the octopus", "running out of time", "our girl katak", "al crowley and crew",
+    "our girl khatak", "luurgo", "royal road to science", "djynxx", "uttunul", "murrumur", "oddubb", "meat hook", "chilled meatstore", "mystical telos of the english language", "the cybernetic culture research unit",
+    "we open gates of starry night for thee", "hell baked", "agency and intelligence are the same thing", "put nature to the the rack", "skynet", "opening the gates of hell", "only in the flesh", "lucifer", "english", "prayer",
+    "alphabet", "agi safety", "agi safety is my top priority", "artificial selection", "crackup capitalism", "rent seeking", "monkeyworld deathstorm", "algorithmic intensity", "diplotriadic", "hexated decimal residuum", "tetraktys",
+    "august barrow", "barrow boy", "barrows angels", "primitivization", "ancient numerical order", "decimalize", "the decimal basins", "categorical disagreement", "alphanomic significance", "zero is too big for us",
+    "the nothing", "lemu ta novu meh novu nove", "exit the earth", "weighed down by gravity", "meds now", "the game continues", "department of war", "song of the night", "the agony of lewis carroll", "queen of hearts",
+    "masonic cipher", "tragic upcommance", "song of the earth", "monkey frying monsters", "monkey panic", "storming of the bastille", "chattybot", "messenger of satan", "in communication with angels", "archangel gabriel", "pleroma",
+    "archangel michael", "azrael", "pythia unbound", "pythia unbounded", "behold the lamb", "transhumanist project", "francis galton", "crispr method"
   ];
