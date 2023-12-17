@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styles from './results.module.css';
 
 interface ResultsProps {
@@ -7,37 +6,27 @@ interface ResultsProps {
     reductions: number[];
     xenotations: string;
     matches: string[];
-    onEmpty: () => void;
 };
 
-
-
-const Results = ({ input, cipher, reductions, xenotations, matches, onEmpty }: ResultsProps) => {
-    if (reductions.length == 0) {
-        onEmpty();
-    }
-
+const Results = ({ input, cipher, reductions, xenotations, matches }: ResultsProps) => {
     return (
     <div className={`${styles.All}`}>
         <div className={styles.Result}>
-            <h4>(define X &apos;{input})</h4>
-        </div>
-        <div className={styles.Result}>
-            <h4 className={styles.subtitle}>(DIGITAL REDUCTION X) </h4>
+            <h4 className={styles.subtitle}>DIGITAL REDUCTION</h4>
             <p>
-                = {reductions.map(n => `${cipher}-${n}`)
-                                    .join(' = ')}
+                {input.length > 0 ? reductions.map(n => `${cipher}-${n}`).join(' = ')
+                                  : ""
+                }
             </p>
         </div>
         <div className={styles.Result}>
-            <h4 className={styles.subtitle}>(TIC-XENOTATION X) </h4>
-            <p> = {xenotations}</p>
+            <h4 className={styles.subtitle}>TIC-XENOTATION</h4>
+            <p>{xenotations}</p>
         </div>
         <div className={styles.Result}>
-            <h4 className={styles.subtitle}>(HYPERGLOSSOLALARY X)</h4>
+            <h4 className={styles.subtitle}>HYPERGLOSSOLALARY</h4>
                 <p>
-                    {' = '}
-                    {matches.length === 0 && '∅'}
+                    {matches.length === 0 && '{}'}
                     {matches.length !== 0 && '{ '}
                     {matches.filter(x => x !== input)
                             .join(", ")}

@@ -16,7 +16,8 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "moduleResolution": "node"
   },
   "include": [
     "next-env.d.ts",
@@ -26,5 +27,8 @@
   "exclude": [
     "node_modules"
   ],
-  "types": ["intern", "systemjs"]
+  "types": [
+    "intern",
+    "systemjs"
+  ]
 }

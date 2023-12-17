@@ -7,6 +7,10 @@ interface GlossaryReductions {
   }  
 };
 
+interface ExportGlossary {
+    [reduction: number]: string[];
+};
+
 // empty on start up, but is computed on the first call to matches
 const TheGlossaryReductions: GlossaryReductions = {};
 
@@ -19,7 +23,6 @@ export default function glossaryMatches(reductions: number[], cipher: string): s
     }
 
     // NOTE: only using the first number in reductions for matching
-    // TODO: try filtering the entries via cipher
     const results = [];
     for (const [cipherName, entries] of Object.entries(TheGlossaryReductions)) {
         if (cipherName == cipher) {
@@ -30,7 +33,27 @@ export default function glossaryMatches(reductions: number[], cipher: string): s
             }
         }
     }
-    return results;
+    return results.sort();
+}
+
+export function cipherGlossary(cipher: string): ExportGlossary {
+    if (Object.keys(TheGlossaryReductions).length === 0) {
+        computeTheGlossaryReductions();
+    }
+
+    let map: ExportGlossary = {};
+    for (const [cipherName, entries] of Object.entries(TheGlossaryReductions)) {
+        if (cipherName === cipher) {
+            for (const [entryName, reductionArray] of Object.entries(entries)) {
+                if (map[reductionArray[0]] === undefined) {
+                    map[reductionArray[0]] = [];
+                }
+
+                map[reductionArray[0]].push(entryName);
+            }
+        }
+    }
+    return map;
 }
 
 function computeTheGlossaryReductions() {
@@ -81,11 +104,11 @@ const TheGlossary = [
     "sufficient reason", "abyss", "supernal triad", "hyperstitional", "handbook to the game", "the holy of holies", "the one great unit", "pseudo christos",
     "xenotation", "implextion", "ticxenotation", "barkerspiral", "dc barker", "professor dc barker", "geotraumatics", "mock turtle soup",
     "ticmaterial", "being of number", "being of beings", "padbbha", "yodtta", "ziltth", "wummno", "umneo", "tactt", "sigol", "rakht", "decimal labyrinth",
-    "qush", "ohmega", "neom", "moan", "los", "kul", "ink", "jaeo", "hagg", "god", "choronzon", "inhumanity", "cipher", "old nick", "ahriman", "crypt",
+    "qush", "ohmega", "neom", "moan", "kul", "jaeo", "god", "choronzon", "inhumanity", "cipher", "old nick", "ahriman", "crypt", "satanism",
     "cryptocurrents", "ibdhjad", "anglossic cycle", "worlds descent", "gateway of the gods", "ordinate number", "cardinal number", "dispersion",
     "programming with nothing", "gematria of nothing", "cube machine", "birth of the goddess", "hyperfunctional", "zero knowledge rollups", "zero knowledge",
     "zk rollups", "randomx", "one eight nine zero", "controlled opposition", "breathing room", "four more years", "feels good man", "proof of work", "btc is not bitcoin",
-    "craigwrightissatoshinakamoto", "satoshi", "tominaga nakamoto", "hash rate plutocracy", "cold rationalism", "atomic swap", "atomic swaps",
+    "craigwrightissatoshinakamoto", "satoshi", "tominaga nakamoto", "hash rate plutocracy", "cold rationalism", "unity", "listening to angels",
     "infinite tail emission", "zodh", "elliptic curves", "rift", "chasm", "cargo", "gnu", "blonde beast", "satan", "the apotheosis of the dance",
     "book of paths", "the silver key", "how is a raven like a writing desk", "polytics", "monkeys paw effect", "mine is a long and sad tale", "looking glass world",
     "null pointer dereferencing", "curiouser and curiouser", "Tchukululok", "worm behind the world", "fabled city of the worms", "the whisperer in the darkness",
@@ -100,5 +123,14 @@ const TheGlossary = [
     "august barrow", "barrow boy", "barrows angels", "primitivization", "ancient numerical order", "decimalize", "the decimal basins", "categorical disagreement", "alphanomic significance", "zero is too big for us",
     "the nothing", "lemu ta novu meh novu nove", "exit the earth", "weighed down by gravity", "meds now", "the game continues", "department of war", "song of the night", "the agony of lewis carroll", "queen of hearts",
     "masonic cipher", "tragic upcommance", "song of the earth", "monkey frying monsters", "monkey panic", "storming of the bastille", "chattybot", "messenger of satan", "in communication with angels", "archangel gabriel", "pleroma",
-    "archangel michael", "azrael", "pythia unbound", "pythia unbounded", "behold the lamb", "transhumanist project", "francis galton", "crispr method"
+    "archangel michael", "azrael", "pythia unbound", "pythia unbounded", "behold the lamb", "transhumanist project", "francis galton", "crispr method", "network spirituality", "the heavenly powers", "the ancient track",
+    "Joseph Scruggs", "Robert Bolton", "James Frazer", "on earth as it is in heaven", "great gates of sleep", "king james version", "kjv", "angelic communication", "Quasi Autonomous Submerged Machines", "satanic gemtria",
+    "paradise lost", "john milton", "John von Neumann", "abysmal nummification of the signifier", "bene gesserit", "reverend mother", "xenocosmography", "dasein", "being is not a being", "a cat without a grin",
+    "anglotheosophical oblique escalation", "the book of common prayer", "bourgeois bold face", "book of common prayer", "factorization", "laws of nature", "natural law", "planetary nihilism process", "chatting with satan", "dream discipline",
+    "she despised him in her heart", "leaping and dancing before the Lord", "charles darwin", "12 february 1809", "february", "primal scream", "guardian of the eight gate", "platonism", "esoteric platonism", "atlanticism", "vedic mysteries",
+    "numogram hex", "basilisk hell", "the secret garden", "the song of the earth", "the meaning of the earth", "the tree of the knowledge of good and evil", "eloquent miracles", "it had to be this way", "natural selection", "trust the plan",
+    "conflict with time", "death of god", "the death of god", "world war three", "world war iii", "world war 3", "secular history", "demented clown regime", "ministry of truth", "the lofty powers", "the fundamental theorem of arithmetic",
+    "luminous qabballah", "solemn providence", "the insignificance of dreams and accidents", "im so profoundly ashamed of what ive been", "synx", "timaeus", "holy ghost", "one true god", "son of man", "the son of man", "plexenomy", "alphanomics",
+    "the satanic tragedy", "angelic materialism", "tristan and isolde", "Tristan and Iseult", "english ordinal", "xenocosmic", "hyperintelligence", "morning star", "zionism", "hell", "they know not what they do",
+    "why have you forsaken me", "maximum entropy", "sacred geometry", "as above so below"
   ];

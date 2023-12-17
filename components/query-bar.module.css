@@ -1,21 +1,15 @@
 .All {
-    display: flex;
-    flex-direction: column;
 }
 
 .clearButton {
-    font-size: 22px;
-    min-width: 408px;
-    background-color: #010101;
-    color: #f7f7f7;
+    width: 300px;
 }
 
 .textInput {
-    font-family: MSGothic, monospace;
-    font-size: 22px;
-    min-width: 408px;
-    width: 100%;
+    font-family: 'SimSun', monospace;
+    font-size: 16px;
     min-height: 22px;
+    width: 300px;
     background-color: #010101;
     color: #f7f7f7;
 }

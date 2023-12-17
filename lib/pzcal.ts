@@ -37,6 +37,7 @@ function pentazygon(monthNum: number): string {
     }
 }
 
+/** Pentazygonic Calendar calculation */
 export default function pzcalc(): string[] {
     const today = new Date();
     const [month, day, year] = [today.getMonth(), today.getDate(), today.getFullYear()];
@@ -56,7 +57,7 @@ export default function pzcalc(): string[] {
 
     let output = [];
     output.push(`D/M/Y: ${dayNumFmt} / ${monthNumFmt} / ${year%100}`);
-    output.push(`The ${dayInMonth}${numPostfix(dayInMonth)} of ${pentazygon(monthNumber).toUpperCase()} in the year ${yearStr} AOK.`);
+    output.push(`The ${dayInMonth}${numPostfix(dayInMonth)} day of ${pentazygon(monthNumber).toUpperCase()} in the year ${yearStr} AOK.`);
     output.push(`${pentazygon(monthNumber).toUpperCase()}`);
     const cal = new Table<string>();
     const weekDays = ["L ", "Du", "Do", "Ix", "Ig", "K ", "Sg", "Sd"];
@@ -64,10 +65,11 @@ export default function pzcalc(): string[] {
     let week = [];
     let i = 0;
     for (const n of range(0, daysInMonth)) {
-        week.push(n.toLocaleString('en-US', {
+        const day = n.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false
-        }));
+        });
+        week.push(n === dayInMonth ? toBoldUnicode(day) : day);
 
         i++;
         if (i == daysInWeek) {
@@ -81,10 +83,32 @@ export default function pzcalc(): string[] {
         cal.addRow(week);
     }
 
-    for (const row of cal.toStrings()) {
-        output.push(row);
+    return output.concat(cal.toStrings());
+}
+
+function toBoldUnicode(str) {
+    const boldStart = 0x1D400;
+    const boldStartDigit = 0x1D7CE;
+    const asciiStart = 65;
+    const asciiStartDigit = 48;
+    let result = '';
+
+    for (let i = 0; i < str.length; i++) {
+        let charCode = str.charCodeAt(i);
+
+        if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+            let isLowercase = charCode >= 97;
+            let boldCharCode = boldStart + charCode - asciiStart + (isLowercase ? 26 : 0);
+            result += String.fromCodePoint(boldCharCode);
+        } else if (charCode >= 48 && charCode <= 57) {
+            let boldCharCode = boldStartDigit + charCode - asciiStartDigit;
+            result += String.fromCodePoint(boldCharCode);
+        } else {
+            result += str[i];
+        }
     }
-    return output;
+
+    return result;
 }
 
 /**

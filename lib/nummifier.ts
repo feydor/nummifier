@@ -3,6 +3,8 @@
  * GoN source: https://eianorange.zenseiderz.org/gon/
  */
 
+import { normalize } from "node:path/posix";
+
 export interface NummifierResult {
   [cipher: string]: {
     reduce: (query: string) => number[];
@@ -12,13 +14,13 @@ export interface NummifierResult {
 const ALPHANUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export const NummifierCiphers = {
     AQ: range(0, 36),
-    AZ: [...range(9, 1, -1), ...[9], ...range(1, 9)],
+    EO: [...range(0, 10), ...range(1, 27)],
+    Synx: factors(1260),
     GoN1: [...range(0, 10), ...range(13, -13, -1)],
     GoN2: [...range(0, 10), ...range(13, 0, -1), ...range(-1, -14, -1)],
     GoN3: [...range(0, 10), ...[1, -10, 7, -3, -13, -9, 6, -2, 12, -8, 5,
         -1, 11, 4, -7, -13, 10, -6, 3, -12, 9, -5, 2, -11, 8, -4]],
 };
-
 
 /**
  * full digital reduction of any query string
@@ -32,7 +34,7 @@ export const NummifierCiphers = {
       nummifier[key] = {
         reduce: function(query: string): number[] {
           if (query.length === 0 || query === null) return [];
-          let sanitized_query = query.match(/[A-Z]/ig);
+          let sanitized_query = query.match(/[A-Z0-9]/ig);
           if (!sanitized_query) return [];
           let n = gematria(sanitized_query.join(""), cipher); // get the first reduction
           let results = [n];
@@ -94,4 +96,7 @@ function range(start: number, end: number, step = 1): number[] {
     .fill(start)
     .map((x, y) => x + y * step);
 }
-  
+
+function factors(num: number): number[] {
+  return range(1, num+1).filter(n => num % n === 0);
+}

@@ -8,9 +8,9 @@
 
 .Result {
     display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin: 0;
+    flex-direction: column;
+    /* gap: 5px; */
+    margin-top: 10px;
 }
 
 .Result p {

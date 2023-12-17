@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Logo from '../../components/logo';
 import OptionsBar from '../../components/options-bar';
 import QueryBar from '../../components/query-bar';
 import Results from '../../components/results';
@@ -8,21 +7,19 @@ import Link from 'next/link';
 
 import initNummifier from '../../lib/nummifier';
 import xenotate from '../../lib/tx'
-import glossaryMatches from '../../lib/hyperglossary';
+import glossaryMatches, { cipherGlossary } from '../../lib/hyperglossary';
 
 const defaultCipher = 'AQ';
 
 export default function Nummifier() {
   const [input, setInput] = useState('');
   const [cipher, setCipher] = useState(defaultCipher);
-  const [submitted, setSubmitted] = useState(false);
   const nummifier = initNummifier();
   let matches = [];
 
 
   function handleSubmit(input: string) {
     setInput(input);
-    setSubmitted(true);
   }
 
   function handleInputChange(input: string) {
@@ -31,15 +28,10 @@ export default function Nummifier() {
 
   function handleQueryClear() {
     setInput('');
-    setSubmitted(false);
   }
 
   function handleCipherChange(key: string) {
     setCipher(key);
-  }
-
-  function handleResultsIsEmpty() {
-    setSubmitted(false);
   }
 
   // digital reduction
@@ -58,33 +50,45 @@ export default function Nummifier() {
     }
   }
 
+  function exportMatchesJson() {
+    let matchesMap = cipherGlossary(cipher);
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(matchesMap));
+    let tempDownloadNode = document.createElement('a');
+    tempDownloadNode.setAttribute("href", dataStr);
+    tempDownloadNode.setAttribute("download", `export-${cipher}.json`);
+    document.body.appendChild(tempDownloadNode);
+    tempDownloadNode.click();
+    tempDownloadNode.remove();
+  }
+
   return (
-    <section className={`${styles.Layout} ${styles.margins}`}>
-        <h1>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
-        <section className={styles.ResultsLayout}>
-            {submitted ?
+    <div className={`${styles.PageLayout}`}>
+      <section className={`${styles.SidebarLayout}`}>
+        <OptionsBar onCipherChange={handleCipherChange} onExportClick={exportMatchesJson}/>
+      </section>
+      <section className={`${styles.MainLayout}`}>
+          <h1>ABYSMAL NUMMIFICATION OF THE SIGNIFIER</h1>
+          <section className={styles.ResultsLayout}>
             <Results
             input={input}
             cipher={cipher}
             reductions={reduce(input)}
             xenotations={tx(reduce(input)[0])}
             matches={matches}
-            onEmpty={handleResultsIsEmpty}
             />
-            : <Logo />}
-        </section>
-        <section className={`${styles.querySection}`}>
-            <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
-            <OptionsBar onCipherChange={handleCipherChange}/>
-        </section>
-        <footer>
-          <p>
-            <Link href="/">
-              <a>/</a>
-            </Link>
-          </p>
-          </footer>
-    </section>
+          </section>
+          <section className={`${styles.querySection}`}>
+              <QueryBar input={input} onInputChange={handleInputChange} onSubmit={handleSubmit} onClear={handleQueryClear}/>
+          </section>
+          <footer>
+            <p>
+              <Link href="/">
+                <a>/</a>
+              </Link>
+            </p>
+            </footer>
+      </section>
+    </div>
   )
 }
 

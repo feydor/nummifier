@@ -2,35 +2,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 
 @font-face {
-  font-family: FavoritLight;
-  src: url("/ABCFavorit-Light-Trial.woff") format("woff");
-}
-
-#font-face {
-  font-family: FavoritLight;
-  font-style: italic;
-  src: url("/ABCFavorit-LightItalic-Trial.woff") format("woff");
+  font-family: MSGothicCustom;
+  src: url("/MSGothic.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: MSGothic;
-  src: url("/MSGothic.ttf") format("truetype");
+  font-family: SimSunCustom;
+  src: url("/SimSun.ttf") format("truetype");
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: MSGothic, FavoritLight, 'Quicksand', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'SimSun', SimSunCustom, 'MS Gothic', MSGothicCustom,'Quicksand', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   
   background-color: #010101;
   color: #f7f7f7;
-  font-size: 22px;
+  font-size: 16px;
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 a, a:visited {
@@ -40,4 +34,10 @@ a, a:visited {
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  background-color: #010101;
+  color: #f7f7f7;
+  margin-right: 5px;
 }

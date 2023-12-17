@@ -1,6 +1,15 @@
 .optionsBar {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-items: center;
-    gap: 7px;
+}
+
+.radioContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.radioContainer input[type="radio"] {
+    margin-right: 5px;
 }

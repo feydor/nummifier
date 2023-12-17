@@ -1,16 +1,19 @@
-.Layout {
+.PageLayout {
 	display: flex;
-	flex-direction: column;
-	max-width: 100%;
 }
 
-.margins {
+.SidebarLayout {
+	flex: 15%;
+	margin-left: 15px;
+	border-right: 1px solid gray;
+}
+
+.MainLayout {
+	flex: 85%;
 	margin-left: 15px;
 }
 
 .querySection {
-	display: flex;
-	flex-direction: column;
 	margin-top: 10px;
 }
 
